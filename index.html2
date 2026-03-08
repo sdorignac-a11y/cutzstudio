@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Éclat Studio | Salón de Belleza</title>
+  <meta
+    name="description"
+    content="Salón de belleza premium con servicios de corte, color, peinados y tratamientos. Reservá tu turno online."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root {
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --shadow-soft: 0 18px 50px rgba(0,0,0,0.08);
+      --shadow-card: 0 10px 30px rgba(0,0,0,0.06);
+      --container: 1180px;
+      --transition: 0.28s ease;
+    }
+
+    body[data-theme="light"] {
+      --bg: #f7f1eb;
+      --bg-2: #efe5dc;
+      --panel: #fffaf6;
+      --panel-2: #f4ebe3;
+      --text: #2a211c;
+      --muted: #7b6c62;
+      --line: rgba(42, 33, 28, 0.08);
+      --accent: #b68b6b;
+      --accent-2: #9f7759;
+      --accent-soft: rgba(182, 139, 107, 0.12);
+      --hero-overlay: linear-gradient(180deg, rgba(247,241,235,0.10), rgba(247,241,235,0.72));
+    }
+
+    body[data-theme="dark"] {
+      --bg: #0f0d0c;
+      --bg-2: #171311;
+      --panel: #1b1613;
+      --panel-2: #231c18;
+      --text: #f5eee7;
+      --muted: #b8a999;
+      --line: rgba(245, 238, 231, 0.08);
+      --accent: #c39a6b;
+      --accent-2: #ddb183;
+      --accent-soft: rgba(195, 154, 107, 0.13);
+      --hero-overlay: linear-gradient(180deg, rgba(15,13,12,0.12), rgba(15,13,12,0.78));
+      --shadow-soft: 0 18px 50px rgba(0,0,0,0.35);
+      --shadow-card: 0 10px 30px rgba(0,0,0,0.24);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background var(--transition), color var(--transition);
+      line-height: 1.5;
+    }
+
+    img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .container {
+      width: min(100% - 28px, var(--container));
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 92px 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .section-head {
+      max-width: 760px;
+      margin-bottom: 34px;
+    }
+
+    .section-head h2 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2rem, 4vw, 3.6rem);
+      line-height: 1.05;
+      margin: 16px 0 12px;
+      font-weight: 700;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      font-size: 1.03rem;
+      max-width: 620px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(14px);
+      background: color-mix(in srgb, var(--bg) 82%, transparent);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: white;
+      font-weight: 800;
+      box-shadow: var(--shadow-card);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.05;
+    }
+
+    .brand-text span:first-child {
+      font-size: 1rem;
+      font-weight: 800;
+    }
+
+    .brand-text span:last-child {
+      font-size: 0.76rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .theme-switcher {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--panel);
+      box-shadow: var(--shadow-card);
+    }
+
+    .theme-btn {
+      border: 0;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-weight: 700;
+      transition: var(--transition);
+    }
+
+    .theme-btn.active {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 52px;
+      padding: 0 22px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 700;
+      transition: transform var(--transition), background var(--transition), border-color var(--transition), color var(--transition);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: white;
+      box-shadow: 0 12px 26px color-mix(in srgb, var(--accent) 30%, transparent);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border-color: var(--line);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 44px 0 84px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.06fr 0.94fr;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .hero-copy h1 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(3rem, 6vw, 5.6rem);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      margin: 18px 0 18px;
+      max-width: 680px;
+    }
+
+    .hero-copy p {
+      font-size: 1.08rem;
+      color: var(--muted);
+      max-width: 590px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .stat {
+      background: color-mix(in srgb, var(--panel) 92%, transparent);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.25rem;
+      margin-bottom: 4px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 640px;
+    }
+
+    .hero-photo-main {
+      position: absolute;
+      inset: 0 0 70px 50px;
+      border-radius: 34px;
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero-photo-main::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--hero-overlay);
+    }
+
+    .hero-photo-main img {
+      height: 100%;
+    }
+
+    .hero-card {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: min(330px, 82%);
+      background: color-mix(in srgb, var(--panel) 88%, transparent);
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      padding: 22px;
+      backdrop-filter: blur(14px);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero-card small {
+      color: var(--accent);
+      font-weight: 700;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+
+    .hero-card h3 {
+      font-size: 1.16rem;
+      margin-bottom: 8px;
+    }
+
+    .hero-card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .service-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding: 26px;
+      box-shadow: var(--shadow-card);
+      transition: transform var(--transition), border-color var(--transition);
+    }
+
+    .service-card:hover {
+      transform: translateY(-4px);
+      border-color: color-mix(in srgb, var(--accent) 24%, var(--line));
+    }
+
+    .service-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: var(--accent-soft);
+      color: var(--accent);
+      margin-bottom: 16px;
+      font-size: 1.15rem;
+      font-weight: 800;
+    }
+
+    .service-card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+
+    .service-card p {
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .about-wrap {
+      display: grid;
+      grid-template-columns: 0.94fr 1.06fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .about-media {
+      position: relative;
+      min-height: 560px;
+    }
+
+    .about-main,
+    .about-secondary {
+      position: absolute;
+      overflow: hidden;
+      border-radius: 30px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .about-main {
+      inset: 0 70px 0 0;
+    }
+
+    .about-secondary {
+      width: 220px;
+      height: 280px;
+      right: 0;
+      bottom: 24px;
+      border: 8px solid var(--bg);
+    }
+
+    .about-main img,
+    .about-secondary img {
+      height: 100%;
+    }
+
+    .about-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      padding: 32px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .about-card h2 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 1.04;
+      margin: 16px 0 16px;
+    }
+
+    .about-card p {
+      color: var(--muted);
+      margin-bottom: 16px;
+      font-size: 1rem;
+    }
+
+    .about-points {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .about-point {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--panel-2);
+    }
+
+    .about-point strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 0.98rem;
+    }
+
+    .about-point span {
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr 0.8fr;
+      gap: 16px;
+    }
+
+    .gallery-item {
+      overflow: hidden;
+      min-height: 260px;
+      border-radius: 28px;
+      position: relative;
+      box-shadow: var(--shadow-card);
+    }
+
+    .gallery-item.large {
+      min-height: 540px;
+    }
+
+    .gallery-item img {
+      height: 100%;
+      transition: transform 0.45s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.04);
+    }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .review-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 26px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .stars {
+      color: var(--accent);
+      font-size: 1.08rem;
+      letter-spacing: 0.12em;
+      margin-bottom: 14px;
+    }
+
+    .review-card p {
+      color: var(--muted);
+      margin-bottom: 18px;
+      font-size: 0.98rem;
+    }
+
+    .review-author {
+      font-weight: 800;
+      font-size: 0.97rem;
+    }
+
+    .cta {
+      padding-bottom: 110px;
+    }
+
+    .cta-box {
+      background:
+        radial-gradient(circle at top left, color-mix(in srgb, var(--accent) 20%, transparent), transparent 38%),
+        linear-gradient(135deg, var(--panel), var(--panel-2));
+      border: 1px solid var(--line);
+      border-radius: 36px;
+      padding: 46px 32px;
+      box-shadow: var(--shadow-soft);
+      text-align: center;
+    }
+
+    .cta-box h2 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2rem, 4vw, 3.6rem);
+      line-height: 1.02;
+      margin: 16px auto 12px;
+      max-width: 760px;
+    }
+
+    .cta-box p {
+      color: var(--muted);
+      max-width: 620px;
+      margin: 0 auto 24px;
+      font-size: 1rem;
+    }
+
+    .footer {
+      border-top: 1px solid var(--line);
+      padding: 26px 0 34px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    @media (max-width: 1100px) {
+      .hero-grid,
+      .about-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 560px;
+      }
+
+      .services-grid,
+      .reviews-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .gallery-item.large {
+        grid-column: span 2;
+        min-height: 420px;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .nav-links {
+        display: none;
+      }
+
+      .nav {
+        flex-wrap: wrap;
+        padding: 12px 0;
+      }
+
+      .nav-right {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .hero {
+        padding-top: 24px;
+      }
+
+      .hero-copy h1 {
+        font-size: clamp(2.5rem, 10vw, 4.2rem);
+      }
+
+      .hero-stats,
+      .about-points,
+      .services-grid,
+      .reviews-grid,
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 470px;
+      }
+
+      .hero-photo-main {
+        inset: 0 0 56px 0;
+      }
+
+      .hero-card {
+        left: 16px;
+        right: 16px;
+        width: auto;
+      }
+
+      .about-media {
+        min-height: 420px;
+      }
+
+      .about-main {
+        inset: 0 46px 0 0;
+      }
+
+      .about-secondary {
+        width: 160px;
+        height: 220px;
+      }
+
+      .gallery-item.large {
+        grid-column: auto;
+        min-height: 300px;
+      }
+
+      .section {
+        padding: 74px 0;
+      }
+
+      .cta-box {
+        padding: 38px 22px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .theme-switcher {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .theme-btn {
+        flex: 1;
+      }
+
+      .nav-right {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body data-theme="light">
+  <header class="topbar">
+    <div class="container nav">
+      <a href="#" class="brand">
+        <div class="brand-mark">É</div>
+        <div class="brand-text">
+          <span>Éclat Studio</span>
+          <span>Salón premium</span>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#servicios">Servicios</a>
+        <a href="#nosotras">Salón</a>
+        <a href="#galeria">Galería</a>
+        <a href="#opiniones">Opiniones</a>
+      </nav>
+
+      <div class="nav-right">
+        <div class="theme-switcher">
+          <button class="theme-btn active" data-set-theme="light">Claro</button>
+          <button class="theme-btn" data-set-theme="dark">Oscuro</button>
+        </div>
+
+        <a href="https://wa.me/5491100000000" class="btn btn-primary">Reservar turno</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">Experiencia de belleza premium</span>
+          <h1>Belleza, estilo y cuidado en cada detalle.</h1>
+          <p>
+            Un espacio pensado para realzar tu imagen con atención personalizada,
+            resultados profesionales y una experiencia tan cuidada como tu look.
+          </p>
+
+          <div class="hero-actions">
+            <a href="https://wa.me/5491100000000" class="btn btn-primary">Reservar turno</a>
+            <a href="#servicios" class="btn btn-secondary">Ver servicios</a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="stat">
+              <strong>+8 años</strong>
+              <span>de experiencia en belleza y cuidado capilar</span>
+            </div>
+            <div class="stat">
+              <strong>+1.200</strong>
+              <span>clientas que confiaron en nuestro salón</span>
+            </div>
+            <div class="stat">
+              <strong>5.0★</strong>
+              <span>valoración promedio por atención y resultados</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-photo-main">
+            <img
+              src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=1200&q=80"
+              alt="Modelo en salón de belleza"
+            />
+          </div>
+
+          <div class="hero-card">
+            <small>Atención personalizada</small>
+            <h3>Reservá tu experiencia en minutos</h3>
+            <p>
+              Cortes, color, peinados y tratamientos con una propuesta cuidada,
+              cálida y profesional.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="servicios">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Servicios</span>
+          <h2>Todo lo que necesitás para renovar tu imagen.</h2>
+          <p>
+            Diseñamos cada servicio para que combines belleza, comodidad y un
+            resultado alineado con tu estilo.
+          </p>
+        </div>
+
+        <div class="services-grid">
+          <article class="service-card">
+            <div class="service-icon">✂</div>
+            <h3>Corte</h3>
+            <p>Asesoramiento personalizado para lograr un look prolijo, moderno y favorecedor.</p>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon">🎨</div>
+            <h3>Color</h3>
+            <p>Técnicas de coloración, iluminación y corrección con acabado natural y profesional.</p>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon">✨</div>
+            <h3>Peinados</h3>
+            <p>Opciones elegantes y versátiles para eventos, salidas especiales o tu día a día.</p>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon">🧴</div>
+            <h3>Tratamientos</h3>
+            <p>Nutrición, reparación y brillo para mantener el cabello sano, suave y cuidado.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="nosotras">
+      <div class="container about-wrap">
+        <div class="about-media">
+          <div class="about-main">
+            <img
+              src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=80"
+              alt="Interior elegante del salón"
+            />
+          </div>
+          <div class="about-secondary">
+            <img
+              src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80"
+              alt="Detalle de cuidado capilar"
+            />
+          </div>
+        </div>
+
+        <div class="about-card">
+          <span class="eyebrow">Sobre el salón</span>
+          <h2>Un espacio donde la belleza se vive con calma, estilo y atención real.</h2>
+          <p>
+            En nuestro salón trabajamos con una mirada estética cuidada, productos
+            de calidad y una atención pensada para que cada visita sea una experiencia.
+          </p>
+          <p>
+            Creemos que un buen resultado no depende solo de la técnica, sino también
+            del tiempo, el detalle y la escucha en cada servicio.
+          </p>
+
+          <div class="about-points">
+            <div class="about-point">
+              <strong>Atención personalizada</strong>
+              <span>Cada cita se adapta a tu estilo, tu pelo y lo que buscás lograr.</span>
+            </div>
+            <div class="about-point">
+              <strong>Ambiente premium</strong>
+              <span>Un salón cálido, delicado y pensado para que te sientas cómoda.</span>
+            </div>
+            <div class="about-point">
+              <strong>Productos seleccionados</strong>
+              <span>Trabajamos con líneas de calidad para cuidar el cabello en profundidad.</span>
+            </div>
+            <div class="about-point">
+              <strong>Resultados prolijos</strong>
+              <span>Buscamos que salgas viéndote bien y sintiéndote aún mejor.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="galeria">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Galería</span>
+          <h2>Trabajos, espacio y detalles que reflejan nuestra esencia.</h2>
+          <p>
+            Una selección de resultados reales y rincones del salón para que conozcas
+            el estilo de nuestra propuesta.
+          </p>
+        </div>
+
+        <div class="gallery-grid">
+          <div class="gallery-item large">
+            <img
+              src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=1200&q=80"
+              alt="Trabajo de peluquería premium"
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="https://images.unsplash.com/photo-1523263685509-57c1d050d19b?auto=format&fit=crop&w=1000&q=80"
+              alt="Detalle de peinado"
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=1000&q=80"
+              alt="Espacio del salón"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="opiniones">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Opiniones</span>
+          <h2>La confianza se construye con resultados y experiencia.</h2>
+          <p>
+            Algunas de las reseñas que mejor describen cómo se siente vivir una cita con nosotras.
+          </p>
+        </div>
+
+        <div class="reviews-grid">
+          <article class="review-card">
+            <div class="stars">★★★★★</div>
+            <p>
+              “Hermoso lugar, atención impecable y el resultado superó lo que esperaba.
+              Se nota muchísimo el cuidado en cada detalle.”
+            </p>
+            <div class="review-author">Valentina R.</div>
+          </article>
+
+          <article class="review-card">
+            <div class="stars">★★★★★</div>
+            <p>
+              “Me encantó la experiencia completa. El salón es divino, te asesoran muy bien
+              y el trabajo final queda súper prolijo.”
+            </p>
+            <div class="review-author">Camila S.</div>
+          </article>
+
+          <article class="review-card">
+            <div class="stars">★★★★★</div>
+            <p>
+              “Encontré justo el estilo que buscaba. Todo se siente premium, desde la atención
+              hasta los productos que usan.”
+            </p>
+            <div class="review-author">Martina L.</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section cta">
+      <div class="container">
+        <div class="cta-box">
+          <span class="eyebrow">Reservá tu turno</span>
+          <h2>Viví una experiencia de belleza pensada para vos.</h2>
+          <p>
+            Elegí tu momento, reservá en pocos pasos y vení a disfrutar de un servicio
+            profesional en un espacio elegante y cuidado.
+          </p>
+          <a href="https://wa.me/5491100000000" class="btn btn-primary">Agendar ahora</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span>© 2026 Éclat Studio. Todos los derechos reservados.</span>
+      <span>Instagram · WhatsApp · Dirección del salón</span>
+    </div>
+  </footer>
+
+  <script>
+    const body = document.body;
+    const themeButtons = document.querySelectorAll("[data-set-theme]");
+
+    themeButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const theme = btn.getAttribute("data-set-theme");
+        body.setAttribute("data-theme", theme);
+
+        themeButtons.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+      });
+    });
+  </script>
+</body>
+</html>
