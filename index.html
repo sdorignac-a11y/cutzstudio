@@ -447,6 +447,47 @@
       color: var(--muted);
       font-size: 0.96rem;
     }
+    .service-includes {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.service-includes strong {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.service-includes ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.service-includes li {
+  position: relative;
+  padding-left: 18px;
+  color: #d7d7d7;
+  font-size: 0.93rem;
+  line-height: 1.5;
+}
+
+.service-includes li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--accent2);
+  font-size: 1rem;
+  font-weight: 900;
+}
 
     .reserve-grid {
       display: grid;
@@ -998,18 +1039,27 @@
         <h2 class="section-title">Lo que hacemos.</h2>
 
         <div class="services-grid">
-          <article class="card service-card">
-            <div class="service-top">
-              <h3>Corte de Cabello</h3>
-              <div class="service-meta">
-                <span class="service-price">$10.000</span>
-              </div>
-            </div>
-            <p>
-              Luce tú corte o Fade perfectamente definido que resalta tu estilo con un acabado moderno y pulido.
-              Ideal para un look Clean.
-            </p>
-          </article>
+         <article class="card service-card">
+  <div class="service-top">
+    <h3>Corte de Cabello</h3>
+    <div class="service-meta">
+      <span class="service-price">$10.000</span>
+    </div>
+  </div>
+
+  <p>
+    Un corte limpio, moderno y bien definido para resaltar tu estilo con un acabado prolijo.
+  </p>
+
+  <div class="service-includes">
+    <strong>Este servicio incluye</strong>
+    <ul>
+      <li>Corte de cabello</li>
+      <li>Perfilado de cejas o diseño</li>
+      <li>Bebestible de cortesía</li>
+    </ul>
+  </div>
+</article>
 
           <article class="card service-card">
             <div class="service-top">
