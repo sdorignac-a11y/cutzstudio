@@ -4,12 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CUTZ studio | Barbería en Quilicura</title>
-  <meta name="description" content="CUTZ studio, barbería urbana en Quilicura. Cortes, barba, ondulación permanente y reservas online por AgendaPro." />
+  <meta
+    name="description"
+    content="CUTZ studio, barbería urbana en Quilicura. Cortes, barba, ondulación permanente y reservas online por AgendaPro."
+  />
   <meta name="theme-color" content="#0a0a0a" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap"
+    rel="stylesheet"
+  />
 
   <style>
     :root {
@@ -19,13 +25,10 @@
       --panel2: #1a1a1a;
       --text: #f4f4f4;
       --muted: #b7b7b7;
-      --line: rgba(255,255,255,0.08);
+      --line: rgba(255, 255, 255, 0.08);
       --accent: #2f6bff;
       --accent2: #8db2ff;
-      --shadow: 0 16px 40px rgba(0,0,0,.35);
-      --radius-xl: 28px;
-      --radius-lg: 22px;
-      --radius-md: 16px;
+      --shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
       --max: 1180px;
     }
 
@@ -41,7 +44,7 @@
       margin: 0;
       font-family: "Inter", sans-serif;
       background:
-        radial-gradient(circle at top right, rgba(47,107,255,.14), transparent 24%),
+        radial-gradient(circle at top right, rgba(47, 107, 255, 0.14), transparent 24%),
         linear-gradient(180deg, #050505 0%, #0d0d0d 40%, #070707 100%);
       color: var(--text);
       line-height: 1.5;
@@ -55,6 +58,10 @@
     img {
       max-width: 100%;
       display: block;
+    }
+
+    section[id] {
+      scroll-margin-top: 96px;
     }
 
     .container {
@@ -73,12 +80,12 @@
       padding: 8px 14px;
       border-radius: 999px;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,.03);
+      background: rgba(255, 255, 255, 0.03);
       color: var(--accent2);
-      font-size: .78rem;
+      font-size: 0.78rem;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: .08em;
+      letter-spacing: 0.08em;
     }
 
     .eyebrow::before {
@@ -87,14 +94,14 @@
       height: 8px;
       border-radius: 50%;
       background: var(--accent);
-      box-shadow: 0 0 14px rgba(47,107,255,.8);
+      box-shadow: 0 0 14px rgba(47, 107, 255, 0.8);
     }
 
     .section-title {
       margin: 18px 0 12px;
       font-size: clamp(2rem, 5vw, 4.3rem);
-      line-height: .95;
-      letter-spacing: -.04em;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
       font-weight: 900;
       text-transform: uppercase;
     }
@@ -109,9 +116,9 @@
       position: sticky;
       top: 0;
       z-index: 50;
-      background: rgba(7,7,7,.82);
+      background: rgba(7, 7, 7, 0.82);
       backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(255,255,255,.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .nav {
@@ -138,7 +145,7 @@
       background: linear-gradient(135deg, var(--accent), #8ab2ff);
       color: white;
       font-weight: 900;
-      box-shadow: 0 10px 24px rgba(47,107,255,.35);
+      box-shadow: 0 10px 24px rgba(47, 107, 255, 0.35);
       flex: 0 0 auto;
     }
 
@@ -146,14 +153,14 @@
       display: block;
       font-size: 1rem;
       font-weight: 900;
-      letter-spacing: .08em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
     }
 
     .brand-text span {
       display: block;
       color: var(--muted);
-      font-size: .82rem;
+      font-size: 0.82rem;
     }
 
     .nav-links {
@@ -162,7 +169,7 @@
       gap: 26px;
       color: #dfdfdf;
       font-weight: 600;
-      font-size: .94rem;
+      font-size: 0.94rem;
     }
 
     .nav-actions {
@@ -190,7 +197,7 @@
       padding: 14px 22px;
       border-radius: 999px;
       font-weight: 800;
-      transition: .2s ease;
+      transition: 0.2s ease;
       border: 1px solid transparent;
       white-space: nowrap;
     }
@@ -202,11 +209,11 @@
     .btn-primary {
       background: linear-gradient(135deg, var(--accent), #7ca9ff);
       color: #fff;
-      box-shadow: 0 14px 30px rgba(47,107,255,.28);
+      box-shadow: 0 14px 30px rgba(47, 107, 255, 0.28);
     }
 
     .btn-secondary {
-      background: rgba(255,255,255,.03);
+      background: rgba(255, 255, 255, 0.03);
       border-color: var(--line);
       color: white;
     }
@@ -217,7 +224,7 @@
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.05fr .95fr;
+      grid-template-columns: 1.05fr 0.95fr;
       gap: 26px;
       align-items: stretch;
     }
@@ -229,8 +236,8 @@
     .hero-copy h1 {
       margin: 18px 0 16px;
       font-size: clamp(2.8rem, 7vw, 6rem);
-      line-height: .9;
-      letter-spacing: -.05em;
+      line-height: 0.9;
+      letter-spacing: -0.05em;
       font-weight: 900;
       text-transform: uppercase;
       max-width: 760px;
@@ -265,9 +272,9 @@
       padding: 10px 14px;
       border-radius: 999px;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,.03);
+      background: rgba(255, 255, 255, 0.03);
       color: #e3e3e3;
-      font-size: .92rem;
+      font-size: 0.92rem;
       font-weight: 700;
     }
 
@@ -277,9 +284,10 @@
       border-radius: 30px;
       overflow: hidden;
       background:
-        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)),
-        url('https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&w=1200&q=80') center/cover;
-      border: 1px solid rgba(255,255,255,.06);
+        linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)),
+        url("https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&w=1200&q=80")
+          center/cover;
+      border: 1px solid rgba(255, 255, 255, 0.06);
       box-shadow: var(--shadow);
     }
 
@@ -287,7 +295,12 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,.12) 0%, rgba(0,0,0,.56) 58%, rgba(0,0,0,.92) 100%);
+      background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.12) 0%,
+        rgba(0, 0, 0, 0.56) 58%,
+        rgba(0, 0, 0, 0.92) 100%
+      );
     }
 
     .hero-badge,
@@ -295,8 +308,8 @@
       position: absolute;
       z-index: 1;
       border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.08);
-      background: rgba(10,10,10,.78);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(10, 10, 10, 0.78);
       backdrop-filter: blur(10px);
     }
 
@@ -315,7 +328,7 @@
     }
 
     .hero-badge span {
-      font-size: .84rem;
+      font-size: 0.84rem;
       color: #d9d9d9;
     }
 
@@ -330,15 +343,15 @@
       display: block;
       margin-bottom: 6px;
       text-transform: uppercase;
-      letter-spacing: .06em;
+      letter-spacing: 0.06em;
       color: var(--accent2);
-      font-size: .82rem;
+      font-size: 0.82rem;
     }
 
     .hero-note p {
       margin: 0;
       color: #dcdcdc;
-      font-size: .95rem;
+      font-size: 0.95rem;
     }
 
     .stats {
@@ -349,7 +362,7 @@
     }
 
     .card {
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.018));
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.018));
       border: 1px solid var(--line);
       box-shadow: var(--shadow);
       border-radius: 24px;
@@ -370,25 +383,28 @@
 
     .stat span {
       color: var(--muted);
-      font-size: .94rem;
+      font-size: 0.94rem;
       font-weight: 600;
     }
 
     .services-grid,
-    .gallery-grid,
-    .contact-grid {
+    .contact-grid,
+    .reviews-grid {
       display: grid;
       gap: 18px;
       margin-top: 30px;
     }
 
-    .services-grid {
+    .services-grid,
+    .reviews-grid,
+    .contact-grid {
       grid-template-columns: repeat(2, 1fr);
     }
 
-    .service-card {
+    .service-card,
+    .review-card {
       padding: 26px;
-      min-height: 260px;
+      min-height: 240px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -403,8 +419,7 @@
     .service-card h3 {
       margin: 0;
       font-size: 1.2rem;
-      text-transform: none;
-      letter-spacing: -.01em;
+      letter-spacing: -0.01em;
     }
 
     .service-meta {
@@ -416,7 +431,7 @@
 
     .service-time {
       color: #cfcfcf;
-      font-size: .95rem;
+      font-size: 0.95rem;
       font-weight: 600;
     }
 
@@ -430,7 +445,7 @@
     .service-card p {
       margin: 20px 0 0;
       color: var(--muted);
-      font-size: .96rem;
+      font-size: 0.96rem;
     }
 
     .reserve-grid {
@@ -442,7 +457,6 @@
 
     .reserve-info,
     .reserve-preview,
-    .gallery-card,
     .contact-card {
       padding: 28px;
     }
@@ -451,7 +465,7 @@
       margin: 0 0 10px;
       font-size: 1.5rem;
       text-transform: uppercase;
-      letter-spacing: -.02em;
+      letter-spacing: -0.02em;
     }
 
     .reserve-info p {
@@ -468,8 +482,8 @@
     .reserve-list div {
       padding: 14px 16px;
       border-radius: 16px;
-      background: rgba(255,255,255,.03);
-      border: 1px solid rgba(255,255,255,.06);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
       color: #e2e2e2;
       font-weight: 600;
     }
@@ -486,7 +500,7 @@
       align-items: center;
       gap: 12px;
       padding-bottom: 12px;
-      border-bottom: 1px solid rgba(255,255,255,.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .chat-dot {
@@ -494,7 +508,7 @@
       height: 12px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--accent), #9abaff);
-      box-shadow: 0 0 16px rgba(47,107,255,.8);
+      box-shadow: 0 0 16px rgba(47, 107, 255, 0.8);
     }
 
     .chat-top strong {
@@ -503,7 +517,7 @@
     }
 
     .chat-top span {
-      font-size: .9rem;
+      font-size: 0.9rem;
       color: var(--muted);
     }
 
@@ -511,48 +525,14 @@
       max-width: 100%;
       padding: 14px 16px;
       border-radius: 18px;
-      font-size: .95rem;
+      font-size: 0.95rem;
       line-height: 1.5;
     }
 
     .bubble.bot {
-      background: rgba(47,107,255,.12);
-      border: 1px solid rgba(47,107,255,.22);
+      background: rgba(47, 107, 255, 0.12);
+      border: 1px solid rgba(47, 107, 255, 0.22);
       color: #f1f1f1;
-    }
-
-    .gallery-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    .gallery-card {
-      min-height: 230px;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: end;
-      background-size: cover;
-      background-position: center;
-    }
-
-    .gallery-card::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,.05) 0%, rgba(0,0,0,.68) 100%);
-    }
-
-    .gallery-card span {
-      position: relative;
-      z-index: 1;
-      font-size: 1rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: .02em;
-    }
-
-    .contact-grid {
-      grid-template-columns: 1fr 1fr;
     }
 
     .contact-card h3 {
@@ -561,43 +541,187 @@
       text-transform: uppercase;
     }
 
-    .contact-card p,
-    .contact-card li {
-      color: var(--muted);
-    }
-
-    .contact-card ul {
-      margin: 12px 0 0;
-      padding-left: 18px;
-    }
-
-    .hours-list {
+    .info-main-list,
+    .hours-main-list {
       display: grid;
-      gap: 10px;
-      margin-top: 14px;
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .info-main-item,
+    .info-extra-item,
+    .hours-item {
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .info-main-item strong,
+    .info-extra-item strong,
+    .hours-item strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #ffffff;
+      font-size: 0.95rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .info-main-item span,
+    .info-extra-item span,
+    .hours-item span {
+      color: var(--muted);
+      font-size: 0.96rem;
+      line-height: 1.55;
+    }
+
+    .info-main-item a {
+      color: var(--accent2);
+      font-weight: 700;
+    }
+
+    .contact-accordion {
+      margin-top: 16px;
+    }
+
+    .contact-accordion details {
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+    }
+
+    .contact-accordion summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      font-weight: 800;
+      font-size: 0.98rem;
+      color: #fff;
+      user-select: none;
+    }
+
+    .contact-accordion summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .contact-accordion summary::after {
+      content: "+";
+      font-size: 1.2rem;
+      color: var(--accent2);
+    }
+
+    .contact-accordion details[open] summary::after {
+      content: "−";
+    }
+
+    .accordion-content {
+      padding: 0 18px 18px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .info-extra-item {
+      position: relative;
+      padding-left: 44px;
+    }
+
+    .info-extra-item::before {
+      content: "✓";
+      position: absolute;
+      left: 16px;
+      top: 16px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(98, 143, 255, 0.16);
+      color: var(--accent2);
+      font-size: 0.78rem;
+      font-weight: 900;
     }
 
     .hours-item {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       gap: 14px;
-      padding: 12px 14px;
-      border-radius: 14px;
-      background: rgba(255,255,255,.03);
-      border: 1px solid rgba(255,255,255,.06);
-      color: #e8e8e8;
-      font-weight: 600;
     }
 
     .hours-item span:last-child {
       color: var(--accent2);
+      font-weight: 700;
       text-align: right;
+    }
+
+    .review-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .review-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      flex: 0 0 56px;
+      display: grid;
+      place-items: center;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .review-avatar.purple { background: linear-gradient(135deg, #a855f7, #c084fc); }
+    .review-avatar.gray   { background: linear-gradient(135deg, #6b7280, #9ca3af); }
+    .review-avatar.green  { background: linear-gradient(135deg, #65a30d, #84cc16); }
+    .review-avatar.orange { background: linear-gradient(135deg, #ea580c, #fb923c); }
+
+    .review-author h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      line-height: 1.1;
+    }
+
+    .review-author span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-top: 4px;
+    }
+
+    .review-stars {
+      color: #facc15;
+      letter-spacing: 2px;
+      font-size: 1.05rem;
+      margin-bottom: 12px;
+    }
+
+    .review-card p {
+      margin: 0;
+      color: #e7e7e7;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .reviews-cta {
+      margin-top: 26px;
+      display: flex;
+      justify-content: center;
     }
 
     .footer {
       padding: 30px 0 40px;
-      border-top: 1px solid rgba(255,255,255,.06);
-      background: rgba(0,0,0,.16);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(0, 0, 0, 0.16);
     }
 
     .footer-inner {
@@ -606,7 +730,63 @@
       gap: 20px;
       flex-wrap: wrap;
       color: var(--muted);
-      font-size: .94rem;
+      font-size: 0.94rem;
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #25d366;
+      color: #fff;
+      box-shadow:
+        0 16px 34px rgba(37, 211, 102, 0.34),
+        0 0 0 1px rgba(255, 255, 255, 0.08);
+      z-index: 9999;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .whatsapp-float:hover {
+      transform: translateY(-3px) scale(1.04);
+      box-shadow:
+        0 20px 40px rgba(37, 211, 102, 0.44),
+        0 0 0 1px rgba(255, 255, 255, 0.12);
+    }
+
+    .whatsapp-float svg {
+      width: 32px;
+      height: 32px;
+      display: block;
+      fill: currentColor;
+    }
+
+    .whatsapp-tooltip {
+      position: absolute;
+      right: 78px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(10, 10, 10, 0.95);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .whatsapp-float:hover .whatsapp-tooltip {
+      opacity: 1;
+      transform: translateY(-50%) translateX(-4px);
     }
 
     @media (max-width: 1040px) {
@@ -617,8 +797,8 @@
       }
 
       .services-grid,
-      .gallery-grid,
-      .stats {
+      .stats,
+      .reviews-grid {
         grid-template-columns: repeat(2, 1fr);
       }
 
@@ -651,7 +831,7 @@
         padding: 20px;
         border-radius: 20px;
         border: 1px solid var(--line);
-        background: rgba(12,12,12,.98);
+        background: rgba(12, 12, 12, 0.98);
         box-shadow: var(--shadow);
       }
     }
@@ -666,8 +846,8 @@
       }
 
       .services-grid,
-      .gallery-grid,
-      .stats {
+      .stats,
+      .reviews-grid {
         grid-template-columns: 1fr;
       }
 
@@ -678,437 +858,33 @@
       .service-card,
       .reserve-info,
       .reserve-preview,
-      .gallery-card,
       .contact-card,
+      .review-card,
       .stat {
         padding: 22px;
-      }
-
-      .bubble {
-        max-width: 100%;
       }
 
       .hours-item {
         flex-direction: column;
         align-items: flex-start;
       }
+
+      .whatsapp-float {
+        right: 16px;
+        bottom: 16px;
+        width: 58px;
+        height: 58px;
+      }
+
+      .whatsapp-float svg {
+        width: 28px;
+        height: 28px;
+      }
+
+      .whatsapp-tooltip {
+        display: none;
+      }
     }
-  .whatsapp-float {
-  position: fixed;
-  right: 22px;
-  bottom: 28px;
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #25D366;
-  color: #fff;
-  box-shadow:
-    0 14px 34px rgba(37, 211, 102, 0.38),
-    0 0 0 1px rgba(255,255,255,0.08);
-  z-index: 9999;
-  transition: transform .2s ease, box-shadow .2s ease;
-}
-
-.whatsapp-float:hover {
-  transform: translateY(-3px) scale(1.04);
-  box-shadow:
-    0 18px 38px rgba(37, 211, 102, 0.46),
-    0 0 0 1px rgba(255,255,255,0.12);
-}
-
-.whatsapp-float svg {
-  width: 34px;
-  height: 34px;
-  display: block;
-  fill: currentColor;
-}
-
-.whatsapp-tooltip {
-  position: absolute;
-  right: 78px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(10,10,10,.95);
-  color: #fff;
-  border: 1px solid rgba(255,255,255,.08);
-  padding: 10px 14px;
-  border-radius: 999px;
-  font-size: .9rem;
-  font-weight: 700;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .2s ease, transform .2s ease;
-}
-
-.whatsapp-float:hover .whatsapp-tooltip {
-  opacity: 1;
-  transform: translateY(-50%) translateX(-4px);
-}
-
-@media (max-width: 640px) {
-  .whatsapp-float {
-    right: 16px;
-    bottom: 20px;
-    width: 58px;
-    height: 58px;
-  }
-
-  .whatsapp-float svg {
-    width: 30px;
-    height: 30px;
-  }
-
-  .whatsapp-tooltip {
-    display: none;
-  }
-}
-.reviews-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 18px;
-  margin-top: 30px;
-}
-
-.review-card {
-  padding: 24px;
-  min-height: 220px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.review-top {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 16px;
-}
-
-.review-avatar {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  flex: 0 0 56px;
-  display: grid;
-  place-items: center;
-  font-size: 1.35rem;
-  font-weight: 800;
-  color: #fff;
-}
-
-.review-avatar.purple { background: linear-gradient(135deg, #a855f7, #c084fc); }
-.review-avatar.gray   { background: linear-gradient(135deg, #6b7280, #9ca3af); }
-.review-avatar.green  { background: linear-gradient(135deg, #65a30d, #84cc16); }
-.review-avatar.orange { background: linear-gradient(135deg, #ea580c, #fb923c); }
-
-.review-author h3 {
-  margin: 0;
-  font-size: 1.1rem;
-  line-height: 1.1;
-}
-
-.review-author span {
-  display: block;
-  color: var(--muted);
-  font-size: .92rem;
-  margin-top: 4px;
-}
-
-.review-stars {
-  color: #facc15;
-  letter-spacing: 2px;
-  font-size: 1.05rem;
-  margin-bottom: 12px;
-}
-
-.review-card p {
-  margin: 0;
-  color: #e7e7e7;
-  font-size: 1rem;
-  line-height: 1.6;
-}
-
-.reviews-cta {
-  margin-top: 26px;
-  display: flex;
-  justify-content: center;
-}
-
-@media (max-width: 820px) {
-  .reviews-grid {
-    grid-template-columns: 1fr;
-  }
-}
-    .info-main-list {
-  display: grid;
-  gap: 14px;
-  margin-top: 10px;
-}
-
-.info-main-item,
-.info-extra-item {
-  padding: 14px 16px;
-  border-radius: 16px;
-  background: rgba(255,255,255,.03);
-  border: 1px solid rgba(255,255,255,.06);
-}
-
-.info-main-item strong,
-.info-extra-item strong {
-  display: block;
-  margin-bottom: 6px;
-  color: #ffffff;
-  font-size: .95rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: .02em;
-}
-
-.info-main-item span,
-.info-extra-item span {
-  color: var(--muted);
-  font-size: .96rem;
-  line-height: 1.55;
-}
-
-.info-main-item a {
-  color: var(--accent2);
-  font-weight: 700;
-}
-
-.info-extra-grid {
-  display: grid;
-  gap: 12px;
-  margin-top: 18px;
-}
-
-.info-extra-item {
-  position: relative;
-  padding-left: 44px;
-}
-
-.info-extra-item::before {
-  content: "✓";
-  position: absolute;
-  left: 16px;
-  top: 16px;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: rgba(98, 143, 255, .16);
-  color: var(--accent2);
-  font-size: .78rem;
-  font-weight: 900;
-}
-    .info-main-list,
-.hours-main-list {
-  display: grid;
-  gap: 14px;
-  margin-top: 12px;
-}
-
-.info-main-item,
-.info-extra-item,
-.hours-item {
-  padding: 14px 16px;
-  border-radius: 16px;
-  background: rgba(255,255,255,.03);
-  border: 1px solid rgba(255,255,255,.06);
-}
-
-.info-main-item strong,
-.info-extra-item strong,
-.hours-item strong {
-  display: block;
-  margin-bottom: 6px;
-  color: #ffffff;
-  font-size: .95rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: .02em;
-}
-
-.info-main-item span,
-.info-extra-item span,
-.hours-item span {
-  color: var(--muted);
-  font-size: .96rem;
-  line-height: 1.55;
-}
-
-.info-main-item a {
-  color: var(--accent2);
-  font-weight: 700;
-}
-
-.contact-accordion {
-  margin-top: 16px;
-}
-
-.contact-accordion details {
-  border-radius: 16px;
-  background: rgba(255,255,255,.03);
-  border: 1px solid rgba(255,255,255,.06);
-  overflow: hidden;
-}
-
-.contact-accordion details + details {
-  margin-top: 12px;
-}
-
-.contact-accordion summary {
-  list-style: none;
-  cursor: pointer;
-  padding: 16px 18px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  font-weight: 800;
-  font-size: .98rem;
-  color: #fff;
-  user-select: none;
-}
-
-.contact-accordion summary::-webkit-details-marker {
-  display: none;
-}
-
-.contact-accordion summary::after {
-  content: "+";
-  font-size: 1.2rem;
-  color: var(--accent2);
-  transition: transform .2s ease;
-}
-
-.contact-accordion details[open] summary::after {
-  content: "−";
-}
-
-.accordion-content {
-  padding: 0 18px 18px 18px;
-  display: grid;
-  gap: 12px;
-}
-
-.info-extra-item {
-  position: relative;
-  padding-left: 44px;
-}
-
-.info-extra-item::before {
-  content: "✓";
-  position: absolute;
-  left: 16px;
-  top: 16px;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: rgba(98, 143, 255, .16);
-  color: var(--accent2);
-  font-size: .78rem;
-  font-weight: 900;
-}
-
-.hours-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 14px;
-}
-
-.hours-item span:last-child {
-  color: var(--accent2);
-  font-weight: 700;
-  text-align: right;
-}
-
-.whatsapp-float {
-  position: fixed;
-  right: 22px;
-  bottom: 22px;
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #25D366;
-  color: #fff;
-  box-shadow:
-    0 16px 34px rgba(37, 211, 102, 0.34),
-    0 0 0 1px rgba(255,255,255,0.08);
-  z-index: 9999;
-  transition: transform .2s ease, box-shadow .2s ease;
-}
-
-.whatsapp-float:hover {
-  transform: translateY(-3px) scale(1.04);
-  box-shadow:
-    0 20px 40px rgba(37, 211, 102, 0.44),
-    0 0 0 1px rgba(255,255,255,0.12);
-}
-
-.whatsapp-float svg {
-  width: 32px;
-  height: 32px;
-  display: block;
-  fill: currentColor;
-}
-
-.whatsapp-tooltip {
-  position: absolute;
-  right: 78px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(10,10,10,.95);
-  color: #fff;
-  border: 1px solid rgba(255,255,255,.08);
-  padding: 10px 14px;
-  border-radius: 999px;
-  font-size: .9rem;
-  font-weight: 700;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .2s ease, transform .2s ease;
-}
-
-.whatsapp-float:hover .whatsapp-tooltip {
-  opacity: 1;
-  transform: translateY(-50%) translateX(-4px);
-}
-
-@media (max-width: 640px) {
-  .whatsapp-float {
-    right: 16px;
-    bottom: 16px;
-    width: 58px;
-    height: 58px;
-  }
-
-  .whatsapp-float svg {
-    width: 28px;
-    height: 28px;
-  }
-
-  .whatsapp-tooltip {
-    display: none;
-  }
-
-  .hours-item {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
   </style>
 </head>
 <body>
@@ -1126,14 +902,21 @@
         <a href="#nosotros">Nosotros</a>
         <a href="#servicios">Servicios</a>
         <a href="#reservas">Reservas</a>
-        <a href="#galeria">Galería</a>
+        <a href="#opiniones">Opiniones</a>
         <a href="#contacto">Contacto</a>
       </nav>
 
       <div class="nav-actions">
         <a class="btn btn-secondary" href="tel:+56963590635">Llamar</a>
-        <a class="btn btn-primary" href="https://cutzstudio.site.agendapro.com/cl/sucursal/361798" target="_blank" rel="noopener noreferrer">Reservar</a>
-        <button class="menu-btn" id="menuBtn">☰</button>
+        <a
+          class="btn btn-primary"
+          href="https://cutzstudio.site.agendapro.com/cl/sucursal/361798"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Reservar
+        </a>
+        <button class="menu-btn" id="menuBtn" aria-label="Abrir menú">☰</button>
       </div>
     </div>
   </header>
@@ -1145,11 +928,19 @@
           <div class="eyebrow">Barbería en Quilicura</div>
           <h1>Tu estilo <span>arranca</span> acá.</h1>
           <p>
-            Cortes, barba, perfilado y ondulación permanente en un espacio con identidad propia. CUTZ studio combina técnica, estilo y una vibra urbana bien marcada.
+            Cortes, barba, perfilado y ondulación permanente en un espacio con identidad propia.
+            CUTZ studio combina técnica, estilo y una vibra urbana bien marcada.
           </p>
 
           <div class="hero-actions">
-            <a class="btn btn-primary" href="https://cutzstudio.site.agendapro.com/cl/sucursal/361798" target="_blank" rel="noopener noreferrer">Reservar turno</a>
+            <a
+              class="btn btn-primary"
+              href="https://cutzstudio.site.agendapro.com/cl/sucursal/361798"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Reservar turno
+            </a>
             <a class="btn btn-secondary" href="tel:+56963590635">Llamar ahora</a>
           </div>
 
@@ -1176,7 +967,7 @@
           </div>
         </div>
 
-        <aside class="hero-card">
+        <aside class="hero-card" aria-hidden="true">
           <div class="hero-badge">
             <strong>Agenda online</strong>
             <span>Rápido y simple</span>
@@ -1195,7 +986,8 @@
         <div class="eyebrow">Nosotros</div>
         <h2 class="section-title">Barrio, estilo y actitud.</h2>
         <p class="section-text">
-          CUTZ studio es un espacio con identidad urbana, cercano y directo. Un lugar donde el corte, la presencia y el ambiente van de la mano para ofrecer una experiencia distinta.
+          CUTZ studio es un espacio con identidad urbana, cercano y directo. Un lugar donde el corte,
+          la presencia y el ambiente van de la mano para ofrecer una experiencia distinta.
         </p>
       </div>
     </section>
@@ -1214,7 +1006,8 @@
               </div>
             </div>
             <p>
-              Luce tú corte o Fade perfectamente definido que resalta tu estilo con un acabado moderno y pulido. Ideal para un look Clean.
+              Luce tú corte o Fade perfectamente definido que resalta tu estilo con un acabado moderno y pulido.
+              Ideal para un look Clean.
             </p>
           </article>
 
@@ -1226,7 +1019,8 @@
               </div>
             </div>
             <p>
-              Combina tú Fade con una barba bien perfilada, creando un look moderno y masculino. Resaltando tus rasgos faciales y aportando a tú estilo personal.
+              Combina tú Fade con una barba bien perfilada, creando un look moderno y masculino.
+              Resaltando tus rasgos faciales y aportando a tú estilo personal.
             </p>
           </article>
 
@@ -1239,7 +1033,8 @@
               </div>
             </div>
             <p>
-              Servicio ideal para lograr una textura marcada y un estilo con más movimiento, manteniendo un acabado moderno y bien trabajado.
+              Servicio ideal para lograr una textura marcada y un estilo con más movimiento,
+              manteniendo un acabado moderno y bien trabajado.
             </p>
           </article>
 
@@ -1271,7 +1066,8 @@
           <div class="card reserve-info">
             <h3>Simple y directo.</h3>
             <p>
-              El proceso está pensado para que el cliente reserve su turno en pocos pasos desde el celular o la computadora.
+              El proceso está pensado para que el cliente reserve su turno en pocos pasos
+              desde el celular o la computadora.
             </p>
 
             <div class="reserve-list">
@@ -1281,7 +1077,14 @@
             </div>
 
             <div class="hero-actions">
-              <a class="btn btn-primary" href="https://cutzstudio.site.agendapro.com/cl/sucursal/361798" target="_blank" rel="noopener noreferrer">Reservar ahora</a>
+              <a
+                class="btn btn-primary"
+                href="https://cutzstudio.site.agendapro.com/cl/sucursal/361798"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Reservar ahora
+              </a>
               <a class="btn btn-secondary" href="#contacto">Ver contacto</a>
             </div>
           </div>
@@ -1295,215 +1098,231 @@
               </div>
             </div>
 
-            <div class="bubble bot">Elegí tu servicio, seleccioná el horario disponible y confirmá tu turno online desde AgendaPro.</div>
-            <div class="bubble bot">Disponible para Corte de Cabello, Corte con Barba, Ondulación Permanente y Perfilado de Barba.</div>
-            <div class="bubble bot">También podés contactarte por teléfono para resolver dudas sobre horarios o servicios.</div>
+            <div class="bubble bot">
+              Elegí tu servicio, seleccioná el horario disponible y confirmá tu turno online desde AgendaPro.
+            </div>
+            <div class="bubble bot">
+              Disponible para Corte de Cabello, Corte con Barba, Ondulación Permanente y Perfilado de Barba.
+            </div>
+            <div class="bubble bot">
+              También podés contactarte por teléfono para resolver dudas sobre horarios o servicios.
+            </div>
           </div>
         </div>
       </div>
     </section>
 
- <section class="section" id="galeria">
-  <div class="container">
-    <div class="eyebrow">Opiniones</div>
-    <h2 class="section-title">Lo que dicen los clientes.</h2>
-    <p class="section-text">
-      Experiencias reales de personas que ya pasaron por CUTZ studio y recomiendan el lugar por el ambiente, la atención y la calidad de cada servicio.
-    </p>
+    <section class="section" id="opiniones">
+      <div class="container">
+        <div class="eyebrow">Opiniones</div>
+        <h2 class="section-title">Lo que dicen los clientes.</h2>
+        <p class="section-text">
+          Experiencias reales de personas que ya pasaron por CUTZ studio y recomiendan el lugar
+          por el ambiente, la atención y la calidad de cada servicio.
+        </p>
 
-    <div class="reviews-grid">
-      <article class="card review-card">
-        <div>
-          <div class="review-top">
-            <div class="review-avatar purple">O</div>
-            <div class="review-author">
-              <h3>Oscar Andres Saldias Herrera</h3>
-              <span>Hace un mes</span>
+        <div class="reviews-grid">
+          <article class="card review-card">
+            <div>
+              <div class="review-top">
+                <div class="review-avatar purple">O</div>
+                <div class="review-author">
+                  <h3>Oscar Andres Saldias Herrera</h3>
+                  <span>Hace un mes</span>
+                </div>
+              </div>
+
+              <div class="review-stars">★★★★★</div>
+
+              <p>
+                “La mejor Barbería de Quilicura!!! sin ruidos, sin gente molestando,
+                un ambiente espectacular... un 7 el local, totalmente recomendado!!!”
+              </p>
             </div>
-          </div>
+          </article>
 
-          <div class="review-stars">★★★★★</div>
+          <article class="card review-card">
+            <div>
+              <div class="review-top">
+                <div class="review-avatar gray">I</div>
+                <div class="review-author">
+                  <h3>Ivan Ferreyra</h3>
+                  <span>Hace 7 meses</span>
+                </div>
+              </div>
 
-          <p>
-            “La mejor Barbería de Quilicura!!! sin ruidos, sin gente molestando, un ambiente espectacular... un 7 el local, totalmente recomendado!!!”
-          </p>
-        </div>
-      </article>
+              <div class="review-stars">★★★★★</div>
 
-      <article class="card review-card">
-        <div>
-          <div class="review-top">
-            <div class="review-avatar gray">I</div>
-            <div class="review-author">
-              <h3>Ivan Ferreyra</h3>
-              <span>Hace 7 meses</span>
+              <p>
+                “Hace mas de 6 años que vengo al mismo lugar, tanto por el excelente servicio
+                como profesional que es RAMA!! 100% recomendado 🙌🏽🙌🏽🙌🏽”
+              </p>
             </div>
-          </div>
+          </article>
 
-          <div class="review-stars">★★★★★</div>
+          <article class="card review-card">
+            <div>
+              <div class="review-top">
+                <div class="review-avatar green">D</div>
+                <div class="review-author">
+                  <h3>Darian Morales</h3>
+                  <span>Hace 7 meses</span>
+                </div>
+              </div>
 
-          <p>
-            “Hace mas de 6 años que vengo al mismo lugar, tanto por el excelente servicio como profesional que es RAMA!! 100% recomendado 🙌🏽🙌🏽🙌🏽”
-          </p>
-        </div>
-      </article>
+              <div class="review-stars">★★★★★</div>
 
-      <article class="card review-card">
-        <div>
-          <div class="review-top">
-            <div class="review-avatar green">D</div>
-            <div class="review-author">
-              <h3>Darian Morales</h3>
-              <span>Hace 7 meses</span>
+              <p>
+                “Excelente atención, super recomendable, calidad en cada corte que me hago 🔥”
+              </p>
             </div>
-          </div>
+          </article>
 
-          <div class="review-stars">★★★★★</div>
+          <article class="card review-card">
+            <div>
+              <div class="review-top">
+                <div class="review-avatar orange">A</div>
+                <div class="review-author">
+                  <h3>Agustin Dapotte</h3>
+                  <span>Hace 7 meses</span>
+                </div>
+              </div>
 
-          <p>
-            “Excelente atención, super recomendable, calidad en cada corte que me hago 🔥”
-          </p>
-        </div>
-      </article>
+              <div class="review-stars">★★★★★</div>
 
-      <article class="card review-card">
-        <div>
-          <div class="review-top">
-            <div class="review-avatar orange">A</div>
-            <div class="review-author">
-              <h3>Agustin Dapotte</h3>
-              <span>Hace 7 meses</span>
+              <p>
+                “Re bien!!!! Buen corte, buena onda, buenos precios”
+              </p>
             </div>
-          </div>
-
-          <div class="review-stars">★★★★★</div>
-
-          <p>
-            “Re bien!!!! Buen corte, buena onda, buenos precios”
-          </p>
+          </article>
         </div>
-      </article>
-    </div>
 
-    <div class="reviews-cta">
-      <a
-        class="btn btn-primary"
-        href="https://www.google.com/maps/place/CUTZ+studio/@-34.4407492,-58.9126319,825m/data=!3m1!1e3!4m8!3m7!1s0x95bc9d5301f00a4d:0xb600bee6e2cd30ae!8m2!3d-34.4407492!4d-58.9126319!9m1!1b1!16s%2Fg%2F11fkrsrsdf!5m1!1e1?entry=ttu&g_ep=EgoyMDI2MDMwNS4wIKXMDSoASAFQAw%3D%3D"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Ver opiniones en Google Maps
-      </a>
-    </div>
-  </div>
-</section>
+        <div class="reviews-cta">
+          <a
+            class="btn btn-primary"
+            href="https://www.google.com/maps/place/CUTZ+studio/@-34.4407447,-58.9152068,825m/data=!3m2!1e3!4b1!4m6!3m5!1s0x95bc9d5301f00a4d:0xb600bee6e2cd30ae!8m2!3d-34.4407492!4d-58.9126319!16s%2Fg%2F11fkrsrsdf!5m1!1e1?entry=ttu&g_ep=EgoyMDI2MDMwNS4wIKXMDSoASAFQAw%3D%3D"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Ver opiniones en Google Maps
+          </a>
+        </div>
+      </div>
+    </section>
 
     <section class="section" id="contacto">
       <div class="container">
         <div class="eyebrow">Contacto</div>
         <h2 class="section-title">Pasá por CUTZ studio.</h2>
 
-<div class="contact-grid">
-  <div class="card contact-card">
-    <h3>Info</h3>
+        <div class="contact-grid">
+          <div class="card contact-card">
+            <h3>Info</h3>
 
-    <div class="info-main-list">
-      <div class="info-main-item">
-        <strong>Ubicación</strong>
-        <span>Av Manuel Antonio Matta 1091, Quilicura, Región Metropolitana, Chile.</span>
-      </div>
+            <div class="info-main-list">
+              <div class="info-main-item">
+                <strong>Ubicación</strong>
+                <span>Av Manuel Antonio Matta 1091, Quilicura, Región Metropolitana, Chile.</span>
+              </div>
 
-      <div class="info-main-item">
-        <strong>Teléfono</strong>
-        <span><a href="tel:+56963590635">+56 9 6359 0635</a></span>
-      </div>
-    </div>
+              <div class="info-main-item">
+                <strong>Teléfono</strong>
+                <span><a href="tel:+56963590635">+56 9 6359 0635</a></span>
+              </div>
+            </div>
 
-    <div class="contact-accordion">
-      <details>
-        <summary>Ver más información</summary>
-        <div class="accordion-content">
-          <div class="info-extra-item">
-            <strong>Accesibilidad</strong>
-            <span>Entrada accesible para personas en silla de ruedas</span>
+            <div class="contact-accordion">
+              <details>
+                <summary>Ver más información</summary>
+                <div class="accordion-content">
+                  <div class="info-extra-item">
+                    <strong>Accesibilidad</strong>
+                    <span>Entrada accesible para personas en silla de ruedas</span>
+                  </div>
+
+                  <div class="info-extra-item">
+                    <strong>Servicios</strong>
+                    <span>Sanitario</span>
+                  </div>
+
+                  <div class="info-extra-item">
+                    <strong>Planificación</strong>
+                    <span>Se recomienda concertar cita</span>
+                  </div>
+
+                  <div class="info-extra-item">
+                    <strong>Pagos</strong>
+                    <span>Tarjetas de débito</span>
+                  </div>
+
+                  <div class="info-extra-item">
+                    <strong>Menores</strong>
+                    <span>Ideal para ir con niños</span>
+                  </div>
+                </div>
+              </details>
+            </div>
+
+            <div class="hero-actions" style="margin-top: 22px;">
+              <a
+                class="btn btn-primary"
+                href="https://cutzstudio.site.agendapro.com/cl/sucursal/361798"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Reservar ahora
+              </a>
+            </div>
           </div>
 
-          <div class="info-extra-item">
-            <strong>Servicios</strong>
-            <span>Sanitario</span>
-          </div>
+          <div class="card contact-card">
+            <h3>Horarios de atención</h3>
 
-          <div class="info-extra-item">
-            <strong>Planificación</strong>
-            <span>Se recomienda concertar cita</span>
-          </div>
+            <div class="hours-main-list">
+              <div class="hours-item">
+                <strong>Lunes</strong>
+                <span>10:00 - 21:00</span>
+              </div>
 
-          <div class="info-extra-item">
-            <strong>Pagos</strong>
-            <span>Tarjetas de débito</span>
-          </div>
+              <div class="hours-item">
+                <strong>Martes</strong>
+                <span>10:00 - 21:00</span>
+              </div>
+            </div>
 
-          <div class="info-extra-item">
-            <strong>Menores</strong>
-            <span>Ideal para ir con niños</span>
+            <div class="contact-accordion">
+              <details>
+                <summary>Ver resto de horarios</summary>
+                <div class="accordion-content">
+                  <div class="hours-item">
+                    <strong>Miércoles</strong>
+                    <span>10:00 - 21:00</span>
+                  </div>
+
+                  <div class="hours-item">
+                    <strong>Jueves</strong>
+                    <span>10:00 - 21:00</span>
+                  </div>
+
+                  <div class="hours-item">
+                    <strong>Viernes</strong>
+                    <span>10:00 - 21:00</span>
+                  </div>
+
+                  <div class="hours-item">
+                    <strong>Sábado</strong>
+                    <span>10:00 - 18:00</span>
+                  </div>
+
+                  <div class="hours-item">
+                    <strong>Domingo</strong>
+                    <span>11:00 - 16:00</span>
+                  </div>
+                </div>
+              </details>
+            </div>
           </div>
         </div>
-      </details>
-    </div>
-
-    <div class="hero-actions" style="margin-top:22px;">
-      <a class="btn btn-primary" href="https://cutzstudio.site.agendapro.com/cl/sucursal/361798" target="_blank" rel="noopener noreferrer">Reservar ahora</a>
-    </div>
-  </div>
-
-  <div class="card contact-card">
-    <h3>Horarios de atención</h3>
-
-    <div class="hours-main-list">
-      <div class="hours-item">
-        <strong>Lunes</strong>
-        <span>10:00 - 21:00</span>
-      </div>
-
-      <div class="hours-item">
-        <strong>Martes</strong>
-        <span>10:00 - 21:00</span>
-      </div>
-    </div>
-
-    <div class="contact-accordion">
-      <details>
-        <summary>Ver resto de horarios</summary>
-        <div class="accordion-content">
-          <div class="hours-item">
-            <strong>Miércoles</strong>
-            <span>10:00 - 21:00</span>
-          </div>
-
-          <div class="hours-item">
-            <strong>Jueves</strong>
-            <span>10:00 - 21:00</span>
-          </div>
-
-          <div class="hours-item">
-            <strong>Viernes</strong>
-            <span>10:00 - 21:00</span>
-          </div>
-
-          <div class="hours-item">
-            <strong>Sábado</strong>
-            <span>10:00 - 18:00</span>
-          </div>
-
-          <div class="hours-item">
-            <strong>Domingo</strong>
-            <span>11:00 - 16:00</span>
-          </div>
-        </div>
-      </details>
-    </div>
-  </div>
-</div>
       </div>
     </section>
   </main>
@@ -1511,7 +1330,7 @@
   <footer class="footer">
     <div class="container footer-inner">
       <div>
-        <strong style="color:var(--text);">CUTZ studio</strong><br>
+        <strong style="color: var(--text);">CUTZ studio</strong><br />
         Barbería urbana en Quilicura.
       </div>
       <div>
@@ -1523,10 +1342,25 @@
     </div>
   </footer>
 
+  <a
+    href="https://wa.me/56963590635?text=Hola%20CUTZ%20studio%2C%20quiero%20hacer%20una%20consulta."
+    class="whatsapp-float"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Escribir por WhatsApp"
+    title="Escribir por WhatsApp"
+  >
+    <span class="whatsapp-tooltip">WhatsApp</span>
+    <svg viewBox="0 0 448 512" aria-hidden="true">
+      <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-221.7 99.3-221.7 221.7 0 39.1 10.2 77.3 29.6 111L0 480l118.7-31.1c32.6 17.8 69.3 27.2 106.1 27.2h.1c122.3 0 221.7-99.3 221.7-221.7 0-59.3-23.1-115-65.7-157.3zM223.9 438.6h-.1c-33.2 0-65.7-8.9-94-25.7l-6.7-4-70.4 18.5 18.8-68.6-4.4-7c-18.5-29.4-28.2-63.4-28.2-98.4 0-101.9 82.9-184.8 184.9-184.8 49.4 0 95.9 19.2 130.8 54.1 34.9 35 54.1 81.4 54 130.8 0 102-82.9 185-184.7 185zm101.1-138.2c-5.5-2.8-32.8-16.1-37.9-17.9-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 17.9-17.6 21.6-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-53.9-29.1-75.4-65.9-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.3-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9s-19.4 19-19.4 46.3c0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.8 94.8 83.8 35.1 15.1 48.8 16.4 66.4 13.9 10.7-1.6 32.8-13.4 37.4-26.3 4.6-12.9 4.6-24 3.2-26.3-1.3-2.3-5-3.7-10.5-6.5z"/>
+    </svg>
+  </a>
+
   <script>
     const header = document.getElementById("header");
     const menuBtn = document.getElementById("menuBtn");
     const year = document.getElementById("year");
+    const navLinks = document.querySelectorAll(".nav-links a");
 
     year.textContent = new Date().getFullYear();
 
@@ -1535,20 +1369,12 @@
         header.classList.toggle("open");
       });
     }
-  </script>
-<a
-  href="https://wa.me/56963590635?text=Hola%20CUTZ%20studio%2C%20quiero%20hacer%20una%20consulta."
-  class="whatsapp-float"
-  target="_blank"
-  rel="noopener noreferrer"
-  aria-label="Escribir por WhatsApp"
-  title="Escribir por WhatsApp"
->
-  <span class="whatsapp-tooltip">WhatsApp</span>
 
-  <svg viewBox="0 0 448 512" aria-hidden="true">
-    <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-221.7 99.3-221.7 221.7 0 39.1 10.2 77.3 29.6 111L0 480l118.7-31.1c32.6 17.8 69.3 27.2 106.1 27.2h.1c122.3 0 221.7-99.3 221.7-221.7 0-59.3-23.1-115-65.7-157.3zM223.9 438.6h-.1c-33.2 0-65.7-8.9-94-25.7l-6.7-4-70.4 18.5 18.8-68.6-4.4-7c-18.5-29.4-28.2-63.4-28.2-98.4 0-101.9 82.9-184.8 184.9-184.8 49.4 0 95.9 19.2 130.8 54.1 34.9 35 54.1 81.4 54 130.8 0 102-82.9 185-184.7 185zm101.1-138.2c-5.5-2.8-32.8-16.1-37.9-17.9-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 17.9-17.6 21.6-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-53.9-29.1-75.4-65.9-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.3-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9s-19.4 19-19.4 46.3c0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.8 94.8 83.8 35.1 15.1 48.8 16.4 66.4 13.9 10.7-1.6 32.8-13.4 37.4-26.3 4.6-12.9 4.6-24 3.2-26.3-1.3-2.3-5-3.7-10.5-6.5z"/>
-  </svg>
-</a>
+    navLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        header.classList.remove("open");
+      });
+    });
+  </script>
 </body>
 </html>
