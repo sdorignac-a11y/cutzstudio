@@ -662,21 +662,6 @@
       .btn-order {
         width: 100%;
       }
-      .catalog-photo {
-  aspect-ratio: 1 / 1.08;
-}
-
-.catalog-floating-card {
-  position: static;
-  margin-top: 14px;
-  max-width: 100%;
-}
-
-.catalog-floating-badge {
-  top: 14px;
-  right: 14px;
-  font-size: 0.72rem;
-}
     }
     .catalog-hero-grid {
   display: grid;
@@ -770,6 +755,20 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   box-shadow: 0 12px 28px rgba(68, 52, 39, 0.08);
+}
+    @media (max-width: 820px) {
+  .catalog-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .catalog-visual {
+    display: none;
+  }
+
+  .catalog-copy {
+    max-width: 100%;
+  }
 }
   </style>
 </head>
