@@ -585,6 +585,24 @@
       .footer-links {
         text-align: left;
       }
+      .catalog-hero-grid {
+  grid-template-columns: 1fr;
+  gap: 28px;
+}
+
+.catalog-visual {
+  min-height: auto;
+}
+
+.catalog-photo-wrap {
+  max-width: 100%;
+}
+
+.catalog-floating-card {
+  left: 14px;
+  bottom: 14px;
+  max-width: 220px;
+}
     }
 
     @media (max-width: 720px) {
@@ -644,7 +662,115 @@
       .btn-order {
         width: 100%;
       }
+      .catalog-photo {
+  aspect-ratio: 1 / 1.08;
+}
+
+.catalog-floating-card {
+  position: static;
+  margin-top: 14px;
+  max-width: 100%;
+}
+
+.catalog-floating-badge {
+  top: 14px;
+  right: 14px;
+  font-size: 0.72rem;
+}
     }
+    .catalog-hero-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 42px;
+  align-items: center;
+}
+
+.catalog-visual {
+  position: relative;
+  min-height: 560px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.catalog-photo-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+}
+
+.catalog-photo-bg {
+  position: absolute;
+  inset: -24px -20px 24px 20px;
+  border-radius: 42px;
+  background:
+    radial-gradient(circle at top, rgba(255,255,255,0.72), transparent 48%),
+    linear-gradient(180deg, rgba(243,237,230,0.95), rgba(232,223,214,0.7));
+  border: 1px solid rgba(37,33,30,0.05);
+  z-index: 0;
+}
+
+.catalog-photo {
+  position: relative;
+  z-index: 1;
+  border-radius: 34px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(68, 52, 39, 0.12);
+  border: 1px solid rgba(37,33,30,0.06);
+  aspect-ratio: 0.88 / 1;
+  background: var(--bg-soft);
+}
+
+.catalog-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.catalog-floating-card {
+  position: absolute;
+  left: -26px;
+  bottom: 34px;
+  z-index: 2;
+  max-width: 240px;
+  padding: 18px 18px 16px;
+  border-radius: 24px;
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(37,33,30,0.08);
+  box-shadow: 0 20px 40px rgba(68, 52, 39, 0.09);
+}
+
+.catalog-floating-card strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.92rem;
+  color: var(--text);
+}
+
+.catalog-floating-card span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+
+.catalog-floating-badge {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 2;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(37,33,30,0.08);
+  color: var(--text);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 12px 28px rgba(68, 52, 39, 0.08);
+}
   </style>
 </head>
 <body>
@@ -691,23 +817,47 @@
 
   <main>
     <section class="catalog-hero">
-      <div class="container">
-        <div class="catalog-copy">
-          <span class="eyebrow">Catálogo completo</span>
-          <h1>Nuestras creaciones para cada ocasión.</h1>
-          <p>
-            Descubrí todas nuestras tortas, mini cakes, box dulces y propuestas artesanales por encargo.
-            Cada producto está pensado para combinar sabor, detalle y una presentación delicada.
-          </p>
+  <div class="container">
+    <div class="catalog-hero-grid">
+      <div class="catalog-copy">
+        <span class="eyebrow">Catálogo completo</span>
+        <h1>Nuestras creaciones para cada ocasión.</h1>
+        <p>
+          Descubrí todas nuestras tortas, mini cakes, box dulces y propuestas artesanales por encargo.
+          Cada producto está pensado para combinar sabor, detalle y una presentación delicada.
+        </p>
 
-          <div class="breadcrumb">
-            <a href="index.html">Inicio</a>
-            <span>•</span>
-            <span>Productos</span>
+        <div class="breadcrumb">
+          <a href="index.html">Inicio</a>
+          <span>•</span>
+          <span>Productos</span>
+        </div>
+      </div>
+
+      <div class="catalog-visual">
+        <div class="catalog-photo-wrap">
+          <div class="catalog-photo-bg"></div>
+
+          <div class="catalog-photo">
+            <img
+              src="https://images.unsplash.com/photo-1519882189396-71f93cb4714b?auto=format&fit=crop&w=1200&q=80"
+              alt="Torta artesanal decorada de Serenitéé"
+            />
+          </div>
+
+          <div class="catalog-floating-badge">Hecho por encargo</div>
+
+          <div class="catalog-floating-card">
+            <strong>Pedidos personalizados</strong>
+            <span>
+              Tortas, mini cakes y propuestas dulces para cumpleaños, regalos y celebraciones especiales.
+            </span>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
     <section class="filters-wrap">
       <div class="container">
