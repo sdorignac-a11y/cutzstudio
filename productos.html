@@ -41,6 +41,10 @@
       overflow-x: hidden;
     }
 
+    body.modal-open {
+      overflow: hidden;
+    }
+
     a {
       color: inherit;
       text-decoration: none;
@@ -49,6 +53,10 @@
     img {
       display: block;
       width: 100%;
+    }
+
+    button {
+      font-family: inherit;
     }
 
     .container {
@@ -328,6 +336,7 @@
       display: flex;
       flex-direction: column;
       transition: transform 0.24s ease, box-shadow 0.24s ease, opacity 0.2s ease;
+      cursor: pointer;
     }
 
     .product-card:hover {
@@ -447,6 +456,7 @@
       background: rgba(255,255,255,0.85);
       border: 1px solid var(--line);
       color: var(--text);
+      cursor: pointer;
     }
 
     .btn-order:hover,
@@ -682,6 +692,201 @@
       box-shadow: 0 12px 28px rgba(68, 52, 39, 0.08);
     }
 
+    .product-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(37, 33, 30, 0.42);
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+
+    .product-modal.open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .product-modal-dialog {
+      width: min(980px, 100%);
+      max-height: 90vh;
+      overflow: auto;
+      border-radius: 34px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(249,246,242,0.98));
+      border: 1px solid rgba(37,33,30,0.08);
+      box-shadow: 0 34px 80px rgba(45,41,38,0.18);
+    }
+
+    .product-modal-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 0;
+    }
+
+    .product-modal-media {
+      position: relative;
+      min-height: 100%;
+      background: var(--bg-soft);
+    }
+
+    .product-modal-media img {
+      width: 100%;
+      height: 100%;
+      min-height: 420px;
+      object-fit: cover;
+    }
+
+    .product-modal-content {
+      padding: 34px 30px 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .product-modal-topbar {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .product-modal-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(243,237,230,0.95);
+      border: 1px solid rgba(37,33,30,0.06);
+      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .product-modal-close {
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.86);
+      color: var(--text);
+      font-size: 1.15rem;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: transform 0.18s ease, background 0.18s ease;
+    }
+
+    .product-modal-close:hover {
+      transform: translateY(-2px);
+      background: white;
+    }
+
+    .product-modal-title {
+      margin: 0;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.4rem, 4vw, 3.5rem);
+      font-weight: 600;
+      letter-spacing: -0.05em;
+      line-height: 0.92;
+      color: var(--text);
+    }
+
+    .product-modal-price {
+      color: var(--text);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-top: 8px;
+    }
+
+    .product-modal-description {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.9;
+      font-size: 0.98rem;
+    }
+
+    .product-modal-section {
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+    }
+
+    .product-modal-section strong {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+
+    .product-modal-list {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.85;
+      font-size: 0.95rem;
+    }
+
+    .product-modal-payments {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .payment-pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(243,237,230,0.95);
+      border: 1px solid rgba(37,33,30,0.06);
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .product-modal-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .product-modal-btn,
+    .product-modal-btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 14px 20px;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      transition: transform 0.18s ease;
+    }
+
+    .product-modal-btn {
+      background: #2d2926;
+      color: white;
+      flex: 1;
+    }
+
+    .product-modal-btn-secondary {
+      background: rgba(255,255,255,0.82);
+      color: var(--text);
+      border: 1px solid var(--line);
+      cursor: pointer;
+    }
+
+    .product-modal-btn:hover,
+    .product-modal-btn-secondary:hover {
+      transform: translateY(-2px);
+    }
+
     @media (max-width: 1050px) {
       .nav-center,
       .desktop-only {
@@ -743,6 +948,32 @@
 
       .catalog-copy {
         max-width: 100%;
+      }
+
+      .product-modal {
+        padding: 14px;
+      }
+
+      .product-modal-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .product-modal-media img {
+        min-height: 280px;
+        max-height: 360px;
+      }
+
+      .product-modal-content {
+        padding: 24px 20px 22px;
+      }
+
+      .product-modal-actions {
+        flex-direction: column;
+      }
+
+      .product-modal-btn,
+      .product-modal-btn-secondary {
+        width: 100%;
       }
     }
 
@@ -908,7 +1139,19 @@
       <div class="container">
         <div class="products-grid" id="productsGrid">
 
-          <article class="product-card" data-category="tortas">
+          <article
+            class="product-card"
+            data-category="tortas"
+            data-title="Marquise"
+            data-price="$60.000"
+            data-badge="Torta"
+            data-image="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1200&q=80"
+            data-description="Chocolate amargo, dulce de leche y merengue italiano. Ideal para celebraciones clásicas."
+            data-features="Base intensa de chocolate;Dulce de leche y merengue italiano;Hecha por encargo;Ideal para cumpleaños y reuniones"
+            data-portions="8/10 porciones"
+            data-payments="Transferencia;Mercado Pago;Efectivo"
+            data-orderlink="https://wa.me/5491123991374?text=Hola%20quiero%20pedir%20la%20Marquise"
+          >
             <div class="product-image">
               <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1200&q=80" alt="Torta marquise" />
               <span class="product-badge">Torta</span>
@@ -925,12 +1168,24 @@
               </div>
               <div class="product-actions">
                 <a class="btn-order" href="https://wa.me/5491123991374?text=Hola%20quiero%20pedir%20la%20Marquise" target="_blank" rel="noreferrer">Pedir</a>
-                <a class="btn-view" href="index.html#contacto">Consultar</a>
+                <button class="btn-view open-product-modal" type="button">Ver más</button>
               </div>
             </div>
           </article>
 
-          <article class="product-card" data-category="tortas">
+          <article
+            class="product-card"
+            data-category="tortas"
+            data-title="Pavlova"
+            data-price="$75.000"
+            data-badge="Torta"
+            data-image="https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=1200&q=80"
+            data-description="Merengue, crema, dulce de leche y frutas de estación con una terminación delicada."
+            data-features="Merengue crocante;Frutas de estación;Presentación elegante;Ideal para eventos y celebraciones"
+            data-portions="10 porciones"
+            data-payments="Transferencia;Mercado Pago;Efectivo"
+            data-orderlink="https://wa.me/5491123991374?text=Hola%20quiero%20pedir%20la%20Pavlova"
+          >
             <div class="product-image">
               <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=1200&q=80" alt="Torta pavlova" />
               <span class="product-badge">Torta</span>
@@ -947,12 +1202,24 @@
               </div>
               <div class="product-actions">
                 <a class="btn-order" href="https://wa.me/5491123991374?text=Hola%20quiero%20pedir%20la%20Pavlova" target="_blank" rel="noreferrer">Pedir</a>
-                <a class="btn-view" href="index.html#contacto">Consultar</a>
+                <button class="btn-view open-product-modal" type="button">Ver más</button>
               </div>
             </div>
           </article>
 
-          <article class="product-card" data-category="tortas">
+          <article
+            class="product-card"
+            data-category="tortas"
+            data-title="Cheesecake"
+            data-price="$65.000"
+            data-badge="Torta"
+            data-image="https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=1200&q=80"
+            data-description="Base crocante de vainilla, queso crema y frutas de estación."
+            data-features="Base crocante de vainilla;Relleno suave de queso crema;Frutas de estación;Terminación clásica y delicada"
+            data-portions="10 porciones"
+            data-payments="Transferencia;Mercado Pago;Efectivo"
+            data-orderlink="https://wa.me/5491123991374?text=Hola%20quiero%20pedir%20el%20Cheesecake"
+          >
             <div class="product-image">
               <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=1200&q=80" alt="Cheesecake" />
               <span class="product-badge">Torta</span>
@@ -969,12 +1236,24 @@
               </div>
               <div class="product-actions">
                 <a class="btn-order" href="https://wa.me/5491123991374?text=Hola%20quiero%20pedir%20el%20Cheesecake" target="_blank" rel="noreferrer">Pedir</a>
-                <a class="btn-view" href="index.html#contacto">Consultar</a>
+                <button class="btn-view open-product-modal" type="button">Ver más</button>
               </div>
             </div>
           </article>
 
-          <article class="product-card" data-category="mini">
+          <article
+            class="product-card"
+            data-category="mini"
+            data-title="Mini vainilla"
+            data-price="$26.000"
+            data-badge="Mini cake"
+            data-image="https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=1200&q=80"
+            data-description="Mini cake de vainilla con crema suave y decoración delicada para regalos o fechas especiales."
+            data-features="Tamaño ideal para regalar;Bizcochuelo suave de vainilla;Decoración delicada;Perfecta para ocasiones íntimas"
+            data-portions="2/4 porciones"
+            data-payments="Transferencia;Mercado Pago;Efectivo"
+            data-orderlink="https://wa.me/5491123991374?text=Hola%20quiero%20pedir%20la%20Mini%20vainilla"
+          >
             <div class="product-image">
               <img src="https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=1200&q=80" alt="Mini cake vainilla" />
               <span class="product-badge">Mini cake</span>
@@ -991,12 +1270,24 @@
               </div>
               <div class="product-actions">
                 <a class="btn-order" href="https://wa.me/5491123991374?text=Hola%20quiero%20pedir%20la%20Mini%20vainilla" target="_blank" rel="noreferrer">Pedir</a>
-                <a class="btn-view" href="index.html#contacto">Consultar</a>
+                <button class="btn-view open-product-modal" type="button">Ver más</button>
               </div>
             </div>
           </article>
 
-          <article class="product-card" data-category="mini">
+          <article
+            class="product-card"
+            data-category="mini"
+            data-title="Mini chocolate"
+            data-price="$28.000"
+            data-badge="Mini cake"
+            data-image="https://images.unsplash.com/photo-1621303837174-89787a7d4729?auto=format&fit=crop&w=1200&q=80"
+            data-description="Chocolate intenso con terminación minimalista. Ideal para una celebración íntima."
+            data-features="Sabor intenso a chocolate;Formato pequeño;Terminación minimalista;Hecha por encargo"
+            data-portions="2/4 porciones"
+            data-payments="Transferencia;Mercado Pago;Efectivo"
+            data-orderlink="https://wa.me/5491123991374?text=Hola%20quiero%20pedir%20la%20Mini%20chocolate"
+          >
             <div class="product-image">
               <img src="https://images.unsplash.com/photo-1621303837174-89787a7d4729?auto=format&fit=crop&w=1200&q=80" alt="Mini cake chocolate" />
               <span class="product-badge">Mini cake</span>
@@ -1013,12 +1304,24 @@
               </div>
               <div class="product-actions">
                 <a class="btn-order" href="https://wa.me/5491123991374?text=Hola%20quiero%20pedir%20la%20Mini%20chocolate" target="_blank" rel="noreferrer">Pedir</a>
-                <a class="btn-view" href="index.html#contacto">Consultar</a>
+                <button class="btn-view open-product-modal" type="button">Ver más</button>
               </div>
             </div>
           </article>
 
-          <article class="product-card" data-category="boxes">
+          <article
+            class="product-card"
+            data-category="boxes"
+            data-title="Box brunch"
+            data-price="$38.000"
+            data-badge="Box dulce"
+            data-image="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=1200&q=80"
+            data-description="Selección dulce para regalar o compartir, con una presentación elegante y cuidada."
+            data-features="Presentación cuidada;Ideal para regalar;Personalizable;Perfecto para brunch o celebraciones"
+            data-portions="Edición regalo"
+            data-payments="Transferencia;Mercado Pago;Efectivo"
+            data-orderlink="https://wa.me/5491123991374?text=Hola%20quiero%20pedir%20el%20Box%20brunch"
+          >
             <div class="product-image">
               <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=1200&q=80" alt="Box dulce" />
               <span class="product-badge">Box dulce</span>
@@ -1035,12 +1338,24 @@
               </div>
               <div class="product-actions">
                 <a class="btn-order" href="https://wa.me/5491123991374?text=Hola%20quiero%20pedir%20el%20Box%20brunch" target="_blank" rel="noreferrer">Pedir</a>
-                <a class="btn-view" href="index.html#contacto">Consultar</a>
+                <button class="btn-view open-product-modal" type="button">Ver más</button>
               </div>
             </div>
           </article>
 
-          <article class="product-card" data-category="boxes">
+          <article
+            class="product-card"
+            data-category="boxes"
+            data-title="Box desayuno"
+            data-price="$42.000"
+            data-badge="Box dulce"
+            data-image="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1200&q=80"
+            data-description="Ideal para cumpleaños, regalos o momentos especiales con una propuesta delicada y artesanal."
+            data-features="Incluye propuesta dulce variada;Ideal para cumpleaños y regalos;Se puede sumar dedicatoria;Presentación artesanal"
+            data-portions="Regalo con dedicatoria"
+            data-payments="Transferencia;Mercado Pago;Efectivo"
+            data-orderlink="https://wa.me/5491123991374?text=Hola%20quiero%20pedir%20el%20Box%20desayuno"
+          >
             <div class="product-image">
               <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1200&q=80" alt="Box de desayuno" />
               <span class="product-badge">Box dulce</span>
@@ -1057,12 +1372,24 @@
               </div>
               <div class="product-actions">
                 <a class="btn-order" href="https://wa.me/5491123991374?text=Hola%20quiero%20pedir%20el%20Box%20desayuno" target="_blank" rel="noreferrer">Pedir</a>
-                <a class="btn-view" href="index.html#contacto">Consultar</a>
+                <button class="btn-view open-product-modal" type="button">Ver más</button>
               </div>
             </div>
           </article>
 
-          <article class="product-card" data-category="especiales">
+          <article
+            class="product-card"
+            data-category="especiales"
+            data-title="Mesa dulce"
+            data-price="A consultar"
+            data-badge="Especial"
+            data-image="https://images.unsplash.com/photo-1464306076886-debca5e8a6b0?auto=format&fit=crop&w=1200&q=80"
+            data-description="Armamos propuestas para eventos, cumpleaños, reuniones y celebraciones con estética personalizada."
+            data-features="Diseño personalizado;Ideal para eventos;Se adapta a la ocasión;Consulta previa recomendada"
+            data-portions="Eventos y celebraciones"
+            data-payments="Transferencia;Mercado Pago;Efectivo"
+            data-orderlink="https://wa.me/5491123991374?text=Hola%20quiero%20consultar%20por%20una%20mesa%20dulce"
+          >
             <div class="product-image">
               <img src="https://images.unsplash.com/photo-1464306076886-debca5e8a6b0?auto=format&fit=crop&w=1200&q=80" alt="Mesa dulce" />
               <span class="product-badge">Especial</span>
@@ -1079,12 +1406,24 @@
               </div>
               <div class="product-actions">
                 <a class="btn-order" href="https://wa.me/5491123991374?text=Hola%20quiero%20consultar%20por%20una%20mesa%20dulce" target="_blank" rel="noreferrer">Consultar</a>
-                <a class="btn-view" href="index.html#contacto">Ver más</a>
+                <button class="btn-view open-product-modal" type="button">Ver más</button>
               </div>
             </div>
           </article>
 
-          <article class="product-card" data-category="especiales">
+          <article
+            class="product-card"
+            data-category="especiales"
+            data-title="Torta personalizada"
+            data-price="A consultar"
+            data-badge="Especial"
+            data-image="https://images.unsplash.com/photo-1535254973040-607b474cb50d?auto=format&fit=crop&w=1200&q=80"
+            data-description="Diseñada según la ocasión, colores, estilo y cantidad de porciones que necesites."
+            data-features="Diseño a medida;Colores y estilo personalizados;Reserva previa;Ideal para celebraciones especiales"
+            data-portions="Cantidad a definir"
+            data-payments="Transferencia;Mercado Pago;Efectivo"
+            data-orderlink="https://wa.me/5491123991374?text=Hola%20quiero%20consultar%20por%20una%20torta%20personalizada"
+          >
             <div class="product-image">
               <img src="https://images.unsplash.com/photo-1535254973040-607b474cb50d?auto=format&fit=crop&w=1200&q=80" alt="Torta personalizada" />
               <span class="product-badge">Especial</span>
@@ -1101,7 +1440,7 @@
               </div>
               <div class="product-actions">
                 <a class="btn-order" href="https://wa.me/5491123991374?text=Hola%20quiero%20consultar%20por%20una%20torta%20personalizada" target="_blank" rel="noreferrer">Consultar</a>
-                <a class="btn-view" href="index.html#contacto">Ver más</a>
+                <button class="btn-view open-product-modal" type="button">Ver más</button>
               </div>
             </div>
           </article>
@@ -1155,6 +1494,53 @@
 
   <a class="whatsapp" href="https://wa.me/5491123991374?text=Hola%20quiero%20hacer%20un%20pedido" target="_blank" rel="noreferrer" aria-label="WhatsApp">✆</a>
 
+  <div class="product-modal" id="productModal" aria-hidden="true">
+    <div class="product-modal-dialog">
+      <div class="product-modal-grid">
+        <div class="product-modal-media">
+          <img id="modalImage" src="" alt="">
+        </div>
+
+        <div class="product-modal-content">
+          <div class="product-modal-topbar">
+            <span class="product-modal-badge" id="modalBadge">Producto</span>
+            <button class="product-modal-close" id="closeProductModal" type="button" aria-label="Cerrar">✕</button>
+          </div>
+
+          <div>
+            <h2 class="product-modal-title" id="modalTitle">Producto</h2>
+            <div class="product-modal-price" id="modalPrice">$0</div>
+          </div>
+
+          <p class="product-modal-description" id="modalDescription"></p>
+
+          <div class="product-modal-section">
+            <strong>Características</strong>
+            <ul class="product-modal-list" id="modalFeatures"></ul>
+          </div>
+
+          <div class="product-modal-section">
+            <strong>Información del pedido</strong>
+            <div class="product-meta">
+              <span class="meta-pill" id="modalPortions">Porciones</span>
+              <span class="meta-pill">Pedido con anticipación</span>
+            </div>
+          </div>
+
+          <div class="product-modal-section">
+            <strong>Métodos de pago</strong>
+            <div class="product-modal-payments" id="modalPayments"></div>
+          </div>
+
+          <div class="product-modal-actions">
+            <a href="#" target="_blank" rel="noreferrer" class="product-modal-btn" id="modalOrderBtn">Pedir por WhatsApp</a>
+            <button class="product-modal-btn-secondary" id="modalCloseSecondary" type="button">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     const menuBtn = document.getElementById('menuBtn');
     const mobilePanel = document.getElementById('mobilePanel');
@@ -1207,9 +1593,9 @@
       });
 
       if (filteredCards.length <= visibleCount) {
-        loadMoreBtn.classList.add('hidden');
+        loadMoreBtn?.classList.add('hidden');
       } else {
-        loadMoreBtn.classList.remove('hidden');
+        loadMoreBtn?.classList.remove('hidden');
       }
     }
 
@@ -1228,6 +1614,100 @@
     loadMoreBtn?.addEventListener('click', () => {
       visibleCount += LOAD_MORE_STEP;
       updateProducts();
+    });
+
+    const productModal = document.getElementById('productModal');
+    const closeProductModal = document.getElementById('closeProductModal');
+    const modalCloseSecondary = document.getElementById('modalCloseSecondary');
+
+    const modalImage = document.getElementById('modalImage');
+    const modalBadge = document.getElementById('modalBadge');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalPrice = document.getElementById('modalPrice');
+    const modalDescription = document.getElementById('modalDescription');
+    const modalFeatures = document.getElementById('modalFeatures');
+    const modalPortions = document.getElementById('modalPortions');
+    const modalPayments = document.getElementById('modalPayments');
+    const modalOrderBtn = document.getElementById('modalOrderBtn');
+
+    function openProductModal(card) {
+      const {
+        title,
+        price,
+        badge,
+        image,
+        description,
+        features,
+        portions,
+        payments,
+        orderlink
+      } = card.dataset;
+
+      modalImage.src = image || '';
+      modalImage.alt = title || 'Producto';
+
+      modalBadge.textContent = badge || 'Producto';
+      modalTitle.textContent = title || 'Producto';
+      modalPrice.textContent = price || '';
+      modalDescription.textContent = description || '';
+      modalPortions.textContent = portions || 'Porciones a consultar';
+      modalOrderBtn.href = orderlink || '#';
+
+      modalFeatures.innerHTML = '';
+      (features || '').split(';').filter(Boolean).forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item.trim();
+        modalFeatures.appendChild(li);
+      });
+
+      modalPayments.innerHTML = '';
+      (payments || '').split(';').filter(Boolean).forEach(item => {
+        const span = document.createElement('span');
+        span.className = 'payment-pill';
+        span.textContent = item.trim();
+        modalPayments.appendChild(span);
+      });
+
+      productModal.classList.add('open');
+      productModal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-open');
+    }
+
+    function closeModal() {
+      productModal.classList.remove('open');
+      productModal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-open');
+    }
+
+    document.querySelectorAll('.open-product-modal').forEach(button => {
+      button.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const card = button.closest('.product-card');
+        if (card) openProductModal(card);
+      });
+    });
+
+    document.querySelectorAll('.product-card').forEach(card => {
+      card.addEventListener('click', (e) => {
+        const clickedOrderButton = e.target.closest('.btn-order');
+        if (clickedOrderButton) return;
+        openProductModal(card);
+      });
+    });
+
+    closeProductModal?.addEventListener('click', closeModal);
+    modalCloseSecondary?.addEventListener('click', closeModal);
+
+    productModal?.addEventListener('click', (e) => {
+      if (e.target === productModal) {
+        closeModal();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && productModal?.classList.contains('open')) {
+        closeModal();
+      }
     });
 
     updateProducts();
