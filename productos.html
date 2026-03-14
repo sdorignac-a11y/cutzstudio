@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Productos | Serenitéé</title>
+  <meta name="description" content="Descubrí todas nuestras tortas, mini cakes, box dulces y propuestas artesanales por encargo." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f9f6f2;
+      --bg-soft: #f3ede6;
+      --white: rgba(255,255,255,0.82);
+      --text: #25211e;
+      --muted: #7b736c;
+      --line: rgba(37, 33, 30, 0.08);
+      --line-strong: rgba(37, 33, 30, 0.13);
+      --accent: #ccbca9;
+      --accent-dark: #8c7d6d;
+      --shadow: 0 26px 60px rgba(68, 52, 39, 0.07);
+      --shadow-soft: 0 12px 30px rgba(68, 52, 39, 0.06);
+      --radius-xl: 42px;
+      --radius-lg: 30px;
+      --radius-md: 22px;
+      --container: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(242,232,220,0.55), transparent 28%),
+        linear-gradient(180deg, #fcfaf7 0%, var(--bg) 100%);
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+    }
+
+    .container {
+      width: min(var(--container), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      padding: 14px 0;
+      text-align: center;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.55);
+      backdrop-filter: blur(10px);
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      background: rgba(249,246,242,0.82);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(37,33,30,0.05);
+    }
+
+    .nav {
+      min-height: 96px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-mark {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,0.82);
+      border: 1px solid var(--line);
+      box-shadow: 0 10px 24px rgba(70,52,38,0.05);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    .brand-copy strong {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.9rem;
+      font-weight: 600;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+    }
+
+    .brand-copy span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    .nav-center {
+      justify-self: center;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.72);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    .nav-links a {
+      padding: 11px 18px;
+      border-radius: 999px;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      background: rgba(37,33,30,0.06);
+      color: var(--text);
+      transform: translateY(-1px);
+    }
+
+    .header-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 22px;
+      border-radius: 999px;
+      background: #2d2926;
+      color: white;
+      font-size: 0.93rem;
+      font-weight: 700;
+      box-shadow: 0 16px 34px rgba(45,41,38,0.14);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      white-space: nowrap;
+    }
+
+    .header-cta:hover {
+      transform: translateY(-2px);
+    }
+
+    .menu-btn {
+      display: none;
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.75);
+      cursor: pointer;
+      font-size: 1.15rem;
+    }
+
+    .mobile-panel {
+      display: none;
+      padding: 0 0 18px;
+    }
+
+    .mobile-panel.open {
+      display: block;
+    }
+
+    .mobile-links {
+      display: grid;
+      gap: 10px;
+    }
+
+    .mobile-links a {
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.76);
+      border: 1px solid var(--line);
+      font-weight: 700;
+    }
+
+    .catalog-hero {
+      padding: 72px 0 28px;
+    }
+
+    .catalog-copy {
+      max-width: 760px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 22px;
+    }
+
+    .catalog-copy h1,
+    .section-title,
+    .product-card h3,
+    .cta h2 {
+      margin: 0;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      letter-spacing: -0.05em;
+      line-height: 0.92;
+      color: var(--text);
+    }
+
+    .catalog-copy h1 {
+      font-size: clamp(3rem, 6vw, 5.2rem);
+      max-width: 11ch;
+      text-wrap: balance;
+    }
+
+    .catalog-copy p,
+    .section-lead,
+    .product-card p,
+    .product-meta,
+    .cta p,
+    footer p {
+      color: var(--muted);
+      line-height: 1.9;
+      font-size: 0.98rem;
+    }
+
+    .catalog-copy p {
+      max-width: 650px;
+      margin: 24px 0 0;
+    }
+
+    .breadcrumb {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 24px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.74);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .filters-wrap {
+      padding: 18px 0 18px;
+    }
+
+    .filters-box {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 20px;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.74);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .filter-btn {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.9);
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 11px 16px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: #2d2926;
+      color: white;
+      border-color: #2d2926;
+      transform: translateY(-1px);
+    }
+
+    .products-section {
+      padding: 24px 0 100px;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .product-card {
+      background: rgba(255,255,255,0.76);
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.24s ease, box-shadow 0.24s ease, opacity 0.2s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 30px 60px rgba(68, 52, 39, 0.1);
+    }
+
+    .product-card.hidden {
+      display: none;
+    }
+
+    .product-image {
+      position: relative;
+      aspect-ratio: 1 / 1.04;
+      overflow: hidden;
+      background: var(--bg-soft);
+    }
+
+    .product-image img {
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.35s ease;
+    }
+
+    .product-card:hover .product-image img {
+      transform: scale(1.04);
+    }
+
+    .product-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(37,33,30,0.06);
+      color: var(--text);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .product-body {
+      padding: 22px 22px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      height: 100%;
+    }
+
+    .product-top {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .product-card h3 {
+      font-size: 2rem;
+    }
+
+    .price {
+      white-space: nowrap;
+      color: var(--text);
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .product-card p {
+      margin: 0;
+    }
+
+    .product-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: auto;
+    }
+
+    .meta-pill {
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: rgba(243,237,230,0.95);
+      border: 1px solid rgba(37,33,30,0.05);
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .product-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .btn-order,
+    .btn-view {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 12px 16px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      transition: transform 0.18s ease;
+    }
+
+    .btn-order {
+      background: #2d2926;
+      color: white;
+      flex: 1;
+    }
+
+    .btn-view {
+      background: rgba(255,255,255,0.85);
+      border: 1px solid var(--line);
+      color: var(--text);
+    }
+
+    .btn-order:hover,
+    .btn-view:hover {
+      transform: translateY(-2px);
+    }
+
+    .cta-section {
+      padding: 0 0 90px;
+    }
+
+    .cta {
+      text-align: center;
+      padding: 54px 28px;
+      border-radius: 38px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(243,237,230,0.88));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .cta h2 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      max-width: 10ch;
+      margin: 0 auto;
+    }
+
+    .cta p {
+      max-width: 560px;
+      margin: 18px auto 0;
+    }
+
+    .cta-actions {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+
+    .btn-main,
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 14px 22px;
+      font-size: 0.93rem;
+      font-weight: 700;
+      transition: transform 0.18s ease;
+    }
+
+    .btn-main {
+      background: #2d2926;
+      color: white;
+    }
+
+    .btn-outline {
+      background: rgba(255,255,255,0.8);
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
+
+    .btn-main:hover,
+    .btn-outline:hover {
+      transform: translateY(-2px);
+    }
+
+    footer {
+      padding: 0 0 34px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-top: 28px;
+      border-top: 1px solid var(--line);
+    }
+
+    .footer-links {
+      display: grid;
+      gap: 10px;
+      text-align: right;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .copyright {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .whatsapp {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 80;
+      width: 60px;
+      height: 60px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: #2d2926;
+      color: white;
+      border: 3px solid rgba(255,255,255,0.9);
+      box-shadow: 0 18px 34px rgba(45,41,38,0.16);
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 1050px) {
+      .nav-center,
+      .desktop-only {
+        display: none;
+      }
+
+      .nav {
+        min-height: 86px;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .menu-btn {
+        display: inline-grid;
+        place-items: center;
+      }
+
+      .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-links {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .catalog-hero {
+        padding: 52px 0 22px;
+      }
+
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .filters-box {
+        padding: 16px;
+      }
+
+      .filter-btn {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        width: min(calc(100% - 22px), var(--container));
+      }
+
+      .catalog-copy h1 {
+        max-width: 12ch;
+      }
+
+      .product-body,
+      .cta {
+        padding: 22px 18px;
+      }
+
+      .cta-actions .btn-main,
+      .cta-actions .btn-outline {
+        width: 100%;
+      }
+
+      .brand-copy strong {
+        font-size: 1.6rem;
+      }
+
+      .brand-copy span {
+        font-size: 0.72rem;
+      }
+
+      .topbar {
+        font-size: 0.72rem;
+      }
+
+      .product-actions {
+        flex-direction: column;
+      }
+
+      .btn-view,
+      .btn-order {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">Pedidos con 48 hs de anticipación</div>
+
+  <header>
+    <div class="container nav">
+      <a href="index.html" class="brand">
+        <div class="brand-mark">S</div>
+        <div class="brand-copy">
+          <strong>Serenitéé</strong>
+          <span>Pastelería artesanal</span>
+        </div>
+      </a>
+
+      <div class="nav-center desktop-only">
+        <nav class="nav-links">
+          <a href="index.html">Inicio</a>
+          <a href="productos.html" class="active">Tortas</a>
+          <a href="index.html#opiniones">Opiniones</a>
+          <a href="index.html#nosotros">Nosotros</a>
+          <a href="index.html#contacto">Contacto</a>
+        </nav>
+      </div>
+
+      <div class="desktop-only">
+        <a href="https://wa.me/5491123991374?text=Hola%20quiero%20hacer%20un%20pedido" target="_blank" rel="noreferrer" class="header-cta">Hacer pedido</a>
+      </div>
+
+      <button class="menu-btn" id="menuBtn" aria-label="Abrir menú">☰</button>
+    </div>
+
+    <div class="container mobile-panel" id="mobilePanel">
+      <div class="mobile-links">
+        <a href="index.html">Inicio</a>
+        <a href="productos.html">Tortas</a>
+        <a href="index.html#opiniones">Opiniones</a>
+        <a href="index.html#nosotros">Nosotros</a>
+        <a href="index.html#contacto">Contacto</a>
+        <a href="https://wa.me/5491123991374?text=Hola%20quiero%20hacer%20un%20pedido" target="_blank" rel="noreferrer">Hacer pedido</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="catalog-hero">
+      <div class="container">
+        <div class="catalog-copy">
+          <span class="eyebrow">Catálogo completo</span>
+          <h1>Nuestras creaciones para cada ocasión.</h1>
+          <p>
+            Descubrí todas nuestras tortas, mini cakes, box dulces y propuestas artesanales por encargo.
+            Cada producto está pensado para combinar sabor, detalle y una presentación delicada.
+          </p>
+
+          <div class="breadcrumb">
+            <a href="index.html">Inicio</a>
+            <span>•</span>
+            <span>Productos</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="filters-wrap">
+      <div class="container">
+        <div class="filters-box">
+          <button class="filter-btn active" data-filter="all">Todos</button>
+          <button class="filter-btn" data-filter="tortas">Tortas</button>
+          <button class="filter-btn" data-filter="mini">Mini cakes</button>
+          <button class="filter-btn" data-filter="boxes">Box dulces</button>
+          <button class="filter-btn" data-filter="especiales">Especiales</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="products-section">
+      <div class="container">
+        <div class="products-grid" id="productsGrid">
+
+          <article class="product-card" data-category="tortas">
+            <div class="product-image">
+              <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1200&q=80" alt="Torta marquise" />
+              <span class="product-badge">Torta</span>
+            </div>
+            <div class="product-body">
+              <div class="product-top">
+                <h3>Marquise</h3>
+                <span class="price">$60.000</span>
+              </div>
+              <p>Chocolate amargo, dulce de leche y merengue italiano. Ideal para celebraciones clásicas.</p>
+              <div class="product-meta">
+                <span class="meta-pill">8/10 porciones</span>
+                <span class="meta-pill">Por encargo</span>
+              </div>
+              <div class="product-actions">
+                <a class="btn-order" href="https://wa.me/5491123991374?text=Hola%20quiero%20pedir%20la%20Marquise" target="_blank" rel="noreferrer">Pedir</a>
+                <a class="btn-view" href="index.html#contacto">Consultar</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="tortas">
+            <div class="product-image">
+              <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=1200&q=80" alt="Torta pavlova" />
+              <span class="product-badge">Torta</span>
+            </div>
+            <div class="product-body">
+              <div class="product-top">
+                <h3>Pavlova</h3>
+                <span class="price">$75.000</span>
+              </div>
+              <p>Merengue, crema, dulce de leche y frutas de estación con una terminación delicada.</p>
+              <div class="product-meta">
+                <span class="meta-pill">10 porciones</span>
+                <span class="meta-pill">Evento</span>
+              </div>
+              <div class="product-actions">
+                <a class="btn-order" href="https://wa.me/5491123991374?text=Hola%20quiero%20pedir%20la%20Pavlova" target="_blank" rel="noreferrer">Pedir</a>
+                <a class="btn-view" href="index.html#contacto">Consultar</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="tortas">
+            <div class="product-image">
+              <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=1200&q=80" alt="Cheesecake" />
+              <span class="product-badge">Torta</span>
+            </div>
+            <div class="product-body">
+              <div class="product-top">
+                <h3>Cheesecake</h3>
+                <span class="price">$65.000</span>
+              </div>
+              <p>Base crocante de vainilla, queso crema y frutas de estación.</p>
+              <div class="product-meta">
+                <span class="meta-pill">10 porciones</span>
+                <span class="meta-pill">Clásico</span>
+              </div>
+              <div class="product-actions">
+                <a class="btn-order" href="https://wa.me/5491123991374?text=Hola%20quiero%20pedir%20el%20Cheesecake" target="_blank" rel="noreferrer">Pedir</a>
+                <a class="btn-view" href="index.html#contacto">Consultar</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="mini">
+            <div class="product-image">
+              <img src="https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=1200&q=80" alt="Mini cake vainilla" />
+              <span class="product-badge">Mini cake</span>
+            </div>
+            <div class="product-body">
+              <div class="product-top">
+                <h3>Mini vainilla</h3>
+                <span class="price">$26.000</span>
+              </div>
+              <p>Mini cake de vainilla con crema suave y decoración delicada para regalos o fechas especiales.</p>
+              <div class="product-meta">
+                <span class="meta-pill">2/4 porciones</span>
+                <span class="meta-pill">Regalo</span>
+              </div>
+              <div class="product-actions">
+                <a class="btn-order" href="https://wa.me/5491123991374?text=Hola%20quiero%20pedir%20la%20Mini%20vainilla" target="_blank" rel="noreferrer">Pedir</a>
+                <a class="btn-view" href="index.html#contacto">Consultar</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="mini">
+            <div class="product-image">
+              <img src="https://images.unsplash.com/photo-1621303837174-89787a7d4729?auto=format&fit=crop&w=1200&q=80" alt="Mini cake chocolate" />
+              <span class="product-badge">Mini cake</span>
+            </div>
+            <div class="product-body">
+              <div class="product-top">
+                <h3>Mini chocolate</h3>
+                <span class="price">$28.000</span>
+              </div>
+              <p>Chocolate intenso con terminación minimalista. Ideal para una celebración íntima.</p>
+              <div class="product-meta">
+                <span class="meta-pill">2/4 porciones</span>
+                <span class="meta-pill">Por encargo</span>
+              </div>
+              <div class="product-actions">
+                <a class="btn-order" href="https://wa.me/5491123991374?text=Hola%20quiero%20pedir%20la%20Mini%20chocolate" target="_blank" rel="noreferrer">Pedir</a>
+                <a class="btn-view" href="index.html#contacto">Consultar</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="boxes">
+            <div class="product-image">
+              <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=1200&q=80" alt="Box dulce" />
+              <span class="product-badge">Box dulce</span>
+            </div>
+            <div class="product-body">
+              <div class="product-top">
+                <h3>Box brunch</h3>
+                <span class="price">$38.000</span>
+              </div>
+              <p>Selección dulce para regalar o compartir, con una presentación elegante y cuidada.</p>
+              <div class="product-meta">
+                <span class="meta-pill">Edición regalo</span>
+                <span class="meta-pill">Personalizable</span>
+              </div>
+              <div class="product-actions">
+                <a class="btn-order" href="https://wa.me/5491123991374?text=Hola%20quiero%20pedir%20el%20Box%20brunch" target="_blank" rel="noreferrer">Pedir</a>
+                <a class="btn-view" href="index.html#contacto">Consultar</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="boxes">
+            <div class="product-image">
+              <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1200&q=80" alt="Box de desayuno" />
+              <span class="product-badge">Box dulce</span>
+            </div>
+            <div class="product-body">
+              <div class="product-top">
+                <h3>Box desayuno</h3>
+                <span class="price">$42.000</span>
+              </div>
+              <p>Ideal para cumpleaños, regalos o momentos especiales con una propuesta delicada y artesanal.</p>
+              <div class="product-meta">
+                <span class="meta-pill">Regalo</span>
+                <span class="meta-pill">Con dedicatoria</span>
+              </div>
+              <div class="product-actions">
+                <a class="btn-order" href="https://wa.me/5491123991374?text=Hola%20quiero%20pedir%20el%20Box%20desayuno" target="_blank" rel="noreferrer">Pedir</a>
+                <a class="btn-view" href="index.html#contacto">Consultar</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="especiales">
+            <div class="product-image">
+              <img src="https://images.unsplash.com/photo-1464306076886-debca5e8a6b0?auto=format&fit=crop&w=1200&q=80" alt="Mesa dulce" />
+              <span class="product-badge">Especial</span>
+            </div>
+            <div class="product-body">
+              <div class="product-top">
+                <h3>Mesa dulce</h3>
+                <span class="price">A consultar</span>
+              </div>
+              <p>Armamos propuestas para eventos, cumpleaños, reuniones y celebraciones con estética personalizada.</p>
+              <div class="product-meta">
+                <span class="meta-pill">Eventos</span>
+                <span class="meta-pill">Personalizado</span>
+              </div>
+              <div class="product-actions">
+                <a class="btn-order" href="https://wa.me/5491123991374?text=Hola%20quiero%20consultar%20por%20una%20mesa%20dulce" target="_blank" rel="noreferrer">Consultar</a>
+                <a class="btn-view" href="index.html#contacto">Ver más</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="especiales">
+            <div class="product-image">
+              <img src="https://images.unsplash.com/photo-1535254973040-607b474cb50d?auto=format&fit=crop&w=1200&q=80" alt="Torta personalizada" />
+              <span class="product-badge">Especial</span>
+            </div>
+            <div class="product-body">
+              <div class="product-top">
+                <h3>Torta personalizada</h3>
+                <span class="price">A consultar</span>
+              </div>
+              <p>Diseñada según la ocasión, colores, estilo y cantidad de porciones que necesites.</p>
+              <div class="product-meta">
+                <span class="meta-pill">A medida</span>
+                <span class="meta-pill">Reserva previa</span>
+              </div>
+              <div class="product-actions">
+                <a class="btn-order" href="https://wa.me/5491123991374?text=Hola%20quiero%20consultar%20por%20una%20torta%20personalizada" target="_blank" rel="noreferrer">Consultar</a>
+                <a class="btn-view" href="index.html#contacto">Ver más</a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta">
+          <h2>¿Querés hacer un pedido personalizado?</h2>
+          <p>
+            También trabajamos propuestas a medida para cumpleaños, eventos, regalos y ocasiones especiales.
+            Escribinos y armamos algo pensado para vos.
+          </p>
+          <div class="cta-actions">
+            <a href="https://wa.me/5491123991374?text=Hola%20quiero%20hacer%20un%20pedido%20personalizado" target="_blank" rel="noreferrer" class="btn-main">Pedir por WhatsApp</a>
+            <a href="index.html" class="btn-outline">Volver al inicio</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <div class="brand">
+          <div class="brand-mark">S</div>
+          <div class="brand-copy">
+            <strong>Serenitéé</strong>
+            <span>Pastelería artesanal</span>
+          </div>
+        </div>
+        <p>Catálogo visual con la misma línea elegante y delicada de la página principal.</p>
+      </div>
+
+      <div class="footer-links">
+        <span>Instagram: @serenitee.aversa</span>
+        <span>WhatsApp: +54 9 11 2399-1374</span>
+      </div>
+    </div>
+
+    <div class="container copyright">© 2026 Serenitéé</div>
+  </footer>
+
+  <a class="whatsapp" href="https://wa.me/5491123991374?text=Hola%20quiero%20hacer%20un%20pedido" target="_blank" rel="noreferrer" aria-label="WhatsApp">✆</a>
+
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const mobilePanel = document.getElementById('mobilePanel');
+
+    menuBtn?.addEventListener('click', () => {
+      mobilePanel.classList.toggle('open');
+      menuBtn.textContent = mobilePanel.classList.contains('open') ? '✕' : '☰';
+    });
+
+    document.querySelectorAll('.mobile-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobilePanel.classList.remove('open');
+        if (menuBtn) menuBtn.textContent = '☰';
+      });
+    });
+
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const productCards = document.querySelectorAll('.product-card');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const filter = button.dataset.filter;
+
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        productCards.forEach(card => {
+          const category = card.dataset.category;
+
+          if (filter === 'all' || category === filter) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
