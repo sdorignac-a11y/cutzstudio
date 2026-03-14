@@ -770,6 +770,150 @@
     max-width: 100%;
   }
 }
+    .more-section {
+  padding: 0 0 70px;
+}
+
+.more-wrap {
+  border-radius: 34px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.72);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+}
+
+.more-toggle {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  padding: 24px 26px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  cursor: pointer;
+  font: inherit;
+  color: var(--text);
+}
+
+.more-toggle-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  text-align: left;
+}
+
+.more-toggle-left strong {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.more-toggle-left span {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.more-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: rgba(37,33,30,0.06);
+  color: var(--text);
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.more-wrap.open .more-icon {
+  transform: rotate(45deg);
+  background: #2d2926;
+  color: white;
+}
+
+.more-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.35s ease;
+  padding: 0 26px;
+}
+
+.more-wrap.open .more-content {
+  max-height: 900px;
+  padding: 0 26px 26px;
+}
+
+.more-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.more-card {
+  border-radius: 24px;
+  border: 1px solid var(--line);
+  background: rgba(249,246,242,0.9);
+  padding: 22px;
+}
+
+.more-card h3 {
+  margin: 0 0 10px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+}
+
+.more-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+.more-card a {
+  display: inline-flex;
+  margin-top: 16px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: #2d2926;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+@media (max-width: 720px) {
+  .more-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .more-toggle {
+    padding: 20px 18px;
+  }
+
+  .more-content {
+    padding: 0 18px;
+  }
+
+  .more-wrap.open .more-content {
+    padding: 0 18px 18px;
+  }
+
+  .more-toggle-left strong {
+    font-size: 1.7rem;
+  }
+
+  .more-card {
+    padding: 18px;
+  }
+}
   </style>
 </head>
 <body>
@@ -1075,6 +1219,48 @@
         </div>
       </div>
     </section>
+
+    <section class="more-section">
+  <div class="container">
+    <div class="more-wrap" id="moreWrap">
+      <button class="more-toggle" id="moreToggle" type="button" aria-expanded="false">
+        <div class="more-toggle-left">
+          <strong>Descubrir más propuestas</strong>
+          <span>Opciones pensadas para regalos, eventos y pedidos personalizados.</span>
+        </div>
+        <div class="more-icon">+</div>
+      </button>
+
+      <div class="more-content" id="moreContent">
+        <div class="more-grid">
+          <article class="more-card">
+            <h3>Tortas personalizadas</h3>
+            <p>Diseños a medida según la ocasión, estilo, colores y cantidad de porciones.</p>
+            <a href="https://wa.me/5491123991374?text=Hola%20quiero%20consultar%20por%20una%20torta%20personalizada" target="_blank" rel="noreferrer">Consultar</a>
+          </article>
+
+          <article class="more-card">
+            <h3>Mesas dulces</h3>
+            <p>Propuestas completas para cumpleaños, celebraciones y eventos especiales.</p>
+            <a href="https://wa.me/5491123991374?text=Hola%20quiero%20consultar%20por%20una%20mesa%20dulce" target="_blank" rel="noreferrer">Consultar</a>
+          </article>
+
+          <article class="more-card">
+            <h3>Boxes para regalo</h3>
+            <p>Opciones delicadas y personalizables para sorprender con una presentación especial.</p>
+            <a href="https://wa.me/5491123991374?text=Hola%20quiero%20consultar%20por%20un%20box%20para%20regalo" target="_blank" rel="noreferrer">Consultar</a>
+          </article>
+
+          <article class="more-card">
+            <h3>Pedidos para eventos</h3>
+            <p>Armamos propuestas dulces para reuniones, fechas especiales y celebraciones más grandes.</p>
+            <a href="https://wa.me/5491123991374?text=Hola%20quiero%20consultar%20por%20un%20pedido%20para%20evento" target="_blank" rel="noreferrer">Consultar</a>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
     <section class="cta-section">
       <div class="container">
