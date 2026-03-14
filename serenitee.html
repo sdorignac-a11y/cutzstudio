@@ -450,47 +450,71 @@
       padding-bottom: 8px;
     }
 
-    .opinions-track::-webkit-scrollbar { display: none; }
+   .opinions-track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(420px, 30%);
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding-bottom: 8px;
+}
 
-    .opinion-card {
-      scroll-snap-align: start;
-      min-height: 250px;
-      padding: 28px;
-      border-radius: 30px;
-      background: rgba(255,255,255,0.72);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 18px;
-    }
+.opinions-track::-webkit-scrollbar {
+  display: none;
+}
 
-    .stars {
-      font-size: 1rem;
-      letter-spacing: 0.14em;
-      color: var(--accent-dark);
-    }
+.opinion-card {
+  scroll-snap-align: start;
+  min-height: 210px;
+  padding: 22px 22px 20px;
+  border-radius: 26px;
+  background: rgba(255,255,255,0.72);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+}
 
-    .opinion-card h3 {
-      font-size: 2rem;
-    }
+.stars {
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  color: var(--accent-dark);
+}
 
-    .opinion-card p {
-      margin: 0;
-    }
+.opinion-card h3 {
+  font-size: 1.55rem;
+  line-height: 1.02;
+  margin-top: 6px;
+}
 
-    .opinion-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      line-height: 1.5;
-    }
+.opinion-card p {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.75;
+  color: var(--muted);
+}
 
-    .opinion-meta strong {
-      color: var(--text);
-      font-size: 0.96rem;
-    }
+.opinion-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1.45;
+}
+
+.opinion-meta strong {
+  color: var(--text);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.opinion-meta span {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
 
     .about-grid {
       display: grid;
