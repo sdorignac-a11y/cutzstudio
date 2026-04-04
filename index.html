@@ -3,1032 +3,890 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Serenitéé | Pastelería artesanal</title>
-  <meta name="description" content="Tortas y pastelería artesanal por encargo para cumpleaños, eventos, regalos y ocasiones especiales." />
+  <title>Assistant.AI | La IA para tu sitio web</title>
+  <meta name="theme-color" content="#eaf4ff" />
+  <meta name="description" content="Assistant.AI responde consultas, recomienda productos y ayuda a convertir más visitas en oportunidades dentro de tu sitio web." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg: #f9f6f2;
-      --bg-soft: #f3ede6;
-      --white: rgba(255,255,255,0.82);
-      --text: #25211e;
-      --muted: #7b736c;
-      --line: rgba(37, 33, 30, 0.08);
-      --line-strong: rgba(37, 33, 30, 0.13);
-      --accent: #ccbca9;
-      --accent-dark: #8c7d6d;
-      --shadow: 0 26px 60px rgba(68, 52, 39, 0.07);
-      --shadow-soft: 0 12px 30px rgba(68, 52, 39, 0.06);
-      --radius-xl: 42px;
-      --radius-lg: 30px;
-      --radius-md: 22px;
-      --container: 1180px;
+    :root{
+      --bg:#eef5ff;
+      --bg-soft:#f7fbff;
+      --surface:#ffffffcc;
+      --surface-strong:#ffffff;
+      --line:#cfe0ff;
+      --line-strong:#bad3ff;
+      --text:#12233f;
+      --muted:#5f7396;
+      --primary:#5c8fff;
+      --primary-2:#7b61ff;
+      --sky:#6fd3ff;
+      --success:#18b67a;
+      --shadow:0 18px 50px rgba(80,118,190,.14);
+      --radius-xl:28px;
+      --radius-lg:22px;
+      --radius-md:16px;
+      --container:1180px;
     }
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      color: var(--text);
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:'Sora',sans-serif;
+      color:var(--text);
       background:
-        radial-gradient(circle at top left, rgba(242,232,220,0.55), transparent 28%),
-        linear-gradient(180deg, #fcfaf7 0%, var(--bg) 100%);
-      overflow-x: hidden;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    img {
-      display: block;
-      width: 100%;
-    }
-
-    .container {
-      width: min(var(--container), calc(100% - 40px));
-      margin: 0 auto;
-    }
-
-    .topbar {
-      padding: 14px 0;
-      text-align: center;
-      border-bottom: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 0.8rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      background: rgba(255,255,255,0.55);
-      backdrop-filter: blur(10px);
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 60;
-      background: rgba(249,246,242,0.82);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(37,33,30,0.05);
-    }
-
-    .nav {
-      min-height: 96px;
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      align-items: center;
-      gap: 18px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .brand-mark {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      background: rgba(255,255,255,0.82);
-      border: 1px solid var(--line);
-      box-shadow: 0 10px 24px rgba(70,52,38,0.05);
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem;
-      flex-shrink: 0;
-    }
-
-    .brand-copy strong {
-      display: block;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.9rem;
-      font-weight: 600;
-      line-height: 0.95;
-      letter-spacing: -0.04em;
-    }
-
-    .brand-copy span {
-      display: block;
-      margin-top: 5px;
-      color: var(--muted);
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-    }
-
-    .nav-center {
-      justify-self: center;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.72);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--muted);
-      font-size: 0.92rem;
-      font-weight: 700;
-    }
-
-    .nav-links a {
-      padding: 11px 18px;
-      border-radius: 999px;
-      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
-    }
-
-    .nav-links a:hover {
-      background: rgba(37,33,30,0.06);
-      color: var(--text);
-      transform: translateY(-1px);
-    }
-
-    .header-cta {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 14px 22px;
-      border-radius: 999px;
-      background: #2d2926;
-      color: white;
-      font-size: 0.93rem;
-      font-weight: 700;
-      box-shadow: 0 16px 34px rgba(45,41,38,0.14);
-      transition: transform 0.18s ease, box-shadow 0.18s ease;
-      white-space: nowrap;
-    }
-
-    .header-cta:hover {
-      transform: translateY(-2px);
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 999px;
-      padding: 14px 22px;
-      font-size: 0.93rem;
-      font-weight: 700;
-      border: 0;
-      cursor: pointer;
-      transition: transform 0.18s ease, box-shadow 0.18s ease;
-      white-space: nowrap;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-    }
-
-    .btn-primary {
-      background: #2d2926;
-      color: white;
-      box-shadow: 0 16px 34px rgba(45,41,38,0.14);
-    }
-
-    .btn-secondary {
-      background: rgba(255,255,255,0.75);
-      color: var(--text);
-      border: 1px solid var(--line);
-    }
-
-    .menu-btn {
-      display: none;
-      width: 46px;
-      height: 46px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.75);
-      cursor: pointer;
-      font-size: 1.15rem;
-    }
-
-    .mobile-panel {
-      display: none;
-      padding: 0 0 18px;
-    }
-
-    .mobile-panel.open {
-      display: block;
-    }
-
-    .mobile-links {
-      display: grid;
-      gap: 10px;
-    }
-
-    .mobile-links a {
-      padding: 14px 16px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.76);
-      border: 1px solid var(--line);
-      font-weight: 700;
-    }
-
-    .section {
-      padding: 110px 0;
-    }
-
-    .section-tight {
-      padding: 86px 0;
-    }
-
-    .hero {
-      padding: 78px 0 56px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 34px;
-      align-items: start;
-    }
-
-    .hero-copy {
-      max-width: 980px;
-      margin: 0 auto;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .eyebrow,
-    .section-label {
-      display: inline-block;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      font-size: 0.78rem;
-      font-weight: 700;
-    }
-
-    .hero .eyebrow {
-      margin-bottom: 24px;
-    }
-
-    .hero h1,
-    .section-title,
-    .product-info h3,
-    .about-card h3,
-    .cta h2,
-    .opinion-card h3 {
-      margin: 0;
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 600;
-      letter-spacing: -0.05em;
-      line-height: 0.92;
-      color: var(--text);
-    }
-
-    .hero h1 {
-      font-size: clamp(3.2rem, 6vw, 5.6rem);
-      max-width: 15ch;
-      text-wrap: balance;
-    }
-
-    .hero p,
-    .section-lead,
-    .product-info p,
-    .about-card p,
-    .about-note,
-    .cta p,
-    footer p,
-    .opinion-card p,
-    .opinion-meta {
-      color: var(--muted);
-      line-height: 1.95;
-      font-size: 0.98rem;
-    }
-
-    .hero p {
-      max-width: 760px;
-      margin: 26px auto 0;
-    }
-
-    .hero-actions {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 34px;
-    }
-
-    .hero-image {
-      width: min(100%, 980px);
-      min-height: 620px;
-      margin: 0 auto;
-      border-radius: var(--radius-xl);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      background: url('https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1400&q=80') center/cover;
-    }
-
-    .hero-note {
-      margin-top: 22px;
-      color: var(--muted);
-      font-size: 0.9rem;
-      letter-spacing: 0.02em;
-    }
-
-    .section-head {
-      max-width: 720px;
-      margin-bottom: 54px;
-    }
-
-    .section-title {
-      margin-top: 18px;
-      font-size: clamp(2.7rem, 5vw, 4.6rem);
-      max-width: 11ch;
-    }
-
-    .section-lead {
-      max-width: 570px;
-      margin-top: 20px;
-    }
-
-    .cakes-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
-    }
-
-    .cake-card {
-      background: rgba(255,255,255,0.72);
-      border: 1px solid var(--line);
-      border-radius: 30px;
-      overflow: hidden;
-      box-shadow: var(--shadow);
-    }
-
-    .cake-media {
-      aspect-ratio: 1 / 1.12;
-      background: var(--bg-soft);
-      overflow: hidden;
-    }
-
-    .cake-media img {
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.35s ease;
-    }
-
-    .cake-card:hover .cake-media img {
-      transform: scale(1.04);
-    }
-
-    .product-info {
-      padding: 24px;
-    }
-
-    .product-info small {
-      display: inline-block;
-      margin-bottom: 12px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      font-size: 0.74rem;
-      font-weight: 700;
-    }
-
-    .product-info h3 {
-      font-size: 2.15rem;
-    }
-
-    .product-info p {
-      margin: 14px 0 0;
-    }
-
-    .meta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 20px;
-    }
-
-    .meta-pill {
-      padding: 9px 12px;
-      border-radius: 999px;
-      background: rgba(243,237,230,0.95);
-      border: 1px solid rgba(37,33,30,0.05);
-      color: var(--muted);
-      font-size: 0.8rem;
-      font-weight: 700;
-    }
-
-    .opinions-shell {
-      overflow: hidden;
-    }
-
-    .opinions-top {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 18px;
-      margin-bottom: 28px;
-    }
-
-    .carousel-controls {
-      display: flex;
-      gap: 10px;
-      flex-shrink: 0;
-    }
-
-    .carousel-btn {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      border: 1px solid var(--line-strong);
-      background: rgba(255,255,255,0.78);
-      color: var(--text);
-      font-size: 1.1rem;
-      cursor: pointer;
-      box-shadow: var(--shadow-soft);
-      transition: transform 0.18s ease, background 0.18s ease;
-    }
-
-    .carousel-btn:hover {
-      transform: translateY(-2px);
-      background: rgba(255,255,255,0.95);
-    }
-
-    .opinions-track {
-      display: grid;
-      grid-auto-flow: column;
-      grid-auto-columns: minmax(420px, 30%);
-      gap: 16px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      scrollbar-width: none;
-      padding-bottom: 8px;
-    }
-
-    .opinions-track::-webkit-scrollbar {
-      display: none;
-    }
-
-    .opinion-card {
-      scroll-snap-align: start;
-      min-height: 210px;
-      padding: 22px 22px 20px;
-      border-radius: 26px;
-      background: rgba(255,255,255,0.72);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 14px;
-    }
-
-    .stars {
-      font-size: 0.8rem;
-      letter-spacing: 0.12em;
-      color: var(--accent-dark);
-    }
-
-    .opinion-card h3 {
-      font-size: 1.55rem;
-      line-height: 1.02;
-      margin-top: 6px;
-    }
-
-    .opinion-card p {
-      margin: 0;
-      font-size: 0.92rem;
-      line-height: 1.75;
-      color: var(--muted);
-    }
-
-    .opinion-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      line-height: 1.45;
-    }
-
-    .opinion-meta strong {
-      color: var(--text);
-      font-size: 0.88rem;
-      font-weight: 700;
-    }
-
-    .opinion-meta span {
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 34px;
-      align-items: stretch;
-    }
-
-    .about-image {
-      min-height: 560px;
-      border-radius: 36px;
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      background: url('https://images.unsplash.com/photo-1483695028939-5bb13f8648b0?auto=format&fit=crop&w=1400&q=80') center/cover;
-    }
-
-    .about-card {
-      padding: 38px;
-      border-radius: 36px;
-      background: rgba(255,255,255,0.72);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .about-card h3 {
-      font-size: clamp(2.4rem, 4vw, 3.5rem);
-      max-width: 10ch;
-    }
-
-    .about-card p {
-      margin: 18px 0 0;
-      max-width: 520px;
-    }
-
-    .about-note {
-      margin-top: 26px;
-      padding-top: 22px;
-      border-top: 1px solid var(--line);
-      max-width: 460px;
-    }
-
-    .cta {
-      text-align: center;
-      padding: 52px 28px;
-      border-radius: 38px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(243,237,230,0.88));
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-    }
-
-    .cta h2 {
-      font-size: clamp(2.5rem, 5vw, 4.1rem);
-      max-width: 11ch;
-      margin: 0 auto;
-    }
-
-    .cta p {
-      max-width: 560px;
-      margin: 18px auto 0;
-    }
-
-    .cta-actions {
-      display: flex;
-      justify-content: center;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-top: 28px;
-    }
-
-    footer {
-      padding: 82px 0 34px;
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 24px;
-      align-items: end;
-      padding-top: 28px;
-      border-top: 1px solid var(--line);
-    }
-
-    .footer-links {
-      display: grid;
-      gap: 10px;
-      text-align: right;
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-
-    .copyright {
-      margin-top: 24px;
-      color: var(--muted);
-      font-size: 0.85rem;
-    }
-
-    .whatsapp {
-      position: fixed;
-      right: 18px;
-      bottom: 18px;
-      z-index: 80;
-      width: 60px;
-      height: 60px;
-      border-radius: 999px;
-      display: grid;
-      place-items: center;
-      background: #2d2926;
-      color: white;
-      border: 3px solid rgba(255,255,255,0.9);
-      box-shadow: 0 18px 34px rgba(45,41,38,0.16);
-      font-size: 1.1rem;
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(34px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-      transition-delay: var(--reveal-delay, 0ms);
-      will-change: opacity, transform;
-    }
-
-    .reveal.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-
-      .reveal,
-      .reveal.is-visible,
-      .btn,
-      .header-cta,
-      .carousel-btn,
-      .cake-media img,
-      .nav-links a {
-        transition: none !important;
-        transform: none !important;
-        opacity: 1 !important;
+        radial-gradient(900px 500px at 0% -10%, rgba(111,211,255,.34), transparent 60%),
+        radial-gradient(900px 500px at 100% 0%, rgba(123,97,255,.14), transparent 58%),
+        linear-gradient(180deg, #f8fbff 0%, #edf4ff 52%, #eaf2ff 100%);
+    }
+    img{max-width:100%;display:block}
+    a{text-decoration:none;color:inherit}
+    button{font:inherit}
+
+    .container{width:min(var(--container), calc(100% - 32px)); margin:0 auto}
+    .section{padding:84px 0}
+    .section-sm{padding:64px 0}
+
+    .glass{
+      background:var(--surface);
+      backdrop-filter:blur(14px);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+    }
+
+    .section-head{
+      text-align:center;
+      max-width:780px;
+      margin:0 auto 36px;
+    }
+    .eyebrow{
+      display:inline-flex;
+      padding:8px 14px;
+      border-radius:999px;
+      font-size:.8rem;
+      font-weight:700;
+      letter-spacing:.05em;
+      text-transform:uppercase;
+      color:#2158d8;
+      background:rgba(92,143,255,.10);
+      border:1px solid rgba(92,143,255,.16);
+      margin-bottom:14px;
+    }
+    .section-head h2{
+      margin:0 0 14px;
+      font-size:clamp(2rem, 4vw, 3rem);
+      line-height:1.08;
+      letter-spacing:-.03em;
+    }
+    .section-head p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.8;
+      font-size:1rem;
+    }
+
+    .btn-row{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:14px 20px;
+      border-radius:14px;
+      border:none;
+      cursor:pointer;
+      transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+      font-weight:700;
+    }
+    .btn:hover{transform:translateY(-2px)}
+    .btn-primary{
+      color:#fff;
+      background:linear-gradient(135deg, var(--primary), var(--primary-2));
+      box-shadow:0 16px 30px rgba(92,143,255,.28);
+    }
+    .btn-secondary{
+      color:#1c4cc2;
+      background:rgba(255,255,255,.82);
+      border:1px solid var(--line);
+    }
+
+    /* NAV */
+    .nav-wrap{position:sticky; top:0; z-index:50; padding-top:18px}
+    .nav{
+      min-height:72px;
+      border-radius:999px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      padding:12px 18px 12px 22px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:800;
+      letter-spacing:-.02em;
+    }
+    .brand-mark{
+      width:40px;
+      height:40px;
+      border-radius:14px;
+      background:linear-gradient(135deg, var(--primary), var(--sky));
+      color:#fff;
+      display:grid;
+      place-items:center;
+      box-shadow:0 12px 28px rgba(92,143,255,.28);
+      font-size:1.1rem;
+      font-weight:800;
+    }
+    .brand small{
+      display:block;
+      color:var(--muted);
+      font-weight:600;
+      font-size:.72rem;
+      letter-spacing:0;
+    }
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .nav-links a{
+      padding:10px 14px;
+      border-radius:12px;
+      color:#244163;
+      font-size:.95rem;
+      font-weight:600;
+      transition:background .2s ease, color .2s ease;
+    }
+    .nav-links a:hover{
+      background:rgba(92,143,255,.10);
+      color:#2158d8;
+    }
+    .nav-cta{display:flex; align-items:center; gap:10px}
+    .menu-toggle{
+      display:none;
+      width:44px;height:44px;border:none;border-radius:14px;
+      background:#fff;color:#1f3e72; cursor:pointer;
+      box-shadow:var(--shadow);
+    }
+
+    /* HERO */
+    .hero{padding:28px 0 42px}
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.08fr .92fr;
+      gap:24px;
+      align-items:stretch;
+    }
+    .hero-copy,
+    .hero-card{border-radius:var(--radius-xl)}
+    .hero-copy{padding:36px}
+    .hero-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 14px;
+      border-radius:999px;
+      color:#2158d8;
+      background:rgba(92,143,255,.10);
+      border:1px solid rgba(92,143,255,.16);
+      font-size:.9rem;
+      font-weight:700;
+      margin-bottom:18px;
+    }
+    .hero h1{
+      margin:0 0 18px;
+      font-size:clamp(2.5rem, 5vw, 4.5rem);
+      line-height:1.02;
+      letter-spacing:-.05em;
+      max-width:11ch;
+    }
+    .hero p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.85;
+      max-width:60ch;
+    }
+    .hero-actions{margin-top:26px}
+    .hero-badges{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:22px;
+    }
+    .hero-badge{
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,.72);
+      border:1px solid var(--line);
+      color:#2b4f83;
+      font-size:.92rem;
+      font-weight:600;
+    }
+
+    .hero-card{padding:24px; display:flex; flex-direction:column; gap:18px}
+    .window-top{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+    }
+    .window-dots{display:flex; gap:8px}
+    .window-dots span{
+      width:10px; height:10px; border-radius:999px;
+      background:#d8e5ff;
+    }
+    .window-tag{
+      padding:8px 12px; border-radius:999px; font-size:.8rem; font-weight:700;
+      color:#2158d8; background:rgba(92,143,255,.10); border:1px solid rgba(92,143,255,.15);
+    }
+    .preview-box{
+      background:linear-gradient(180deg, #f8fbff 0%, #eef5ff 100%);
+      border:1px solid #d8e5ff;
+      border-radius:22px;
+      padding:18px;
+    }
+    .preview-box h3{margin:0 0 14px; font-size:1.22rem}
+    .chat-demo{display:flex; flex-direction:column; gap:12px}
+    .bubble{
+      max-width:86%;
+      padding:12px 14px;
+      border-radius:18px;
+      line-height:1.6;
+      font-size:.94rem;
+    }
+    .bubble.user{
+      margin-left:auto;
+      background:rgba(92,143,255,.16);
+      border:1px solid rgba(92,143,255,.20);
+    }
+    .bubble.bot{
+      background:#fff;
+      border:1px solid #dbe7ff;
+      color:#254063;
+    }
+    .mini-list{
+      display:grid;
+      gap:10px;
+    }
+    .mini-item{
+      display:flex; gap:12px; align-items:flex-start;
+      padding:14px;
+      border-radius:18px;
+      background:rgba(255,255,255,.72);
+      border:1px solid #dce8ff;
+    }
+    .mini-num{
+      width:34px;height:34px;border-radius:12px;
+      background:linear-gradient(135deg, #dcebff, #e9f5ff);
+      color:#2158d8;
+      display:grid;place-items:center; font-weight:800; flex:0 0 auto;
+    }
+    .mini-item strong{display:block; margin-bottom:4px}
+    .mini-item span{color:var(--muted); line-height:1.6; font-size:.94rem}
+
+    /* BENEFITS */
+    .benefits-grid{
+      display:grid;
+      grid-template-columns:repeat(4, minmax(0,1fr));
+      gap:18px;
+    }
+    .benefit-card{
+      padding:24px;
+      border-radius:var(--radius-lg);
+      min-height:245px;
+      display:flex;
+      flex-direction:column;
+      background:rgba(255,255,255,.82);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      transition:transform .2s ease, border-color .2s ease;
+    }
+    .benefit-card:hover{transform:translateY(-4px); border-color:var(--line-strong)}
+    .benefit-icon{
+      width:48px;height:48px;border-radius:16px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg, rgba(92,143,255,.16), rgba(111,211,255,.20));
+      color:#2158d8; font-weight:800; margin-bottom:18px;
+    }
+    .benefit-card h3{margin:0 0 10px; font-size:1.12rem; line-height:1.25}
+    .benefit-card p{margin:0; color:var(--muted); line-height:1.75; font-size:.95rem}
+    .benefit-meta{margin-top:auto; padding-top:18px; display:flex; gap:10px; flex-wrap:wrap}
+    .chip{
+      display:inline-flex; padding:9px 12px; border-radius:999px;
+      background:#eef5ff; border:1px solid #d8e5ff; color:#2e4f82; font-size:.84rem; font-weight:700;
+    }
+
+    /* HOW IT WORKS */
+    .flow-grid{
+      display:grid;
+      grid-template-columns:.95fr 1.05fr;
+      gap:20px;
+      align-items:stretch;
+    }
+    .steps,
+    .flow-visual{border-radius:var(--radius-xl)}
+    .steps{padding:26px}
+    .step-list{display:grid; gap:14px}
+    .step-item{
+      display:flex; gap:16px; align-items:flex-start;
+      padding:18px;
+      border-radius:20px;
+      background:rgba(255,255,255,.72);
+      border:1px solid #dbe7ff;
+    }
+    .step-num{
+      width:42px;height:42px;border-radius:14px;
+      display:grid; place-items:center;
+      background:linear-gradient(135deg, var(--primary), var(--sky));
+      color:#fff; font-weight:800; flex:0 0 auto;
+      box-shadow:0 12px 24px rgba(92,143,255,.22);
+    }
+    .step-item h3{margin:0 0 6px; font-size:1.06rem}
+    .step-item p{margin:0; color:var(--muted); line-height:1.75; font-size:.94rem}
+
+    .flow-visual{padding:24px}
+    .visual-card{
+      height:100%;
+      border-radius:24px;
+      border:1px solid #dce7ff;
+      background:linear-gradient(180deg, #f8fbff 0%, #edf5ff 100%);
+      padding:22px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:18px;
+    }
+    .visual-screen{
+      border-radius:22px;
+      background:#fff;
+      border:1px solid #dce7ff;
+      padding:18px;
+      box-shadow:0 18px 40px rgba(80,118,190,.08);
+    }
+    .screen-header{display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:14px}
+    .screen-header strong{font-size:1rem}
+    .status-pill{padding:8px 12px; border-radius:999px; background:rgba(24,182,122,.10); color:#10835b; border:1px solid rgba(24,182,122,.16); font-size:.82rem; font-weight:700}
+    .screen-grid{display:grid; gap:12px}
+    .screen-row{
+      display:grid; grid-template-columns:1fr auto; gap:12px;
+      padding:14px;
+      border-radius:16px;
+      background:#f6faff;
+      border:1px solid #deebff;
+    }
+    .screen-row span{color:var(--muted); font-size:.9rem}
+    .screen-row strong{font-size:.95rem}
+
+    /* COMPARE */
+    .compare-switches{
+      display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin-bottom:22px;
+    }
+    .compare-btn{
+      border:none; cursor:pointer; padding:12px 18px; border-radius:999px;
+      background:#fff; border:1px solid var(--line); color:#2d4d81; font-weight:700;
+      transition:all .2s ease;
+    }
+    .compare-btn.active{background:linear-gradient(135deg, var(--primary), var(--primary-2)); color:#fff; box-shadow:0 16px 28px rgba(92,143,255,.24)}
+    .compare-grid{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:20px}
+    .compare-card{
+      padding:28px;
+      border-radius:var(--radius-lg);
+      background:rgba(255,255,255,.82);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      transition:opacity .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    .compare-card.dim{opacity:.55; transform:scale(.985)}
+    .compare-card h3{margin:0 0 14px; font-size:1.28rem}
+    .compare-card ul{list-style:none; margin:0; padding:0; display:grid; gap:12px}
+    .compare-card li{padding:14px 16px; border-radius:16px; background:#f7fbff; border:1px solid #deebff; color:#39587f; line-height:1.6}
+    .compare-badge{display:inline-flex; margin-bottom:16px; padding:8px 12px; border-radius:999px; font-size:.82rem; font-weight:700}
+    .badge-before{background:rgba(255,123,123,.10); color:#c25151; border:1px solid rgba(255,123,123,.14)}
+    .badge-after{background:rgba(24,182,122,.10); color:#10835b; border:1px solid rgba(24,182,122,.14)}
+
+    /* SERVICES */
+    .services-grid{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:18px;
+    }
+    .service-card{
+      padding:26px;
+      border-radius:var(--radius-lg);
+      background:rgba(255,255,255,.84);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+    }
+    .service-card.featured{border-color:#bfd7ff; box-shadow:0 22px 46px rgba(92,143,255,.16)}
+    .service-tag{display:inline-flex; margin-bottom:14px; padding:8px 12px; border-radius:999px; background:#eef5ff; border:1px solid #dbe7ff; color:#2a55cb; font-size:.8rem; font-weight:700}
+    .service-card h3{margin:0 0 10px; font-size:1.18rem}
+    .service-card p{margin:0 0 18px; color:var(--muted); line-height:1.8}
+    .service-note{padding:12px 14px; border-radius:16px; background:#f8fbff; border:1px solid #deebff; color:#39587f; font-size:.92rem; font-weight:600}
+
+    /* FAQ */
+    .faq-list{display:grid; gap:14px; max-width:920px; margin:0 auto}
+    .faq-item{
+      border-radius:22px;
+      overflow:hidden;
+      background:rgba(255,255,255,.84);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+    }
+    .faq-question{
+      width:100%; border:none; background:transparent; cursor:pointer;
+      display:flex; justify-content:space-between; align-items:center; gap:16px;
+      padding:22px 22px; text-align:left; color:var(--text); font-weight:700;
+    }
+    .faq-icon{
+      width:34px; height:34px; border-radius:12px;
+      display:grid; place-items:center; background:#eef5ff; color:#2555cc; font-size:1.2rem; flex:0 0 auto;
+    }
+    .faq-answer{max-height:0; overflow:hidden; transition:max-height .25s ease}
+    .faq-answer p{margin:0; padding:0 22px 22px; color:var(--muted); line-height:1.8}
+    .faq-item.open .faq-answer{max-height:220px}
+    .faq-item.open .faq-icon{transform:rotate(45deg)}
+
+    /* CTA / FOOTER */
+    .cta-card{
+      padding:34px;
+      border-radius:var(--radius-xl);
+      text-align:center;
+    }
+    .cta-card h2{margin:0 0 12px; font-size:clamp(2rem, 4vw, 3rem); line-height:1.08}
+    .cta-card p{margin:0 auto; max-width:60ch; color:var(--muted); line-height:1.85}
+    .cta-card .btn-row{justify-content:center; margin-top:24px}
+
+    footer{padding:24px 0 48px}
+    .footer-bar{
+      display:flex; justify-content:space-between; gap:18px; align-items:center; flex-wrap:wrap;
+      padding:20px 24px; border-radius:22px;
+    }
+    .footer-bar p{margin:0; color:var(--muted); font-size:.92rem}
+    .footer-links{display:flex; gap:16px; flex-wrap:wrap}
+    .footer-links a{color:#2b4f83; font-weight:600; font-size:.92rem}
+
+    /* reveal */
+    .reveal{opacity:0; transform:translateY(24px); transition:opacity .65s ease, transform .65s ease}
+    .reveal.show{opacity:1; transform:none}
+
+    /* responsive */
+    @media (max-width: 1100px){
+      .benefits-grid,
+      .services-grid{grid-template-columns:repeat(2, minmax(0,1fr))}
+      .hero-grid,
+      .flow-grid{grid-template-columns:1fr}
+      .hero h1{max-width:none}
+    }
+    @media (max-width: 820px){
+      .nav{border-radius:26px; align-items:flex-start}
+      .menu-toggle{display:grid; place-items:center}
+      .nav-links{
+        display:none;
+        width:100%;
+        flex-direction:column;
+        align-items:flex-start;
+        padding-top:14px;
       }
+      .nav-links.open{display:flex}
+      .nav-cta{margin-left:auto}
+      .benefits-grid,
+      .services-grid,
+      .compare-grid{grid-template-columns:1fr}
+      .hero-copy,
+      .hero-card,
+      .steps,
+      .flow-visual,
+      .cta-card{padding:24px}
+      .section{padding:68px 0}
     }
-
-    @media (max-width: 1050px) {
-      .about-grid,
-      .footer-grid,
-      .nav {
-        grid-template-columns: 1fr;
-      }
-
-      .cakes-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .nav-center,
-      .desktop-only {
-        display: none;
-      }
-
-      .nav {
-        min-height: 86px;
-        display: flex;
-        justify-content: space-between;
-      }
-
-      .opinions-track {
-        grid-auto-columns: 72%;
-      }
-
-      .hero-image {
-        min-height: 520px;
-      }
-
-      .about-image {
-        min-height: 420px;
-      }
-
-      .footer-links {
-        text-align: left;
-      }
-
-      .menu-btn {
-        display: inline-grid;
-        place-items: center;
-      }
-    }
-
-    @media (max-width: 820px) {
-      .section {
-        padding: 86px 0;
-      }
-
-      .hero {
-        padding: 48px 0 30px;
-      }
-
-      .opinions-top {
-        flex-direction: column;
-        align-items: start;
-      }
-
-      .opinions-track {
-        grid-auto-columns: 84%;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .container {
-        width: min(calc(100% - 22px), var(--container));
-      }
-
-      .hero h1 {
-        max-width: 12ch;
-      }
-
-      .hero-actions .btn,
-      .cta-actions .btn {
-        width: 100%;
-      }
-
-      .hero-image {
-        min-height: 390px;
-        border-radius: 28px;
-      }
-
-      .about-card,
-      .cta,
-      .product-info {
-        padding: 24px 20px;
-      }
-
-      .opinion-card {
-        min-height: 190px;
-        padding: 20px 18px 18px;
-      }
-
-      .about-image {
-        border-radius: 28px;
-      }
-
-      .section-head {
-        margin-bottom: 36px;
-      }
-
-      .hero-note {
-        text-align: center;
-      }
-
-      .brand-copy strong {
-        font-size: 1.6rem;
-      }
-
-      .brand-copy span {
-        font-size: 0.72rem;
-      }
-
-      .topbar {
-        font-size: 0.72rem;
-      }
-
-      .opinions-track {
-        grid-auto-columns: 92%;
-      }
-
-      .opinion-card h3 {
-        font-size: 1.35rem;
-      }
-
-      .stars {
-        font-size: 0.75rem;
-      }
+    @media (max-width: 560px){
+      .container{width:min(var(--container), calc(100% - 20px))}
+      .hero{padding-top:18px}
+      .hero h1{font-size:2.55rem}
+      .section-head h2{font-size:2rem}
+      .btn{width:100%}
+      .btn-row{flex-direction:column}
+      .nav{padding:12px}
+      .brand{gap:10px}
+      .brand-mark{width:36px;height:36px}
+      .hero-badges{gap:8px}
+      .hero-badge,.chip{font-size:.8rem}
     }
   </style>
 </head>
 <body>
-  <div class="topbar">Pedidos con 48 hs de anticipación</div>
+  <div class="nav-wrap">
+    <div class="container">
+      <nav class="nav glass">
+        <a href="#inicio" class="brand" aria-label="Ir al inicio">
+          <div class="brand-mark">AI</div>
+          <div>
+            Assistant.AI
+            <small>Atención inteligente para tu web</small>
+          </div>
+        </a>
 
-  <header>
-    <div class="container nav">
-      <a href="#inicio" class="brand">
-        <div class="brand-mark">S</div>
-        <div class="brand-copy">
-          <strong>Serenitéé</strong>
-          <span>Pastelería artesanal</span>
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">☰</button>
+
+        <div class="nav-links" id="navLinks">
+          <a href="#beneficios">Beneficios</a>
+          <a href="#funciona">Cómo funciona</a>
+          <a href="#comparador">Antes / Después</a>
+          <a href="#servicios">Aplicaciones</a>
+          <a href="#faq">FAQ</a>
         </div>
-      </a>
 
-      <div class="nav-center desktop-only">
-        <nav class="nav-links">
-          <a href="#inicio">Inicio</a>
-          <a href="productos.html">Tortas</a>
-          <a href="#opiniones">Opiniones</a>
-          <a href="#nosotros">Nosotros</a>
-          <a href="#contacto">Contacto</a>
-        </nav>
-      </div>
-
-      <div class="desktop-only">
-        <a href="https://wa.me/5491123991374?text=Hola%20quiero%20hacer%20un%20pedido" target="_blank" rel="noreferrer" class="header-cta">Hacer pedido</a>
-      </div>
-
-      <button class="menu-btn" id="menuBtn" aria-label="Abrir menú">☰</button>
+        <div class="nav-cta">
+          <a class="btn btn-primary" href="#cta">Ver demo</a>
+        </div>
+      </nav>
     </div>
-
-    <div class="container mobile-panel" id="mobilePanel">
-      <div class="mobile-links">
-        <a href="#inicio">Inicio</a>
-        <a href="productos.html">Tortas</a>
-        <a href="#opiniones">Opiniones</a>
-        <a href="#nosotros">Nosotros</a>
-        <a href="#contacto">Contacto</a>
-        <a href="https://wa.me/5491123991374?text=Hola%20quiero%20hacer%20un%20pedido" target="_blank" rel="noreferrer">Hacer pedido</a>
-      </div>
-    </div>
-  </header>
+  </div>
 
   <main>
     <section class="hero" id="inicio">
-      <div class="container hero-grid">
-        <div class="hero-copy reveal">
-          <span class="eyebrow">Tortas por encargo · eventos · ocasiones especiales</span>
-          <h1>Tortas y pastelería artesanal para momentos especiales.</h1>
-          <p>
-            Creamos tortas, mesas dulces y pedidos personalizados para cumpleaños, celebraciones, eventos y regalos.
-            Cada creación está pensada para combinar sabor, detalle y una presentación delicada.
-          </p>
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-copy glass reveal">
+            <div class="hero-pill">Responder mejor. Vender mejor. Atender mejor.</div>
+            <h1>La IA que trabaja dentro de tu sitio web</h1>
+            <p>
+              Assistant.AI responde consultas, recomienda productos, guía al visitante y ayuda a convertir más oportunidades en tiempo real.
+              Todo desde tu web y con la información real de tu negocio.
+            </p>
 
-          <div class="hero-actions">
-  <a href="https://wa.me/5491123991374?text=Hola%20quiero%20hacer%20un%20pedido" target="_blank" rel="noreferrer" class="btn btn-primary">Pedir por WhatsApp</a>
-  <a href="productos.html" class="btn btn-secondary">Ver tortas</a>
-</div>
+            <div class="hero-actions btn-row">
+              <a href="#cta" class="btn btn-primary">Quiero ver cómo funciona</a>
+              <a href="#funciona" class="btn btn-secondary">Ver implementación</a>
+            </div>
 
-          <div class="hero-note">Tomamos pedidos para fiestas, cumpleaños, celebraciones y regalos especiales.</div>
+            <div class="hero-badges">
+              <span class="hero-badge">Disponible 24/7</span>
+              <span class="hero-badge">Con tu info real</span>
+              <span class="hero-badge">Integración simple</span>
+              <span class="hero-badge">Diseñado para convertir</span>
+            </div>
+          </div>
+
+          <div class="hero-card glass reveal">
+            <div class="window-top">
+              <div class="window-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="window-tag">Vista previa</div>
+            </div>
+
+            <div class="preview-box">
+              <h3>Así se siente la experiencia</h3>
+              <div class="chat-demo">
+                <div class="bubble user">Hola, ¿tienen disponibilidad para hoy?</div>
+                <div class="bubble bot">Sí, hoy hay disponibilidad. También te puedo mostrar horarios, formas de pago o ayudarte a reservar.</div>
+                <div class="bubble user">¿Y aceptan transferencia?</div>
+                <div class="bubble bot">Sí, podemos responder con los medios de pago reales que tengas cargados en tu panel.</div>
+              </div>
+            </div>
+
+            <div class="mini-list">
+              <div class="mini-item">
+                <div class="mini-num">01</div>
+                <div>
+                  <strong>Atiende sin fricción</strong>
+                  <span>Evita esperas y responde con más claridad desde el primer mensaje.</span>
+                </div>
+              </div>
+              <div class="mini-item">
+                <div class="mini-num">02</div>
+                <div>
+                  <strong>Usa información real</strong>
+                  <span>Productos, horarios, promos, servicios, condiciones y medios de pago.</span>
+                </div>
+              </div>
+              <div class="mini-item">
+                <div class="mini-num">03</div>
+                <div>
+                  <strong>Se integra fácil</strong>
+                  <span>La idea es que puedas sumarlo a tu sitio sin una implementación complicada.</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <div class="hero-image reveal" style="--reveal-delay: 120ms;" aria-label="Torta artesanal de Serenitéé"></div>
       </div>
     </section>
 
-    <section class="section" id="tortas">
+    <section class="section" id="beneficios">
       <div class="container">
         <div class="section-head reveal">
-          <span class="section-label">Ejemplos</span>
-          <h2 class="section-title">Algunas de nuestras creaciones.</h2>
-          <p class="section-lead">
-            Una selección de tortas y propuestas dulces hechas por encargo, con diseños cuidados y sabores pensados para cada ocasión.
-          </p>
-        </div>
-
-        <div class="cakes-grid">
-          <article class="cake-card reveal">
-            <div class="cake-media">
-              <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1200&q=80" alt="Marquise de chocolate" />
-            </div>
-            <div class="product-info">
-              <small>Signature</small>
-              <h3>Marquise</h3>
-              <p>Base de chocolate amargo sin gluten, dulce de leche y merengue italiano.</p>
-              <div class="meta-row">
-                <span class="meta-pill">$60.000</span>
-                <span class="meta-pill">8/10 porciones</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="cake-card reveal" style="--reveal-delay: 90ms;">
-            <div class="cake-media">
-              <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=1200&q=80" alt="Pavlova" />
-            </div>
-            <div class="product-info">
-              <small>Floral</small>
-              <h3>Pavlova</h3>
-              <p>Merengue, dulce de leche, crema y frutas de estación con una terminación delicada.</p>
-              <div class="meta-row">
-                <span class="meta-pill">$75.000</span>
-                <span class="meta-pill">10 porciones</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="cake-card reveal" style="--reveal-delay: 180ms;">
-            <div class="cake-media">
-              <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=1200&q=80" alt="Cheesecake" />
-            </div>
-            <div class="product-info">
-              <small>Clásico</small>
-              <h3>Cheesecake</h3>
-              <p>Base crocante de vainilla, queso crema, frutas de estación y mermelada.</p>
-              <div class="meta-row">
-                <span class="meta-pill">$65.000</span>
-                <span class="meta-pill">10 porciones</span>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section-tight" id="opiniones">
-      <div class="container opinions-shell">
-        <div class="opinions-top reveal">
-          <div class="section-head" style="margin-bottom:0;">
-            <span class="section-label">Opiniones</span>
-            <h2 class="section-title" style="max-width: 12ch;">Lo que dicen quienes ya pidieron.</h2>
-            <p class="section-lead">
-              Una selección de reseñas reales para mostrar la experiencia, el cuidado y la dedicación en cada pedido.
-            </p>
-          </div>
-
-          <div class="carousel-controls">
-            <button class="carousel-btn" id="opinionsPrev" aria-label="Anterior">←</button>
-            <button class="carousel-btn" id="opinionsNext" aria-label="Siguiente">→</button>
-          </div>
-        </div>
-
-        <div class="opinions-track" id="opinionsTrack">
-          <article class="opinion-card reveal">
-            <div>
-              <div class="stars">★★★★★</div>
-              <h3>Hermosa presentación</h3>
-            </div>
-            <p>“La torta llegó impecable, súper rica y con una presentación divina. Quedó perfecta para el cumpleaños.”</p>
-            <div class="opinion-meta">
-              <strong>Martina R.</strong>
-              <span>Pedido personalizado</span>
-            </div>
-          </article>
-
-          <article class="opinion-card reveal" style="--reveal-delay: 80ms;">
-            <div>
-              <div class="stars">★★★★★</div>
-              <h3>Muy delicado todo</h3>
-            </div>
-            <p>“Se nota el cuidado en cada detalle. Desde la estética hasta el sabor, todo tenía una terminación muy prolija.”</p>
-            <div class="opinion-meta">
-              <strong>Lucía A.</strong>
-              <span>Mesa dulce para evento</span>
-            </div>
-          </article>
-
-          <article class="opinion-card reveal" style="--reveal-delay: 160ms;">
-            <div>
-              <div class="stars">★★★★★</div>
-              <h3>Quedamos felices</h3>
-            </div>
-            <p>“Pedimos para una celebración familiar y salió todo increíble. Hermoso, rico y entregado en tiempo y forma.”</p>
-            <div class="opinion-meta">
-              <strong>Sofía P.</strong>
-              <span>Pedido para celebración</span>
-            </div>
-          </article>
-
-          <article class="opinion-card reveal" style="--reveal-delay: 240ms;">
-            <div>
-              <div class="stars">★★★★★</div>
-              <h3>Ideal para regalar</h3>
-            </div>
-            <p>“Buscaba algo fino y especial para regalar, y la verdad quedó mejor de lo que imaginaba. Volvería a pedir.”</p>
-            <div class="opinion-meta">
-              <strong>Valentina C.</strong>
-              <span>Pedido de regalo</span>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section-tight" id="nosotros">
-      <div class="container about-grid">
-        <div class="about-image reveal" aria-label="Imagen del local o del equipo"></div>
-
-        <div class="about-card reveal" style="--reveal-delay: 120ms;">
-          <span class="section-label">Quiénes somos</span>
-          <h3>Pastelería artesanal hecha con detalle y dedicación.</h3>
+          <span class="eyebrow">Beneficios</span>
+          <h2>Una atención más clara, más útil y más profesional dentro de tu web</h2>
           <p>
-            Nos especializamos en tortas y propuestas dulces por pedido, cuidando tanto el sabor como la presentación de cada creación.
+            El objetivo no es solo responder. La idea es acompañar mejor al visitante, resolver dudas más rápido y hacer que tu sitio se sienta más moderno y más activo.
           </p>
-          <p>
-            Trabajamos para que cada entrega se sienta especial, ya sea para un cumpleaños, una reunión, un evento o un regalo.
-          </p>
-          <div class="about-note">
-            Realizamos pedidos personalizados con reserva previa para preparar cada detalle con tiempo, dedicación y cuidado.
-          </div>
+        </div>
+
+        <div class="benefits-grid">
+          <article class="benefit-card reveal">
+            <div class="benefit-icon">✦</div>
+            <h3>Responde preguntas frecuentes</h3>
+            <p>Horarios, precios, medios de pago, envíos, stock, promos, ubicación o servicios, sin depender de estar conectado.</p>
+            <div class="benefit-meta">
+              <span class="chip">24/7</span>
+              <span class="chip">Atención clara</span>
+            </div>
+          </article>
+
+          <article class="benefit-card reveal">
+            <div class="benefit-icon">✦</div>
+            <h3>Recomienda productos y opciones</h3>
+            <p>No solo contesta. También puede orientar al visitante según lo que busca y ayudar a que la consulta avance.</p>
+            <div class="benefit-meta">
+              <span class="chip">Más intención</span>
+              <span class="chip">Más conversión</span>
+            </div>
+          </article>
+
+          <article class="benefit-card reveal">
+            <div class="benefit-icon">✦</div>
+            <h3>Ayuda a tomar acciones</h3>
+            <p>Según el negocio, puede ayudar con pedidos, reservas, consultas importantes o pasos siguientes dentro de la atención.</p>
+            <div class="benefit-meta">
+              <span class="chip">Menos fricción</span>
+              <span class="chip">En tiempo real</span>
+            </div>
+          </article>
+
+          <article class="benefit-card reveal">
+            <div class="benefit-icon">✦</div>
+            <h3>Mejora la imagen del sitio</h3>
+            <p>Tu web se siente más moderna, más activa y mejor preparada para responder cuando alguien llega con intención real.</p>
+            <div class="benefit-meta">
+              <span class="chip">Más presencia</span>
+              <span class="chip">Experiencia premium</span>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
-    <section class="section" id="contacto">
+    <section class="section" id="funciona">
       <div class="container">
-        <div class="cta reveal">
-          <h2>Tomamos pedidos para celebraciones y ocasiones especiales.</h2>
+        <div class="section-head reveal">
+          <span class="eyebrow">Implementación</span>
+          <h2>¿Cómo funciona?</h2>
+          <p>Cargás la información de tu negocio, integrás el asistente y empezás a responder mejor dentro de tu sitio.</p>
+        </div>
+
+        <div class="flow-grid">
+          <div class="steps glass reveal">
+            <div class="step-list">
+              <article class="step-item">
+                <div class="step-num">1</div>
+                <div>
+                  <h3>Cargás tu información real</h3>
+                  <p>Productos, horarios, promos, medios de pago, servicios, condiciones o detalles importantes del negocio.</p>
+                </div>
+              </article>
+
+              <article class="step-item">
+                <div class="step-num">2</div>
+                <div>
+                  <h3>Pegás el widget en tu web</h3>
+                  <p>Desde tu panel copiás el snippet y lo integrás en el HTML de tu sitio para activar el chat flotante.</p>
+                </div>
+              </article>
+
+              <article class="step-item">
+                <div class="step-num">3</div>
+                <div>
+                  <h3>El asistente empieza a atender</h3>
+                  <p>Responde consultas, recomienda opciones y acompaña mejor la experiencia del visitante en tiempo real.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="flow-visual glass reveal">
+            <div class="visual-card">
+              <div>
+                <span class="eyebrow" style="margin-bottom:12px">Vista del sistema</span>
+                <h3 style="margin:0 0 10px; font-size:1.25rem">Una estructura simple y fácil de entender</h3>
+                <p style="margin:0; color:var(--muted); line-height:1.8">La idea es que el proceso se vea ordenado, moderno y claro tanto para vos como para tus clientes.</p>
+              </div>
+
+              <div class="visual-screen">
+                <div class="screen-header">
+                  <strong>Panel de Assistant.AI</strong>
+                  <span class="status-pill">Activo</span>
+                </div>
+                <div class="screen-grid">
+                  <div class="screen-row">
+                    <div>
+                      <strong>Información cargada</strong>
+                      <span>Productos, horarios y medios de pago</span>
+                    </div>
+                    <strong>OK</strong>
+                  </div>
+                  <div class="screen-row">
+                    <div>
+                      <strong>Widget instalado</strong>
+                      <span>Chat flotante integrado en la web</span>
+                    </div>
+                    <strong>OK</strong>
+                  </div>
+                  <div class="screen-row">
+                    <div>
+                      <strong>Atención en curso</strong>
+                      <span>Visitantes siendo guiados en tiempo real</span>
+                    </div>
+                    <strong>24/7</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="comparador">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Antes / Después</span>
+          <h2>Mostrá el impacto de forma visual</h2>
+          <p>En pocos segundos se entiende qué cambia cuando la atención deja de depender de estar conectado todo el tiempo.</p>
+        </div>
+
+        <div class="compare-switches reveal">
+          <button class="compare-btn active" data-mode="before" type="button">Sin Assistant.AI</button>
+          <button class="compare-btn" data-mode="after" type="button">Con Assistant.AI</button>
+        </div>
+
+        <div class="compare-grid">
+          <article class="compare-card reveal" id="compareBefore">
+            <span class="compare-badge badge-before">Sin Assistant.AI</span>
+            <h3>La atención depende de estar presente</h3>
+            <ul>
+              <li>Consultas que se pierden o se responden tarde</li>
+              <li>Ventas que se enfrían mientras esperan respuesta</li>
+              <li>Información repetida una y otra vez</li>
+              <li>La experiencia depende del momento del día</li>
+            </ul>
+          </article>
+
+          <article class="compare-card dim reveal" id="compareAfter">
+            <span class="compare-badge badge-after">Con Assistant.AI</span>
+            <h3>La web responde y acompaña mejor</h3>
+            <ul>
+              <li>Respuestas instantáneas con información real</li>
+              <li>Visitantes guiados según lo que buscan</li>
+              <li>Más oportunidades de reserva, pedido o consulta útil</li>
+              <li>Una experiencia más moderna y consistente</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="servicios">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Aplicaciones reales</span>
+          <h2>Cómo puede ayudarte dentro de tu sitio web</h2>
           <p>
-            Podés escribirnos para consultar por tortas personalizadas, mesas dulces, regalos o pedidos para eventos. Trabajamos con reserva previa para preparar cada pedido con el tiempo y cuidado que merece.
+            El foco está puesto en resultados concretos: responder mejor, guiar mejor al visitante y convertir más consultas en oportunidades reales.
           </p>
-          <div class="cta-actions">
-            <a href="https://wa.me/5491123991374?text=Hola%20quiero%20hacer%20un%20pedido" target="_blank" rel="noreferrer" class="btn btn-primary">Escribir por WhatsApp</a>
-            <a href="https://instagram.com/serenitee.aversa" target="_blank" rel="noreferrer" class="btn btn-secondary">Ver Instagram</a>
+        </div>
+
+        <div class="services-grid">
+          <article class="service-card reveal">
+            <span class="service-tag">Consultas</span>
+            <h3>Responder dudas frecuentes</h3>
+            <p>Ideal para negocios que reciben muchas preguntas repetidas sobre servicios, precios, horarios, ubicación o formas de pago.</p>
+            <div class="service-note">Perfecto para bajar fricción desde el primer contacto.</div>
+          </article>
+
+          <article class="service-card featured reveal">
+            <span class="service-tag">Acción</span>
+            <h3>Ayudar a pasar de la visita a la acción</h3>
+            <p>Según el rubro, puede colaborar con pedidos, reservas, consultas importantes o el siguiente paso dentro del proceso comercial.</p>
+            <div class="service-note">Ideal para restaurantes, barberías, tiendas y negocios de servicios.</div>
+          </article>
+
+          <article class="service-card reveal">
+            <span class="service-tag">Experiencia</span>
+            <h3>Hacer que la web se sienta más viva</h3>
+            <p>Un visitante siente que el sitio responde, acompaña y entiende lo que busca, en vez de ser una web estática.</p>
+            <div class="service-note">Aporta una imagen más profesional y más actual del negocio.</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">FAQ</span>
+          <h2>Preguntas frecuentes</h2>
+          <p>Respuestas concretas a las dudas más comunes antes de implementar el servicio.</p>
+        </div>
+
+        <div class="faq-list">
+          <article class="faq-item reveal">
+            <button class="faq-question" type="button">
+              <span>¿Cómo se instala en mi sitio web?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Desde tu panel copiás un snippet y lo pegás en tu sitio. El chat queda integrado como widget flotante y listo para responder.</p>
+            </div>
+          </article>
+
+          <article class="faq-item reveal">
+            <button class="faq-question" type="button">
+              <span>¿Responde con información real del negocio?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Sí. Justamente esa es la idea: que responda con tu información cargada y no con respuestas genéricas.</p>
+            </div>
+          </article>
+
+          <article class="faq-item reveal">
+            <button class="faq-question" type="button">
+              <span>¿Sirve para distintos tipos de negocio?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Sí. La lógica base funciona para tiendas, barberías, restaurantes, estudios, marcas y muchos otros casos donde haya consultas repetidas o intención de compra.</p>
+            </div>
+          </article>
+
+          <article class="faq-item reveal">
+            <button class="faq-question" type="button">
+              <span>¿Qué valor agrega realmente?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Hace que tu web atienda mejor, más rápido y con más consistencia. Eso mejora percepción de marca y también ayuda a no perder oportunidades.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-sm" id="cta">
+      <div class="container">
+        <div class="cta-card glass reveal">
+          <span class="eyebrow">Siguiente paso</span>
+          <h2>Mostrale a tus visitantes una atención mucho más moderna</h2>
+          <p>
+            Si querés, podés usar esta landing como base y después reemplazar los textos, links y demos por la información final de tu negocio o de cada cliente.
+          </p>
+          <div class="btn-row">
+            <a href="#inicio" class="btn btn-primary">Volver arriba</a>
+            <a href="#beneficios" class="btn btn-secondary">Revisar secciones</a>
           </div>
         </div>
       </div>
@@ -1036,72 +894,73 @@
   </main>
 
   <footer>
-    <div class="container footer-grid">
-      <div>
-        <div class="brand">
-          <div class="brand-mark">S</div>
-          <div class="brand-copy">
-            <strong>Serenitéé</strong>
-            <span>Pastelería artesanal</span>
-          </div>
+    <div class="container">
+      <div class="footer-bar glass">
+        <p>© 2026 Assistant.AI — Diseño limpio, claro y listo para seguir editando.</p>
+        <div class="footer-links">
+          <a href="#inicio">Inicio</a>
+          <a href="#servicios">Aplicaciones</a>
+          <a href="#faq">FAQ</a>
         </div>
-        <p>Diseño conceptual elegante, limpio y centrado en producto + identidad de marca.</p>
-      </div>
-
-      <div class="footer-links">
-        <span>Instagram: @serenitee.aversa</span>
-        <span>WhatsApp: +54 9 11 2399-1374</span>
       </div>
     </div>
-
-    <div class="container copyright">© 2026 Serenitéé</div>
   </footer>
 
-  <a class="whatsapp" href="https://wa.me/5491123991374?text=Hola%20quiero%20hacer%20un%20pedido" target="_blank" rel="noreferrer" aria-label="WhatsApp">✆</a>
-
   <script>
-    const menuBtn = document.getElementById('menuBtn');
-    const mobilePanel = document.getElementById('mobilePanel');
-    const revealItems = document.querySelectorAll('.reveal');
-    const opinionsTrack = document.getElementById('opinionsTrack');
-    const opinionsPrev = document.getElementById('opinionsPrev');
-    const opinionsNext = document.getElementById('opinionsNext');
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
 
-    menuBtn?.addEventListener('click', () => {
-      mobilePanel.classList.toggle('open');
-      menuBtn.textContent = mobilePanel.classList.contains('open') ? '✕' : '☰';
-    });
+    if (menuToggle && navLinks) {
+      menuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('open');
+      });
 
-    document.querySelectorAll('.mobile-links a').forEach(link => {
-      link.addEventListener('click', () => {
-        mobilePanel.classList.remove('open');
-        if (menuBtn) menuBtn.textContent = '☰';
+      navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => navLinks.classList.remove('open'));
+      });
+    }
+
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+      const btn = item.querySelector('.faq-question');
+      btn.addEventListener('click', () => {
+        const open = item.classList.contains('open');
+        faqItems.forEach(i => i.classList.remove('open'));
+        if (!open) item.classList.add('open');
       });
     });
 
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.16, rootMargin: '0px 0px -40px 0px' });
+    const compareButtons = document.querySelectorAll('.compare-btn');
+    const beforeCard = document.getElementById('compareBefore');
+    const afterCard = document.getElementById('compareAfter');
 
-      revealItems.forEach(item => observer.observe(item));
-    } else {
-      revealItems.forEach(item => item.classList.add('is-visible'));
-    }
+    compareButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        compareButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
 
-    const scrollOpinions = (direction) => {
-      if (!opinionsTrack) return;
-      const amount = Math.min(opinionsTrack.clientWidth * 0.9, 420);
-      opinionsTrack.scrollBy({ left: direction * amount, behavior: 'smooth' });
-    };
+        const mode = btn.dataset.mode;
+        if (mode === 'before') {
+          beforeCard.classList.remove('dim');
+          afterCard.classList.add('dim');
+        } else {
+          afterCard.classList.remove('dim');
+          beforeCard.classList.add('dim');
+        }
+      });
+    });
 
-    opinionsPrev?.addEventListener('click', () => scrollOpinions(-1));
-    opinionsNext?.addEventListener('click', () => scrollOpinions(1));
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    revealEls.forEach(el => revealObserver.observe(el));
   </script>
 </body>
 </html>
