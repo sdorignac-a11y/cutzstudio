@@ -102,13 +102,15 @@
       '.fab-wrap:hover svg{transform:scale(1.07) rotate(-3deg);}',
       '.fab-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-52%);width:24px;height:24px;color:#F7F3EA;pointer-events:none;}',
       '.menu{position:fixed;bottom:100px;right:20px;z-index:999999;',
-      '  display:flex;flex-direction:column;gap:10px;align-items:flex-end;}',
+      '  display:flex;flex-direction:column;gap:12px;align-items:flex-end;}',
       '.menu.hidden{display:none;}',
-      '.menu-item{background:#F7F3EA;border:1px solid #DED5C2;border-radius:10px;',
-      '  padding:13px 16px;font-size:13.5px;font-weight:600;color:#211D18;cursor:pointer;',
-      '  box-shadow:0 12px 24px -10px rgba(0,0,0,.3);white-space:nowrap;display:flex;align-items:center;gap:10px;}',
-      '.menu-item:hover{background:#EDE6D8;}',
-      '.menu-item .ic{font-size:15px;}',
+      '.menu-item{background:#FFFFFF;border:none;border-radius:30px;',
+      '  padding:9px 20px 9px 9px;font-size:13.5px;font-weight:600;color:#211D18;cursor:pointer;',
+      '  box-shadow:0 14px 28px -12px rgba(0,0,0,.35);white-space:nowrap;display:flex;align-items:center;gap:12px;',
+      '  transition:transform .15s ease, box-shadow .15s ease;}',
+      '.menu-item:hover{transform:translateX(-2px);box-shadow:0 16px 32px -12px rgba(0,0,0,.4);}',
+      '.menu-item .ic{width:34px;height:34px;border-radius:50%;background:#F1EAD9;',
+      '  display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}',
       '.overlay{position:fixed;inset:0;background:rgba(17,19,24,.6);display:none;',
       '  align-items:center;justify-content:center;z-index:9999999;padding:20px;}',
       '.overlay.open{display:flex;}',
@@ -140,13 +142,9 @@
 
     var fab = document.createElement('button');
     fab.className = 'fab-wrap';
-    fab.style.position = 'relative';
     fab.innerHTML =
       '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">' +
       '  <path fill="#A8632C" d="M50 4 C56 4 57 16 62 18 C68 20 78 12 82 17 C86 22 78 30 80 36 C82 42 95 44 95 51 C95 58 83 59 80 65 C77 71 84 82 78 86 C72 90 63 80 57 82 C51 84 48 96 41 96 C34 96 33 84 27 81 C21 78 10 85 6 79 C2 73 12 64 10 58 C8 52 -3 49 -1 42 C1 35 14 36 18 31 C22 26 17 14 24 10 C31 6 39 17 45 15 C48 14 47 4 50 4 Z"/>' +
-      '</svg>' +
-      '<svg class="fab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
-      '  <path d="M4 20h16M6 20V10l6-5 6 5v10"/><path d="M10 20v-5h4v5"/>' +
       '</svg>';
     root.appendChild(fab);
 
