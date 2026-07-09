@@ -103,8 +103,12 @@
       '.fab-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-52%);width:24px;height:24px;color:#F7F3EA;pointer-events:none;}',
       '.menu{position:fixed;bottom:100px;right:20px;z-index:999999;}',
       '.menu.hidden{display:none;}',
-      '.menu-card{background:#FFFFFF;border-radius:16px;padding:8px;width:270px;',
-      '  box-shadow:0 20px 40px -14px rgba(0,0,0,.35);}',
+      '.menu-card{background:#FFFFFF;border-radius:14px;padding:0;width:280px;',
+      '  box-shadow:0 20px 40px -14px rgba(0,0,0,.35);overflow:hidden;}',
+      '.menu-header{padding:16px 18px 12px;border-bottom:1px solid #EDE6D8;}',
+      '.menu-header strong{display:block;font-size:14px;color:#211D18;}',
+      '.menu-header span{display:block;font-size:11.5px;color:#8a8375;margin-top:2px;}',
+      '.menu-body{padding:8px;}',
       '.menu-item{background:none;border:none;border-radius:10px;width:100%;',
       '  padding:11px 10px;font-size:13.5px;font-weight:600;color:#211D18;cursor:pointer;',
       '  display:flex;align-items:center;gap:12px;text-align:left;transition:background .15s ease;}',
@@ -159,7 +163,11 @@
         : '') +
       (currentProduct ? '<div class="menu-divider"></div>' : '') +
       '<button class="menu-item" id="optCatalog"><span class="ic">📷</span><span class="txt">Probar un mueble en tu espacio<small>Subí una foto y elegí del catálogo</small></span></button>';
-    menu.innerHTML = '<div class="menu-card">' + itemsHtml + '</div>';
+    menu.innerHTML =
+      '<div class="menu-card">' +
+      '  <div class="menu-header"><strong>¿Qué querés hacer?</strong><span>Elegí una opción para seguir</span></div>' +
+      '  <div class="menu-body">' + itemsHtml + '</div>' +
+      '</div>';
     root.appendChild(menu);
 
     fab.addEventListener('click', function () {
