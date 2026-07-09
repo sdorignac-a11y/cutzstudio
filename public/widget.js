@@ -103,21 +103,24 @@
       '.fab-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-52%);width:24px;height:24px;color:#F7F3EA;pointer-events:none;}',
       '.menu{position:fixed;bottom:100px;right:20px;z-index:999999;}',
       '.menu.hidden{display:none;}',
-      '.menu-card{background:#FFFFFF;border-radius:14px;padding:0;width:280px;',
-      '  box-shadow:0 20px 40px -14px rgba(0,0,0,.35);overflow:hidden;}',
-      '.menu-header{padding:16px 18px 12px;border-bottom:1px solid #EDE6D8;}',
-      '.menu-header strong{display:block;font-size:14px;color:#211D18;}',
-      '.menu-header span{display:block;font-size:11.5px;color:#8a8375;margin-top:2px;}',
-      '.menu-body{padding:8px;}',
-      '.menu-item{background:none;border:none;border-radius:10px;width:100%;',
-      '  padding:11px 10px;font-size:13.5px;font-weight:600;color:#211D18;cursor:pointer;',
-      '  display:flex;align-items:center;gap:12px;text-align:left;transition:background .15s ease;}',
-      '.menu-item:hover{background:#F3EDE0;}',
-      '.menu-item .ic{width:34px;height:34px;border-radius:50%;background:#F1EAD9;',
-      '  display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}',
-      '.menu-item .txt{display:flex;flex-direction:column;gap:1px;}',
-      '.menu-item .txt small{font-weight:400;color:#8a8375;font-size:11px;}',
-      '.menu-divider{height:1px;background:#EDE6D8;margin:4px 6px;}',
+      '.menu-card{background:#FBF1E4;border:1px solid #EAD9BE;border-radius:20px;padding:22px;width:280px;',
+      '  box-shadow:0 24px 48px -16px rgba(0,0,0,.3);}',
+      '.menu-header{text-align:center;margin-bottom:16px;}',
+      '.menu-header .sun{font-size:20px;display:block;margin-bottom:6px;}',
+      '.menu-header strong{display:block;font-size:19px;font-weight:700;color:#4A2F1D;line-height:1.2;}',
+      '.menu-header span{display:block;font-size:12px;color:#9C8A72;margin-top:6px;}',
+      '.menu-body{display:flex;flex-direction:column;gap:10px;}',
+      '.menu-item{background:#FFFFFF;border:none;border-radius:14px;width:100%;',
+      '  padding:12px 14px;font-size:13.5px;font-weight:700;color:#211D18;cursor:pointer;',
+      '  display:flex;align-items:center;gap:12px;text-align:left;',
+      '  box-shadow:0 6px 14px -8px rgba(74,47,29,.25);transition:transform .15s ease;}',
+      '.menu-item:hover{transform:translateY(-1px);}',
+      '.menu-item .ic{width:34px;height:34px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:18px;}',
+      '.menu-item .txt{display:flex;flex-direction:column;gap:2px;flex:1;}',
+      '.menu-item .txt small{font-weight:400;color:#9C8A72;font-size:11px;}',
+      '.menu-item .chev{color:#C9B79A;font-size:16px;flex-shrink:0;}',
+      '.menu-footer{text-align:center;margin-top:16px;font-size:10.5px;color:#B5A183;',
+      '  font-style:italic;letter-spacing:.02em;}',
       '.overlay{position:fixed;inset:0;background:rgba(17,19,24,.6);display:none;',
       '  align-items:center;justify-content:center;z-index:9999999;padding:20px;}',
       '.overlay.open{display:flex;}',
@@ -159,14 +162,14 @@
     menu.className = 'menu hidden';
     var itemsHtml =
       (currentProduct
-        ? '<button class="menu-item" id="opt3d"><span class="ic">🪑</span><span class="txt">Ver este producto en 3D<small>Girá y probalo en AR</small></span></button>'
+        ? '<button class="menu-item" id="opt3d"><span class="ic">🪑</span><span class="txt">Ver este producto en 3D<small>Giralo y probalo en AR</small></span><span class="chev">›</span></button>'
         : '') +
-      (currentProduct ? '<div class="menu-divider"></div>' : '') +
-      '<button class="menu-item" id="optCatalog"><span class="ic">📷</span><span class="txt">Probar un mueble en tu espacio<small>Subí una foto y elegí del catálogo</small></span></button>';
+      '<button class="menu-item" id="optCatalog"><span class="ic">📷</span><span class="txt">Probar un mueble en tu espacio<small>Subí una foto y elegí del catálogo</small></span><span class="chev">›</span></button>';
     menu.innerHTML =
       '<div class="menu-card">' +
-      '  <div class="menu-header"><strong>¿Qué querés hacer?</strong><span>Elegí una opción para seguir</span></div>' +
+      '  <div class="menu-header"><span class="sun">☀️</span><strong>Probalo en tu casa</strong><span>Elegí cómo querés ver el mueble</span></div>' +
       '  <div class="menu-body">' + itemsHtml + '</div>' +
+      '  <div class="menu-footer">powered by reality</div>' +
       '</div>';
     root.appendChild(menu);
 
