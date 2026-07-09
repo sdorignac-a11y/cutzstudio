@@ -101,16 +101,19 @@
       '.fab-wrap svg{width:100%;height:100%;filter:drop-shadow(0 10px 18px rgba(0,0,0,.35));transition:transform .2s ease;display:block;}',
       '.fab-wrap:hover svg{transform:scale(1.07) rotate(-3deg);}',
       '.fab-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-52%);width:24px;height:24px;color:#F7F3EA;pointer-events:none;}',
-      '.menu{position:fixed;bottom:100px;right:20px;z-index:999999;',
-      '  display:flex;flex-direction:column;gap:12px;align-items:flex-end;}',
+      '.menu{position:fixed;bottom:100px;right:20px;z-index:999999;}',
       '.menu.hidden{display:none;}',
-      '.menu-item{background:#FFFFFF;border:none;border-radius:30px;',
-      '  padding:9px 20px 9px 9px;font-size:13.5px;font-weight:600;color:#211D18;cursor:pointer;',
-      '  box-shadow:0 14px 28px -12px rgba(0,0,0,.35);white-space:nowrap;display:flex;align-items:center;gap:12px;',
-      '  transition:transform .15s ease, box-shadow .15s ease;}',
-      '.menu-item:hover{transform:translateX(-2px);box-shadow:0 16px 32px -12px rgba(0,0,0,.4);}',
+      '.menu-card{background:#FFFFFF;border-radius:16px;padding:8px;width:270px;',
+      '  box-shadow:0 20px 40px -14px rgba(0,0,0,.35);}',
+      '.menu-item{background:none;border:none;border-radius:10px;width:100%;',
+      '  padding:11px 10px;font-size:13.5px;font-weight:600;color:#211D18;cursor:pointer;',
+      '  display:flex;align-items:center;gap:12px;text-align:left;transition:background .15s ease;}',
+      '.menu-item:hover{background:#F3EDE0;}',
       '.menu-item .ic{width:34px;height:34px;border-radius:50%;background:#F1EAD9;',
       '  display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}',
+      '.menu-item .txt{display:flex;flex-direction:column;gap:1px;}',
+      '.menu-item .txt small{font-weight:400;color:#8a8375;font-size:11px;}',
+      '.menu-divider{height:1px;background:#EDE6D8;margin:4px 6px;}',
       '.overlay{position:fixed;inset:0;background:rgba(17,19,24,.6);display:none;',
       '  align-items:center;justify-content:center;z-index:9999999;padding:20px;}',
       '.overlay.open{display:flex;}',
@@ -150,11 +153,13 @@
 
     var menu = document.createElement('div');
     menu.className = 'menu hidden';
-    menu.innerHTML =
+    var itemsHtml =
       (currentProduct
-        ? '<div class="menu-item" id="opt3d"><span class="ic">🪑</span> Ver este producto en 3D</div>'
+        ? '<button class="menu-item" id="opt3d"><span class="ic">🪑</span><span class="txt">Ver este producto en 3D<small>Girá y probalo en AR</small></span></button>'
         : '') +
-      '<div class="menu-item" id="optCatalog"><span class="ic">📷</span> Probar un mueble en tu espacio</div>';
+      (currentProduct ? '<div class="menu-divider"></div>' : '') +
+      '<button class="menu-item" id="optCatalog"><span class="ic">📷</span><span class="txt">Probar un mueble en tu espacio<small>Subí una foto y elegí del catálogo</small></span></button>';
+    menu.innerHTML = '<div class="menu-card">' + itemsHtml + '</div>';
     root.appendChild(menu);
 
     fab.addEventListener('click', function () {
