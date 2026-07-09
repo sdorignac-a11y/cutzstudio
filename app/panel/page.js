@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { supabase } from '../../lib/supabaseClient';
 
 const statusLabel = { review: 'Listo para revisar', published: 'Publicado', rejected: 'Necesita nuevo archivo' };
+const SITE_DOMAIN = 'https://cutzstudio.vercel.app';
 
 export default function PanelPage() {
   const router = useRouter();
@@ -13,6 +14,7 @@ export default function PanelPage() {
   const [loadingSession, setLoadingSession] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [copiedId, setCopiedId] = useState(null);
 
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
@@ -107,6 +109,16 @@ export default function PanelPage() {
     fetchProducts();
   }
 
+  function copyEmbedCode(product) {
+    const snippet =
+      `<script src="${SITE_DOMAIN}/widget.js"></script>\n` +
+      `<div data-ebano-product="${product.id}"></div>`;
+    navigator.clipboard.writeText(snippet).then(() => {
+      setCopiedId(product.id);
+      setTimeout(() => setCopiedId(null), 2000);
+    });
+  }
+
   if (loadingSession) return <main style={{ padding: 40 }}>Cargando…</main>;
 
   return (
@@ -176,12 +188,21 @@ export default function PanelPage() {
                 <td style={td}><strong>{p.name}</strong><div className="mono" style={{ fontSize: 11.5, color: '#8a8375' }}>{p.price}</div></td>
                 <td style={td}><span className="mono" style={{ fontSize: 11.5, color: '#8a8375' }}>{p.alto} × {p.ancho} × {p.fondo} cm</span></td>
                 <td style={td}><span className={`badge ${p.status}`}><span className="bd"></span>{statusLabel[p.status]}</span></td>
-                <td style={{ ...td, display: 'flex', gap: 8 }}>
+                <td style={{ ...td, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                   {p.status === 'review' && (
                     <>
                       <button className="btn btn-sage" style={{ padding: '6px 10px', fontSize: 11.5 }} onClick={() => setStatus(p.id, 'published')}>Aprobar</button>
                       <button className="btn btn-rust" style={{ padding: '6px 10px', fontSize: 11.5 }} onClick={() => setStatus(p.id, 'rejected')}>Rechazar</button>
                     </>
+                  )}
+                  {p.status === 'published' && (
+                    <button
+                      className="btn btn-ghost"
+                      style={{ padding: '6px 10px', fontSize: 11.5 }}
+                      onClick={() => copyEmbedCode(p)}
+                    >
+                      {copiedId === p.id ? '✓ Copiado' : 'Copiar código'}
+                    </button>
                   )}
                   <button className="btn btn-ghost" style={{ padding: '6px 10px', fontSize: 11.5 }} onClick={() => deleteProduct(p.id)}>Borrar</button>
                 </td>
