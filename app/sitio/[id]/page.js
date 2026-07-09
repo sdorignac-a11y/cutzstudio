@@ -49,6 +49,8 @@ export default function ProductPage() {
           camera-orbit="35deg 78deg 2.6m"
           ar
           ar-modes="webxr scene-viewer quick-look"
+ar-modes="webxr scene-viewer quick-look"
+          ar-scale="fixed"
           style={{ width: '100%', height: '100%' }}
         >
           <button
