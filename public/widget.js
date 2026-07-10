@@ -1,7 +1,9 @@
 /**
  * Reality — Widget embebible
- * Estética actualizada: panel rectangular, botones compactos,
- * íconos monocromos, tipografía más redondeada y footer "powered by reality".
+ * Estética: panel rectangular, botones compactos, íconos monocromos,
+ * tipografía redondeada (Baloo 2 / Nunito), footer "powered by reality".
+ * + Análisis con IA: el cliente sube una foto de su espacio y Claude
+ *   sugiere qué productos del catálogo quedarían mejor ahí.
  */
 (function () {
   'use strict';
@@ -9,6 +11,7 @@
   // -----------------------------------------------------------
   var SUPABASE_URL = 'https://loqapxtmxrdnzxencgxs.supabase.co';
   var SUPABASE_ANON_KEY = 'sb_publishable_C6HGGPizWvwmyttbvIC6UA_5gLeeh_1';
+  var SITE_DOMAIN = 'https://cutzstudio.vercel.app';
   // -----------------------------------------------------------
 
   var MODEL_VIEWER_SRC = 'https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js';
@@ -106,6 +109,14 @@
       '  <path d="M15 17l3.2-4.5h11.6L33 17h4.5c2 0 3.5 1.5 3.5 3.5v15c0 2-1.5 3.5-3.5 3.5h-27C8.5 39 7 37.5 7 35.5v-15c0-2 1.5-3.5 3.5-3.5H15z" />' +
       '  <circle cx="24" cy="28" r="7" />' +
       '  <path d="M35 22h.1" />' +
+      '</svg>'
+    );
+  }
+
+  function sparkIcon() {
+    return (
+      '<svg class="line-icon" viewBox="0 0 48 48" aria-hidden="true" style="stroke:none;fill:currentColor;">' +
+      '  <path d="M24 6l3.5 12.5L40 22l-12.5 3.5L24 38l-3.5-12.5L8 22l12.5-3.5z" />' +
       '</svg>'
     );
   }
@@ -461,7 +472,7 @@
       '  text-align:center;',
       '  cursor:pointer;',
       '  background:#FFFFFF;',
-      '  margin-bottom:16px;',
+      '  margin-bottom:12px;',
       '  color:#6E4127;',
       '}',
 
@@ -476,6 +487,54 @@
       '  color:#8a7b68;',
       '  margin:8px 0 0;',
       '  line-height:1.45;',
+      '}',
+
+      '.analyze-btn{',
+      '  width:100%;',
+      '  background:#6B4A32;',
+      '  color:#FFF7ED;',
+      '  border:none;',
+      '  padding:13px;',
+      '  border-radius:999px;',
+      '  font-size:13px;',
+      '  font-weight:800;',
+      '  cursor:pointer;',
+      '  margin-bottom:14px;',
+      '  display:none;',
+      '  align-items:center;',
+      '  justify-content:center;',
+      '  gap:8px;',
+      '}',
+
+      '.analyze-btn.show{',
+      '  display:flex;',
+      '}',
+
+      '.analyze-btn:disabled{',
+      '  opacity:.6;',
+      '  cursor:default;',
+      '}',
+
+      '.analyze-btn .line-icon{',
+      '  width:16px;',
+      '  height:16px;',
+      '  color:#FFF7ED;',
+      '}',
+
+      '.rec-banner{',
+      '  font-size:12px;',
+      '  font-weight:700;',
+      '  color:#5C6B4F;',
+      '  background:#E9EFE3;',
+      '  padding:10px 12px;',
+      '  border-radius:12px;',
+      '  margin-bottom:14px;',
+      '  display:none;',
+      '  line-height:1.4;',
+      '}',
+
+      '.rec-banner.show{',
+      '  display:block;',
       '}',
 
       '.cat-note{',
@@ -505,6 +564,12 @@
       '  background:#FFFFFF;',
       '}',
 
+      '.cat-item.recommended{',
+      '  border-color:#A8632C;',
+      '  background:#FBF0E1;',
+      '  box-shadow:0 8px 18px rgba(168,99,44,.14);',
+      '}',
+
       '.cat-item .info strong{',
       '  font-size:13.5px;',
       '  display:block;',
@@ -514,6 +579,14 @@
       '.cat-item .info span{',
       '  font-size:11.5px;',
       '  color:#8a7b68;',
+      '}',
+
+      '.cat-item .reason{',
+      '  font-size:11.5px;',
+      '  color:#A8632C;',
+      '  margin-top:4px;',
+      '  font-style:italic;',
+      '  line-height:1.35;',
       '}',
 
       '.cat-item button{',
@@ -680,12 +753,14 @@
       '  <div class="upload-zone" id="uploadZone">' +
       '    <div id="uploadPlaceholder">' +
       '      ' + cameraIcon() +
-      '      <p>Subí una foto del lugar donde querés probar un mueble. Por ahora es solo de referencia.</p>' +
+      '      <p>Subí una foto del lugar donde querés probar un mueble.</p>' +
       '    </div>' +
       '    <img id="uploadPreview" style="display:none;">' +
       '    <input type="file" id="uploadInput" accept="image/*" style="display:none;">' +
       '  </div>' +
-      '  <div class="cat-note">Por ahora elegís vos del catálogo cuál mueble probar. La sugerencia automática según tu foto está en camino.</div>' +
+      '  <button class="analyze-btn" id="analyzeBtn">' + sparkIcon() + ' Buscar qué mueble queda mejor acá</button>' +
+      '  <div class="rec-banner" id="recBanner"></div>' +
+      '  <div class="cat-note">También podés elegir vos directo del catálogo completo:</div>' +
       '  <div class="cat-list" id="catList"><div class="empty">Cargando catálogo…</div></div>' +
       '  <div class="poweredby">powered by reality</div>' +
       '</div>';
@@ -696,6 +771,10 @@
     var input = overlay.querySelector('#uploadInput');
     var preview = overlay.querySelector('#uploadPreview');
     var placeholder = overlay.querySelector('#uploadPlaceholder');
+    var analyzeBtn = overlay.querySelector('#analyzeBtn');
+    var recBanner = overlay.querySelector('#recBanner');
+    var uploadedBase64 = null;
+    var uploadedMediaType = null;
 
     zone.addEventListener('click', function () {
       input.click();
@@ -711,9 +790,57 @@
         preview.src = ev.target.result;
         preview.style.display = 'block';
         placeholder.style.display = 'none';
+        uploadedBase64 = ev.target.result.split(',')[1];
+        uploadedMediaType = file.type;
+        analyzeBtn.classList.add('show');
+        recBanner.classList.remove('show');
       };
 
       reader.readAsDataURL(file);
+    });
+
+    analyzeBtn.addEventListener('click', function () {
+      if (!uploadedBase64) return;
+
+      analyzeBtn.disabled = true;
+      var originalLabel = analyzeBtn.innerHTML;
+      analyzeBtn.textContent = 'Analizando tu ambiente…';
+
+      var list = overlay.querySelector('#catList');
+      var products = overlay._products || [];
+
+      fetch(SITE_DOMAIN + '/api/recommend', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          imageBase64: uploadedBase64,
+          imageMediaType: uploadedMediaType,
+          products: products.map(function (p) {
+            return { id: p.id, name: p.name, price: p.price, alto: p.alto, ancho: p.ancho, fondo: p.fondo };
+          }),
+        }),
+      })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          analyzeBtn.disabled = false;
+          analyzeBtn.innerHTML = originalLabel;
+
+          if (data.error || !data.recommendations || !data.recommendations.length) {
+            recBanner.textContent = 'No se pudo analizar la foto ahora — elegí del catálogo abajo.';
+            recBanner.classList.add('show');
+            return;
+          }
+
+          recBanner.textContent = '✦ Encontramos ' + data.recommendations.length + ' mueble(s) que podrían quedar bien acá';
+          recBanner.classList.add('show');
+          renderCatalogList(list, products, overlay._arOverlay, data.recommendations);
+        })
+        .catch(function () {
+          analyzeBtn.disabled = false;
+          analyzeBtn.innerHTML = originalLabel;
+          recBanner.textContent = 'No se pudo analizar la foto ahora — elegí del catálogo abajo.';
+          recBanner.classList.add('show');
+        });
     });
 
     overlay.querySelector('.close').addEventListener('click', function () {
@@ -730,6 +857,36 @@
     return overlay;
   }
 
+  function renderCatalogList(list, products, arOverlay, recommendations) {
+    var recMap = {};
+    (recommendations || []).forEach(function (r) { recMap[r.id] = r.reason; });
+
+    var sorted = products.slice().sort(function (a, b) {
+      var ra = recMap[a.id] ? 1 : 0, rb = recMap[b.id] ? 1 : 0;
+      return rb - ra;
+    });
+
+    list.innerHTML = sorted.map(function (p) {
+      var isRec = !!recMap[p.id];
+      return (
+        '<div class="cat-item' + (isRec ? ' recommended' : '') + '" data-id="' + escapeHtml(p.id) + '">' +
+        '  <div class="info">' +
+        '    <strong>' + (isRec ? '✦ ' : '') + escapeHtml(p.name) + '</strong>' +
+        '    <span>' + escapeHtml(p.price) + ' · ' + p.alto + '×' + p.ancho + '×' + p.fondo + ' cm</span>' +
+        (isRec ? '    <div class="reason">' + escapeHtml(recMap[p.id]) + '</div>' : '') +
+        '  </div>' +
+        '  <button>Ver en 3D</button>' +
+        '</div>'
+      );
+    }).join('');
+
+    list.querySelectorAll('.cat-item').forEach(function (item, i) {
+      item.querySelector('button').addEventListener('click', function () {
+        openAR(arOverlay, sorted[i]);
+      });
+    });
+  }
+
   function openCatalog(overlay) {
     overlay.classList.add('open');
 
@@ -741,29 +898,14 @@
 
     fetchCatalog()
       .then(function (products) {
+        overlay._products = products;
+
         if (!products.length) {
           list.innerHTML = '<div class="empty">Todavía no hay productos publicados.</div>';
           return;
         }
 
-        list.innerHTML = products.map(function (p) {
-          return (
-            '<div class="cat-item" data-id="' + escapeHtml(p.id) + '">' +
-            '  <div class="info">' +
-            '    <strong>' + escapeHtml(p.name) + '</strong>' +
-            '    <span>' + escapeHtml(p.price) + ' · ' + p.alto + '×' + p.ancho + '×' + p.fondo + ' cm</span>' +
-            '  </div>' +
-            '  <button>Ver en 3D</button>' +
-            '</div>'
-          );
-        }).join('');
-
-        list.querySelectorAll('.cat-item').forEach(function (item, i) {
-          item.querySelector('button').addEventListener('click', function () {
-            overlay.classList.remove('open');
-            openAR(overlay._arOverlay, products[i]);
-          });
-        });
+        renderCatalogList(list, products, overlay._arOverlay, []);
       })
       .catch(function () {
         list.innerHTML = '<div class="empty">No se pudo cargar el catálogo.</div>';
