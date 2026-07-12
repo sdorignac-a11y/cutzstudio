@@ -62,13 +62,23 @@ function ProductThumb({ product }) {
 
 export default function ProductosPage() {
   const fileInputRef = useRef(null);
+  const accountRef = useRef(null);
 
   const [user, setUser] = useState(null);
+  const [accountOpen, setAccountOpen] = useState(false);
   const [products, setProducts] = useState([]);
   const [form, setForm] = useState(EMPTY_FORM);
   const [file, setFile] = useState(null);
   const [editingProduct, setEditingProduct] = useState(null);
   const [slugTouched, setSlugTouched] = useState(false);
+
+  const [sourceMode, setSourceMode] = useState('file'); // 'file' | 'photos'
+  const [photoFiles, setPhotoFiles] = useState([]);
+  const [generating, setGenerating] = useState(false);
+  const [generationStatus, setGenerationStatus] = useState('');
+  const [generatedModelUrl, setGeneratedModelUrl] = useState(null);
+  const photoInputRef = useRef(null);
+  const pollingRef = useRef(null);
 
   const [loadingProducts, setLoadingProducts] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -111,6 +121,22 @@ export default function ProductosPage() {
     statusFilter,
     confirmDelete,
   ]);
+
+  useEffect(() => {
+    function handleOutsideClick(event) {
+      if (accountRef.current && !accountRef.current.contains(event.target)) {
+        setAccountOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (pollingRef.current) clearInterval(pollingRef.current);
+    };
+  }, []);
 
   function showToast(title, message, type = 'success') {
     setToast({ title, message, type });
@@ -191,9 +217,20 @@ export default function ProductosPage() {
     setFile(null);
     setEditingProduct(null);
     setSlugTouched(false);
+    setSourceMode('file');
+    setPhotoFiles([]);
+    setGeneratedModelUrl(null);
+    setGenerationStatus('');
+    if (pollingRef.current) {
+      clearInterval(pollingRef.current);
+      pollingRef.current = null;
+    }
 
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
+    }
+    if (photoInputRef.current) {
+      photoInputRef.current.value = '';
     }
   }
 
@@ -234,6 +271,90 @@ export default function ProductosPage() {
     return data.publicUrl;
   }
 
+  async function handleGeneratePhotos() {
+    if (photoFiles.length < 2) {
+      showToast(
+        'Faltan fotos',
+        'Subí al menos 2 fotos del mueble, desde ángulos distintos.',
+        'error'
+      );
+      return;
+    }
+
+    setGenerating(true);
+    setGeneratedModelUrl(null);
+    setGenerationStatus('Subiendo fotos…');
+
+    try {
+      const userFolder = user?.id || 'public';
+      const imageUrls = [];
+
+      for (const photo of photoFiles) {
+        const path = `${userFolder}/photos/${crypto.randomUUID()}-${photo.name}`;
+        const { error: uploadError } = await supabase.storage
+          .from(STORAGE_BUCKET)
+          .upload(path, photo, { cacheControl: '3600', upsert: false });
+
+        if (uploadError) throw uploadError;
+
+        const { data } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(path);
+        imageUrls.push(data.publicUrl);
+      }
+
+      setGenerationStatus('Iniciando generación 3D…');
+
+      const startRes = await fetch('/api/photo-to-3d', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ imageUrls }),
+      });
+      const startData = await startRes.json();
+
+      if (startData.error || !startData.requestId) {
+        throw new Error(startData.error || 'No se pudo iniciar la generación');
+      }
+
+      setGenerationStatus('Generando el modelo 3D… esto puede tardar unos minutos');
+
+      pollingRef.current = setInterval(async () => {
+        try {
+          const statusRes = await fetch(
+            `/api/photo-to-3d/status?request_id=${startData.requestId}`
+          );
+          const statusData = await statusRes.json();
+
+          if (statusData.error) {
+            clearInterval(pollingRef.current);
+            pollingRef.current = null;
+            setGenerating(false);
+            setGenerationStatus('');
+            showToast('No se pudo generar el modelo', statusData.error, 'error');
+            return;
+          }
+
+          if (statusData.status === 'COMPLETED') {
+            clearInterval(pollingRef.current);
+            pollingRef.current = null;
+            setGenerating(false);
+            setGenerationStatus('');
+            setGeneratedModelUrl(statusData.modelUrl);
+            showToast('Modelo generado', 'El modelo 3D está listo — ya podés guardar el producto.');
+          }
+        } catch {
+          // seguimos intentando en el próximo intervalo
+        }
+      }, 4000);
+    } catch (error) {
+      setGenerating(false);
+      setGenerationStatus('');
+      showToast(
+        'No pudimos generar el modelo',
+        error?.message || 'Intentá nuevamente.',
+        'error'
+      );
+    }
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
 
@@ -246,10 +367,10 @@ export default function ProductosPage() {
       return;
     }
 
-    if (!editingProduct && !file) {
+    if (!editingProduct && !file && !generatedModelUrl) {
       showToast(
         'Falta el modelo 3D',
-        'Seleccioná un archivo .glb antes de guardar.',
+        'Seleccioná un archivo .glb o generá el modelo desde fotos.',
         'error'
       );
       return;
@@ -260,7 +381,9 @@ export default function ProductosPage() {
     try {
       let modelUrl = editingProduct?.model_url || '';
 
-      if (file) {
+      if (sourceMode === 'photos' && generatedModelUrl) {
+        modelUrl = generatedModelUrl;
+      } else if (file) {
         modelUrl = await uploadModel(file);
       }
 
@@ -424,20 +547,40 @@ export default function ProductosPage() {
               <span>3</span>
             </button>
 
-            <div className="user-block">
-              <span className="user-avatar">
+            <div className="account-wrap" ref={accountRef}>
+              <button
+                className="account-trigger"
+                type="button"
+                onClick={() => setAccountOpen((current) => !current)}
+                aria-expanded={accountOpen}
+                aria-label="Cuenta"
+              >
                 {getInitials(user?.email)}
-              </span>
-              <span className="user-copy">
-                <strong>{user?.email || 'Tu cuenta'}</strong>
-                <small>Administrador</small>
-              </span>
-            </div>
+              </button>
 
-            <button className="logout-button" type="button" onClick={handleSignOut}>
-              <i data-lucide="log-out"></i>
-              Salir
-            </button>
+              {accountOpen && (
+                <div className="account-dropdown">
+                  <div className="account-dropdown-info">
+                    <span className="account-dropdown-avatar">{getInitials(user?.email)}</span>
+                    <div>
+                      <strong>{user?.email || 'Tu cuenta'}</strong>
+                      <small>Administrador</small>
+                    </div>
+                  </div>
+                  <button
+                    className="account-dropdown-logout"
+                    type="button"
+                    onClick={() => {
+                      setAccountOpen(false);
+                      handleSignOut();
+                    }}
+                  >
+                    <i data-lucide="log-out"></i>
+                    Cerrar sesión
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </header>
 
@@ -628,52 +771,127 @@ export default function ProductosPage() {
               </div>
 
               <div className="field file-field">
-                <span>Archivo 3D (.glb)</span>
+                <span>Cómo cargar el modelo 3D</span>
 
-                <button
-                  className={`drop-zone ${dragging ? 'dragging' : ''} ${file ? 'has-file' : ''}`}
-                  type="button"
-                  onClick={() => fileInputRef.current?.click()}
-                  onDragOver={(event) => {
-                    event.preventDefault();
-                    setDragging(true);
-                  }}
-                  onDragLeave={() => setDragging(false)}
-                  onDrop={handleDrop}
-                >
-                  <span className="upload-icon">
-                    <i data-lucide={file ? 'badge-check' : 'cloud-upload'}></i>
-                  </span>
+                <div className="source-toggle">
+                  <button
+                    type="button"
+                    className={sourceMode === 'file' ? 'active' : ''}
+                    onClick={() => setSourceMode('file')}
+                  >
+                    <i data-lucide="upload"></i>
+                    Ya tengo el archivo .glb
+                  </button>
+                  <button
+                    type="button"
+                    className={sourceMode === 'photos' ? 'active' : ''}
+                    onClick={() => setSourceMode('photos')}
+                  >
+                    <i data-lucide="sparkles"></i>
+                    Generar desde fotos (IA)
+                  </button>
+                </div>
 
-                  <span className="drop-copy">
-                    <strong>
-                      {file
-                        ? file.name
-                        : editingProduct?.model_url
-                          ? 'Modelo 3D actual cargado'
-                          : 'Arrastrá y soltá tu archivo .glb aquí'}
-                    </strong>
-                    <small>
-                      {file
-                        ? `${(file.size / 1024 / 1024).toFixed(2)} MB`
-                        : 'o hacé clic para seleccionar'}
-                    </small>
-                  </span>
-                </button>
+                {sourceMode === 'file' ? (
+                  <>
+                    <button
+                      className={`drop-zone ${dragging ? 'dragging' : ''} ${file ? 'has-file' : ''}`}
+                      type="button"
+                      onClick={() => fileInputRef.current?.click()}
+                      onDragOver={(event) => {
+                        event.preventDefault();
+                        setDragging(true);
+                      }}
+                      onDragLeave={() => setDragging(false)}
+                      onDrop={handleDrop}
+                    >
+                      <span className="upload-icon">
+                        <i data-lucide={file ? 'badge-check' : 'cloud-upload'}></i>
+                      </span>
 
-                <input
-                  ref={fileInputRef}
-                  className="hidden-file-input"
-                  type="file"
-                  accept=".glb,model/gltf-binary"
-                  onChange={(event) =>
-                    selectFile(event.target.files?.[0])
-                  }
-                />
+                      <span className="drop-copy">
+                        <strong>
+                          {file
+                            ? file.name
+                            : editingProduct?.model_url
+                              ? 'Modelo 3D actual cargado'
+                              : 'Arrastrá y soltá tu archivo .glb aquí'}
+                        </strong>
+                        <small>
+                          {file
+                            ? `${(file.size / 1024 / 1024).toFixed(2)} MB`
+                            : 'o hacé clic para seleccionar'}
+                        </small>
+                      </span>
+                    </button>
 
-                <p className="upload-help">
-                  Recomendamos archivos .glb optimizados. Tamaño máximo: 50 MB.
-                </p>
+                    <input
+                      ref={fileInputRef}
+                      className="hidden-file-input"
+                      type="file"
+                      accept=".glb,model/gltf-binary"
+                      onChange={(event) =>
+                        selectFile(event.target.files?.[0])
+                      }
+                    />
+
+                    <p className="upload-help">
+                      Recomendamos archivos .glb optimizados. Tamaño máximo: 50 MB.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      className={`drop-zone ${photoFiles.length ? 'has-file' : ''}`}
+                      type="button"
+                      onClick={() => photoInputRef.current?.click()}
+                    >
+                      <span className="upload-icon">
+                        <i data-lucide={generatedModelUrl ? 'badge-check' : 'images'}></i>
+                      </span>
+                      <span className="drop-copy">
+                        <strong>
+                          {photoFiles.length
+                            ? `${photoFiles.length} foto(s) seleccionada(s)`
+                            : 'Subí 2 a 4 fotos del mueble'}
+                        </strong>
+                        <small>Desde ángulos distintos: frente, costado, atrás</small>
+                      </span>
+                    </button>
+
+                    <input
+                      ref={photoInputRef}
+                      className="hidden-file-input"
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      onChange={(event) =>
+                        setPhotoFiles(Array.from(event.target.files || []).slice(0, 4))
+                      }
+                    />
+
+                    <button
+                      type="button"
+                      className="generate-button"
+                      onClick={handleGeneratePhotos}
+                      disabled={generating || photoFiles.length < 2}
+                    >
+                      <i data-lucide="sparkles"></i>
+                      {generating ? (generationStatus || 'Generando…') : 'Generar modelo 3D'}
+                    </button>
+
+                    {generatedModelUrl && !generating && (
+                      <p className="generate-success">
+                        <i data-lucide="check-circle-2"></i>
+                        Modelo generado — ya podés guardar el producto.
+                      </p>
+                    )}
+
+                    <p className="upload-help">
+                      La generación con IA es una aproximación — revisá el resultado antes de publicar.
+                    </p>
+                  </>
+                )}
               </div>
 
               <div className="form-actions">
@@ -1045,68 +1263,107 @@ export default function ProductosPage() {
           font-weight: 900;
         }
 
-        .user-block {
-          display: flex;
-          align-items: center;
-          gap: 10px;
+        .account-wrap {
+          position: relative;
         }
 
-        .user-avatar {
+        .account-trigger {
           width: 41px;
           height: 41px;
           display: grid;
           place-items: center;
+          border: 0;
           border-radius: 50%;
+          cursor: pointer;
           color: var(--white);
           background: linear-gradient(145deg, var(--blue-600), #0a5ee6);
           box-shadow: 0 8px 18px rgba(29, 105, 227, 0.22);
           font-size: 0.77rem;
           font-weight: 900;
+          transition: transform 0.15s ease, box-shadow 0.15s ease;
         }
 
-        .user-copy {
+        .account-trigger:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 11px 22px rgba(29, 105, 227, 0.3);
+        }
+
+        .account-dropdown {
+          position: absolute;
+          z-index: 40;
+          top: calc(100% + 12px);
+          right: 0;
+          width: 260px;
+          padding: 14px;
+          border: 1px solid var(--border);
+          border-radius: 18px;
+          background: var(--white);
+          box-shadow: 0 20px 46px rgba(23, 58, 112, 0.16);
+        }
+
+        .account-dropdown-info {
+          display: flex;
+          align-items: center;
+          gap: 11px;
+          padding-bottom: 13px;
+          margin-bottom: 11px;
+          border-bottom: 1px solid var(--border);
+        }
+
+        .account-dropdown-avatar {
+          width: 38px;
+          height: 38px;
+          flex: 0 0 auto;
           display: grid;
-          line-height: 1.25;
+          place-items: center;
+          border-radius: 50%;
+          color: var(--white);
+          background: linear-gradient(145deg, var(--blue-600), #0a5ee6);
+          font-size: 0.73rem;
+          font-weight: 900;
         }
 
-        .user-copy strong {
-          max-width: 220px;
+        .account-dropdown-info strong {
+          display: block;
           overflow: hidden;
           color: var(--navy);
           font-size: 0.78rem;
           text-overflow: ellipsis;
           white-space: nowrap;
+          max-width: 175px;
         }
 
-        .user-copy small {
+        .account-dropdown-info small {
           color: var(--muted);
           font-size: 0.7rem;
           font-weight: 700;
         }
 
-        .logout-button {
-          min-height: 41px;
+        .account-dropdown-logout {
+          width: 100%;
+          min-height: 40px;
           display: inline-flex;
           align-items: center;
-          gap: 7px;
-          padding: 0 14px;
+          gap: 8px;
+          padding: 0 12px;
           border: 1px solid var(--border);
-          border-radius: 13px;
+          border-radius: 12px;
           color: #65799c;
           background: var(--white);
           font-size: 0.78rem;
           font-weight: 850;
+          cursor: pointer;
         }
 
-        .logout-button i {
+        .account-dropdown-logout i {
           width: 16px;
           height: 16px;
         }
 
-        .logout-button:hover {
-          color: var(--blue-700);
-          border-color: #bed6fa;
-          background: var(--blue-50);
+        .account-dropdown-logout:hover {
+          color: var(--danger);
+          border-color: #f3c7cd;
+          background: #fff5f6;
         }
 
         .page-shell {
@@ -1469,10 +1726,12 @@ export default function ProductosPage() {
         .currency-prefix {
           position: absolute;
           top: 50%;
-          left: 14px;
+          left: 13px;
+          width: 16px;
           color: #8292ac;
-          font-size: 0.88rem;
+          font-size: 0.85rem;
           font-weight: 800;
+          text-align: center;
           transform: translateY(-50%);
         }
 
@@ -1579,6 +1838,83 @@ export default function ProductosPage() {
           text-align: center;
         }
 
+        .source-toggle {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 8px;
+          margin-bottom: 10px;
+        }
+
+        .source-toggle button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 7px;
+          min-height: 40px;
+          padding: 0 10px;
+          border: 1px solid #d7e2f1;
+          border-radius: 11px;
+          color: #627598;
+          background: var(--white);
+          font-size: 0.72rem;
+          font-weight: 850;
+          cursor: pointer;
+        }
+
+        .source-toggle button i {
+          width: 14px;
+          height: 14px;
+        }
+
+        .source-toggle button.active {
+          border-color: var(--blue-600);
+          color: var(--blue-700);
+          background: var(--blue-50);
+        }
+
+        .generate-button {
+          width: 100%;
+          min-height: 44px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          margin-top: 10px;
+          border: 0;
+          border-radius: 12px;
+          color: var(--white);
+          background: linear-gradient(180deg, #3189f8, #1067ed);
+          font-size: 0.78rem;
+          font-weight: 900;
+          cursor: pointer;
+        }
+
+        .generate-button:disabled {
+          cursor: default;
+          opacity: 0.55;
+        }
+
+        .generate-button i {
+          width: 15px;
+          height: 15px;
+        }
+
+        .generate-success {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+          margin: 10px 0 0;
+          color: #18834a;
+          font-size: 0.7rem;
+          font-weight: 850;
+        }
+
+        .generate-success i {
+          width: 14px;
+          height: 14px;
+        }
+
         .form-actions {
           display: flex;
           justify-content: center;
@@ -1628,9 +1964,10 @@ export default function ProductosPage() {
         .table-card-header {
           min-height: 74px;
           display: flex;
+          flex-wrap: wrap;
           align-items: center;
           justify-content: space-between;
-          gap: 20px;
+          gap: 14px 20px;
           padding: 16px 20px;
         }
 
@@ -1667,6 +2004,7 @@ export default function ProductosPage() {
 
         .table-tools {
           display: flex;
+          flex-wrap: wrap;
           align-items: center;
           gap: 10px;
         }
