@@ -238,11 +238,12 @@ export default function HomePage() {
         }
         .micro-pill i { width: 14px; height: 14px; }
 
-        /* Íconos grandes decorativos del hero (reemplazan las ilustraciones dibujadas a mano) */
-        .hero-furniture-icon { position: absolute; z-index: 1; pointer-events: none; color: var(--blue-300); opacity: 0.55; }
-        .hero-furniture-icon svg { width: 100%; height: 100%; stroke-width: 1; }
-        .hero-chair-icon { left: 0; bottom: 30px; width: 130px; height: 130px; animation: float 5.5s ease-in-out infinite; }
-        .hero-sofa-icon { right: 0; bottom: 30px; width: 170px; height: 170px; animation: float 5.5s ease-in-out infinite; animation-delay: -2.2s; transform: scaleX(-1); }
+        .hero-furniture {
+          position: absolute; z-index: 1; bottom: 50px; width: min(22vw, 270px);
+          pointer-events: none; filter: drop-shadow(0 22px 24px rgba(35, 68, 120, 0.16));
+        }
+        .hero-chair { left: -10px; transform: rotate(-1deg); animation: float 5.5s ease-in-out infinite; }
+        .hero-sofa { right: -20px; width: min(27vw, 340px); transform: rotate(1deg); animation: float 5.5s ease-in-out infinite; animation-delay: -2.2s; }
 
         .orbit { position: absolute; z-index: 2; width: 95px; height: 95px; border: 2px dashed rgba(45, 124, 242, 0.55); border-radius: 50%; pointer-events: none; }
         .orbit-left { left: 5%; bottom: 190px; border-right-color: transparent; border-bottom-color: transparent; transform: rotate(10deg); }
@@ -352,7 +353,7 @@ export default function HomePage() {
         @media (max-width: 1020px) {
           .nav-links { gap: 18px; }
           .hero { min-height: 480px; }
-          .hero-furniture-icon { opacity: 0.35; }
+          .hero-furniture { opacity: 0.52; }
           .comparison-top { grid-template-columns: 1fr; }
           .comparison-image { height: 170px; }
           .demo-layout { grid-template-columns: 1fr; }
@@ -370,7 +371,7 @@ export default function HomePage() {
           .navbar > .btn { display: none; }
           .menu-button { display: grid; }
           .hero { padding-top: 60px; }
-          .hero-furniture-icon { bottom: 10px; opacity: 0.2; }
+          .hero-furniture { bottom: 10px; opacity: 0.2; }
           .comparison-grid, .steps { grid-template-columns: 1fr; }
           .steps { gap: 30px; }
           .section-card { padding: 26px 18px; }
@@ -393,8 +394,8 @@ export default function HomePage() {
           .hero-actions .btn { width: min(100%, 300px); min-width: 0; }
           .hero-pills { gap: 6px; }
           .micro-pill { padding: 7px 9px; font-size: 0.68rem; }
-          .hero-chair-icon { width: 90px; height: 90px; }
-          .hero-sofa-icon { width: 110px; height: 110px; }
+          .hero-chair { left: -60px; }
+          .hero-sofa { right: -80px; }
           .comparison-card { min-height: 0; padding: 14px; }
           .comparison-image { height: 150px; }
           .benefits-grid { grid-template-columns: 1fr; }
@@ -434,8 +435,28 @@ export default function HomePage() {
           <div className="orbit orbit-left"></div>
           <div className="orbit orbit-right"></div>
 
-          <div className="hero-furniture-icon hero-chair-icon"><i data-lucide="armchair"></i></div>
-          <div className="hero-furniture-icon hero-sofa-icon"><i data-lucide="sofa"></i></div>
+          <svg className="hero-furniture hero-chair" viewBox="0 0 390 360" aria-hidden="true">
+            <ellipse cx="195" cy="324" rx="150" ry="24" fill="rgba(31,67,119,.10)" />
+            <path d="M90 132C90 82 123 48 170 48h50c47 0 80 34 80 84v82H90z" fill="#86b6ed" />
+            <rect x="64" y="175" width="262" height="116" rx="46" fill="#6fa4e6" />
+            <rect x="77" y="190" width="236" height="89" rx="39" fill="#7aade8" />
+            <rect x="54" y="158" width="74" height="142" rx="34" fill="#689be0" />
+            <rect x="262" y="158" width="74" height="142" rx="34" fill="#689be0" />
+            <path d="M94 287h32l-12 60H83zM264 287h32l11 60h-31z" fill="#c6ad87" />
+            <path d="M134 69c20-9 101-9 121 0" fill="none" stroke="rgba(255,255,255,.3)" strokeWidth="6" strokeLinecap="round" />
+          </svg>
+
+          <svg className="hero-furniture hero-sofa" viewBox="0 0 520 360" aria-hidden="true">
+            <ellipse cx="260" cy="326" rx="212" ry="24" fill="rgba(31,67,119,.10)" />
+            <rect x="78" y="122" width="364" height="153" rx="48" fill="#d6dbe2" />
+            <rect x="54" y="176" width="412" height="119" rx="42" fill="#c9cfd8" />
+            <rect x="54" y="155" width="83" height="145" rx="34" fill="#c0c7d1" />
+            <rect x="383" y="155" width="83" height="145" rx="34" fill="#c0c7d1" />
+            <rect x="124" y="182" width="130" height="92" rx="25" fill="#dce1e7" />
+            <rect x="266" y="182" width="130" height="92" rx="25" fill="#dce1e7" />
+            <path d="M112 291h32l-7 43h-32zM376 291h32l8 43h-32z" fill="#c3a67f" />
+            <rect x="299" y="140" width="88" height="72" rx="18" fill="#8fbdef" />
+          </svg>
 
           <div className="container hero-content reveal">
             <div className="eyebrow">
