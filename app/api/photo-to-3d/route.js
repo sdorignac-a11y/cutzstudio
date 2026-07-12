@@ -8,8 +8,22 @@
 
 const MODEL_ID = 'tripo3d/h3.1/multiview-to-3d';
 
+import { checkRateLimit, verifySupabaseUser } from '../../../lib/rateLimit';
+
 export async function POST(req) {
   try {
+    const user = await verifySupabaseUser(req.headers.get('authorization'));
+    if (!user) {
+      return cors(json({ error: 'Necesitás estar logueado para generar modelos 3D.' }, 401));
+    }
+
+    const { blocked } = await checkRateLimit('photo3d:' + user.id, 10, 60);
+    if (blocked) {
+      return cors(
+        json({ error: 'Alcanzaste el límite de generaciones por hora. Probá más tarde.' }, 429)
+      );
+    }
+
     const { imageUrls } = await req.json();
 
     if (!imageUrls || imageUrls.length < 2) {
