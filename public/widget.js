@@ -45,8 +45,9 @@
     });
   }
 
-  function fetchProductById(id) {
+  function fetchProductById(id, storeId) {
     var url = SUPABASE_URL + '/rest/v1/products?id=eq.' + encodeURIComponent(id) +
+      '&owner_id=eq.' + encodeURIComponent(storeId) +
       '&status=eq.published&select=id,name,price,alto,ancho,fondo,model_url,slug';
 
     return fetchFromSupabase(url).then(function (rows) {
@@ -55,8 +56,9 @@
     });
   }
 
-  function fetchProductBySlug(slug) {
+  function fetchProductBySlug(slug, storeId) {
     var url = SUPABASE_URL + '/rest/v1/products?slug=eq.' + encodeURIComponent(slug) +
+      '&owner_id=eq.' + encodeURIComponent(storeId) +
       '&status=eq.published&select=id,name,price,alto,ancho,fondo,model_url,slug';
 
     return fetchFromSupabase(url).then(function (rows) {
@@ -64,8 +66,9 @@
     });
   }
 
-  function fetchCatalog() {
+  function fetchCatalog(storeId) {
     var url = SUPABASE_URL + '/rest/v1/products?status=eq.published' +
+      '&owner_id=eq.' + encodeURIComponent(storeId) +
       '&select=id,name,price,alto,ancho,fondo,model_url,slug&order=created_at.desc';
 
     return fetchFromSupabase(url);
@@ -124,7 +127,7 @@
   // -----------------------------------------------------------
   // UI flotante con Shadow DOM
   // -----------------------------------------------------------
-  function buildFAB(currentProduct) {
+  function buildFAB(currentProduct, storeId) {
     var host = document.createElement('div');
     host.style.all = 'initial';
     document.body.appendChild(host);
@@ -757,6 +760,7 @@
     var arOverlay = buildAROverlay(root);
     var resultOverlay = buildResultOverlay(root);
     var catalogOverlay = buildCatalogOverlay(root, arOverlay, resultOverlay);
+    catalogOverlay._storeId = storeId;
 
     if (currentProduct && menu.querySelector('#opt3d')) {
       menu.querySelector('#opt3d').addEventListener('click', function () {
@@ -1100,7 +1104,7 @@
 
     var list = overlay.querySelector('#catList');
 
-    fetchCatalog()
+    fetchCatalog(overlay._storeId)
       .then(function (products) {
         overlay._products = products;
 
@@ -1117,22 +1121,38 @@
   }
 
   // -----------------------------------------------------------
+  function showMissingStoreError(container) {
+    container.innerHTML =
+      '<div style="font-family:sans-serif;font-size:12px;color:#8C3B2E;">' +
+      'Reality: falta el atributo data-store en el código de instalación.</div>';
+    console.error('[Reality widget] Falta data-store — sin esto, el widget no puede saber de qué mueblería traer los productos.');
+  }
+
   function init() {
     var manual = document.querySelector('[data-ebano-product]');
     var auto = document.querySelector('[data-ebano-auto]');
+    var container = manual || auto;
+
+    if (!container) return;
+
+    var storeId = container.getAttribute('data-store');
+    if (!storeId) {
+      showMissingStoreError(container);
+      return;
+    }
 
     if (manual) {
       var idOrSlug = manual.getAttribute('data-ebano-product');
 
-      fetchProductById(idOrSlug)
+      fetchProductById(idOrSlug, storeId)
         .catch(function () {
-          return fetchProductBySlug(idOrSlug);
+          return fetchProductBySlug(idOrSlug, storeId);
         })
         .then(function (p) {
-          buildFAB(p);
+          buildFAB(p, storeId);
         })
         .catch(function () {
-          buildFAB(null);
+          buildFAB(null, storeId);
         });
 
       return;
@@ -1142,16 +1162,16 @@
       var slug = slugFromUrl();
 
       if (!slug) {
-        buildFAB(null);
+        buildFAB(null, storeId);
         return;
       }
 
-      fetchProductBySlug(slug)
+      fetchProductBySlug(slug, storeId)
         .then(function (p) {
-          buildFAB(p);
+          buildFAB(p, storeId);
         })
         .catch(function () {
-          buildFAB(null);
+          buildFAB(null, storeId);
         });
     }
   }
