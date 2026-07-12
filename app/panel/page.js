@@ -628,20 +628,22 @@ export default function ProductosPage() {
                   <strong>1. Copiá el código</strong>
                   <p>
                     Pegalo antes del cierre de la etiqueta
-                    <code>&lt;/body&gt;</code> del sitio del cliente.
+                    <code>&lt;/body&gt;</code> del sitio del cliente. Este código ya
+                    tiene tu ID de mueblería incluido — no lo compartas con otra
+                    mueblería, cada una necesita el suyo propio.
                   </p>
                 </div>
 
                 <pre>
 {`<script src="https://cutzstudio.vercel.app/widget.js"></script>
-<div data-ebano-auto></div>`}
+<div data-ebano-auto data-store="${user?.id || 'TU-ID-DE-MUEBLERIA'}"></div>`}
                 </pre>
 
                 <button
                   type="button"
                   onClick={() => {
                     navigator.clipboard.writeText(
-`<script src="https://cutzstudio.vercel.app/widget.js"></script>\n<div data-ebano-auto></div>`
+`<script src="https://cutzstudio.vercel.app/widget.js"></script>\n<div data-ebano-auto data-store="${user?.id || 'TU-ID-DE-MUEBLERIA'}"></div>`
                     );
                     showToast('Código copiado', 'Ya podés pegarlo en el sitio del cliente.');
                   }}
