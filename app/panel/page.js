@@ -303,9 +303,12 @@ export default function ProductosPage() {
 
       setGenerationStatus('Iniciando generación 3D…');
 
+      const { data: { session } } = await supabase.auth.getSession();
+      const authHeader = session?.access_token ? `Bearer ${session.access_token}` : '';
+
       const startRes = await fetch('/api/photo-to-3d', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', Authorization: authHeader },
         body: JSON.stringify({ imageUrls }),
       });
       const startData = await startRes.json();
@@ -319,7 +322,8 @@ export default function ProductosPage() {
       pollingRef.current = setInterval(async () => {
         try {
           const statusRes = await fetch(
-            `/api/photo-to-3d/status?request_id=${startData.requestId}`
+            `/api/photo-to-3d/status?request_id=${startData.requestId}`,
+            { headers: { Authorization: authHeader } }
           );
           const statusData = await statusRes.json();
 
