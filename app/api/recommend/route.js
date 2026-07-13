@@ -24,7 +24,7 @@ export async function POST(req) {
       );
     }
 
-    const { imageBase64, imageMediaType, products } = await req.json();
+    const { imageBase64, imageMediaType, userNote, products } = await req.json();
     if (!imageBase64 || !products || !products.length) {
       return cors(json({ error: 'Falta la imagen o el catálogo' }, 400));
     }
@@ -51,11 +51,15 @@ export async function POST(req) {
                 type: 'input_text',
                 text:
                   'Esta es una foto de un ambiente real de la casa de un cliente.\n\n' +
+                  (userNote && userNote.trim()
+                    ? `El cliente además contó esto sobre lo que busca: "${userNote.trim()}"\n\n`
+                    : '') +
                   'Este es el catálogo disponible de una mueblería:\n\n' +
                   productList +
                   '\n\n' +
                   'Elegí hasta 3 productos del catálogo que mejor quedarían en ese ambiente. ' +
-                  'Tené en cuenta estilo, color, proporciones y que el tamaño tenga sentido para el espacio visible. ' +
+                  'Tené en cuenta estilo, color, proporciones, que el tamaño tenga sentido para el espacio visible, ' +
+                  'y lo que el cliente haya comentado sobre lo que busca, si lo hizo. ' +
                   'La razón debe ser corta, clara y en español. ' +
                   'No inventes productos ni ids. Solo podés usar ids del catálogo.',
               },
