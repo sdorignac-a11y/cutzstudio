@@ -30,7 +30,7 @@ export async function GET(req) {
 
     if (!statusRes.ok) {
       const errText = await statusRes.text();
-      return cors(json({ error: 'Error consultando el estado: ' + errText }, 500));
+      return cors(json({ error: `Error consultando el estado (código ${statusRes.status}): ${errText || '(sin detalle del servidor)'}` }, 500));
     }
 
     const statusData = await statusRes.json();
