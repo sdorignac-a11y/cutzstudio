@@ -519,7 +519,7 @@ export default function ProductosPage() {
       pollingRef.current = setInterval(async () => {
         try {
           const statusRes = await fetch(
-            `/api/photo-to-3d/status?request_id=${startData.requestId}`,
+            `/api/photo-to-3d/status?status_url=${encodeURIComponent(startData.statusUrl)}&result_url=${encodeURIComponent(startData.resultUrl)}`,
             { headers: { Authorization: authHeader } }
           );
           const statusData = await statusRes.json();
