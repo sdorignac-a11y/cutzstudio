@@ -492,6 +492,32 @@
       '  line-height:1.45;',
       '}',
 
+      '.user-note{',
+      '  width:100%;',
+      '  min-height:52px;',
+      '  max-height:100px;',
+      '  margin-top:10px;',
+      '  padding:10px 12px;',
+      '  border:1px solid #E0CDB0;',
+      '  border-radius:12px;',
+      '  background:#FFFFFF;',
+      '  color:#3a2f22;',
+      '  font-family:inherit;',
+      '  font-size:12.5px;',
+      '  line-height:1.4;',
+      '  resize:vertical;',
+      '  box-sizing:border-box;',
+      '}',
+
+      '.user-note:focus{',
+      '  outline:none;',
+      '  border-color:#A8632C;',
+      '}',
+
+      '.user-note::placeholder{',
+      '  color:#a89680;',
+      '}',
+
       '.analyze-btn{',
       '  width:100%;',
       '  background:#6B4A32;',
@@ -865,6 +891,7 @@
       '    <img id="uploadPreview" style="display:none;">' +
       '    <input type="file" id="uploadInput" accept="image/*" style="display:none;">' +
       '  </div>' +
+      '  <textarea class="user-note" id="userNote" placeholder="¿Algo que quieras contarnos? Ej: quiero algo para el rincón de la ventana, o que combine con la pared blanca (opcional)"></textarea>' +
       '  <button class="analyze-btn" id="analyzeBtn">' + sparkIcon() + ' Buscar qué mueble queda mejor acá</button>' +
       '  <div class="rec-banner" id="recBanner"></div>' +
       '  <div class="cat-note">También podés elegir vos directo del catálogo completo:</div>' +
@@ -880,6 +907,7 @@
     var placeholder = overlay.querySelector('#uploadPlaceholder');
     var analyzeBtn = overlay.querySelector('#analyzeBtn');
     var recBanner = overlay.querySelector('#recBanner');
+    var userNoteField = overlay.querySelector('#userNote');
     var uploadedBase64 = null;
     var uploadedMediaType = null;
 
@@ -923,6 +951,7 @@
         body: JSON.stringify({
           imageBase64: uploadedBase64,
           imageMediaType: uploadedMediaType,
+          userNote: userNoteField.value.trim(),
           products: products.map(function (p) {
             return { id: p.id, name: p.name, price: p.price, alto: p.alto, ancho: p.ancho, fondo: p.fondo };
           }),
@@ -1066,6 +1095,9 @@
   function callGenerateApi(overlay, product, productBase64, buttonEl, originalLabel) {
     buttonEl.textContent = 'Generando imagen…';
 
+    var noteField = overlay.querySelector('#userNote');
+    var userNote = noteField ? noteField.value.trim() : '';
+
     fetch(SITE_DOMAIN + '/api/generate-image', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -1078,6 +1110,7 @@
         alto: product.alto,
         ancho: product.ancho,
         fondo: product.fondo,
+        userNote: userNote,
       }),
     })
       .then(function (res) { return res.json(); })
