@@ -31,6 +31,76 @@ function slugify(value) {
     .replace(/^-+|-+$/g, '');
 }
 
+// Parser simple de CSV: soporta comas y comillas dentro de un mismo campo.
+function parseCsv(text) {
+  const rows = [];
+  let row = [];
+  let field = '';
+  let insideQuotes = false;
+
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i];
+    const next = text[i + 1];
+
+    if (insideQuotes) {
+      if (char === '"' && next === '"') {
+        field += '"';
+        i++;
+      } else if (char === '"') {
+        insideQuotes = false;
+      } else {
+        field += char;
+      }
+    } else if (char === '"') {
+      insideQuotes = true;
+    } else if (char === ',') {
+      row.push(field);
+      field = '';
+    } else if (char === '\n' || char === '\r') {
+      if (char === '\r' && next === '\n') i++;
+      row.push(field);
+      rows.push(row);
+      row = [];
+      field = '';
+    } else {
+      field += char;
+    }
+  }
+  if (field.length || row.length) {
+    row.push(field);
+    rows.push(row);
+  }
+
+  return rows.filter((r) => r.some((cell) => cell.trim() !== ''));
+}
+
+// Convierte las filas crudas del CSV (con encabezado) en objetos de producto
+function csvRowsToProducts(rawRows) {
+  if (!rawRows.length) return [];
+
+  const header = rawRows[0].map((h) => h.trim().toLowerCase());
+  const idx = {
+    name: header.indexOf('nombre') !== -1 ? header.indexOf('nombre') : header.indexOf('name'),
+    price: header.indexOf('precio') !== -1 ? header.indexOf('precio') : header.indexOf('price'),
+    alto: header.indexOf('alto'),
+    ancho: header.indexOf('ancho'),
+    fondo: header.indexOf('fondo'),
+    slug: header.indexOf('slug'),
+  };
+
+  return rawRows.slice(1).map((cells) => {
+    const name = (cells[idx.name] || '').trim();
+    return {
+      name,
+      price: (cells[idx.price] || '').trim(),
+      alto: (cells[idx.alto] || '').trim(),
+      ancho: (cells[idx.ancho] || '').trim(),
+      fondo: (cells[idx.fondo] || '').trim(),
+      slug: (cells[idx.slug] || '').trim() || slugify(name),
+    };
+  });
+}
+
 function getInitials(email = '') {
   const name = email.split('@')[0] || 'R';
   const parts = name.split(/[._-]/).filter(Boolean);
@@ -85,6 +155,16 @@ export default function ProductosPage() {
   const [dragging, setDragging] = useState(false);
   const [installationOpen, setInstallationOpen] = useState(false);
 
+  const [importOpen, setImportOpen] = useState(false);
+  const [importTab, setImportTab] = useState('csv'); // 'csv' | 'quick'
+  const [csvRows, setCsvRows] = useState([]);
+  const [csvFileName, setCsvFileName] = useState('');
+  const [quickRows, setQuickRows] = useState([
+    { name: '', price: '', alto: '', ancho: '', fondo: '', slug: '' },
+  ]);
+  const [importing, setImporting] = useState(false);
+  const [importResults, setImportResults] = useState(null);
+
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
 
@@ -101,7 +181,8 @@ export default function ProductosPage() {
         product.slug?.toLowerCase().includes(normalized);
 
       const matchesStatus =
-        statusFilter === 'all' || product.status === statusFilter;
+        statusFilter === 'all' ||
+        (statusFilter === 'missing-model' ? !product.model_url : product.status === statusFilter);
 
       return matchesSearch && matchesStatus;
     });
@@ -120,6 +201,11 @@ export default function ProductosPage() {
     loadingProducts,
     statusFilter,
     confirmDelete,
+    importOpen,
+    importTab,
+    csvRows,
+    quickRows,
+    importResults,
   ]);
 
   useEffect(() => {
@@ -168,6 +254,110 @@ export default function ProductosPage() {
     }
 
     setLoadingProducts(false);
+  }
+
+  async function refreshProducts() {
+    const { data, error } = await supabase
+      .from('products')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (!error) setProducts(data || []);
+  }
+
+  function handleCsvFile(file) {
+    if (!file) return;
+    setCsvFileName(file.name);
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const rawRows = parseCsv(String(event.target.result));
+      setCsvRows(csvRowsToProducts(rawRows));
+    };
+    reader.readAsText(file);
+  }
+
+  function addQuickRow() {
+    setQuickRows((current) => [
+      ...current,
+      { name: '', price: '', alto: '', ancho: '', fondo: '', slug: '' },
+    ]);
+  }
+
+  function updateQuickRow(index, field, value) {
+    setQuickRows((current) =>
+      current.map((row, i) => {
+        if (i !== index) return row;
+        const updated = { ...row, [field]: value };
+        if (field === 'name' && !row.slugTouched) {
+          updated.slug = slugify(value);
+        }
+        return updated;
+      })
+    );
+  }
+
+  function removeQuickRow(index) {
+    setQuickRows((current) => current.filter((_, i) => i !== index));
+  }
+
+  async function runImport() {
+    const rows = (importTab === 'csv' ? csvRows : quickRows).filter(
+      (row) => row.name && row.name.trim()
+    );
+
+    if (!rows.length) {
+      showToast('Nada para importar', 'Cargá al menos un producto con nombre.', 'error');
+      return;
+    }
+
+    setImporting(true);
+    setImportResults(null);
+
+    const succeeded = [];
+    const failed = [];
+
+    for (const row of rows) {
+      const payload = {
+        owner_id: user?.id,
+        name: row.name.trim(),
+        price: row.price?.trim()
+          ? row.price.trim().startsWith('$')
+            ? row.price.trim()
+            : `$ ${row.price.trim()}`
+          : '$ —',
+        alto: Number(row.alto) || 0,
+        ancho: Number(row.ancho) || 0,
+        fondo: Number(row.fondo) || 0,
+        slug: row.slug?.trim() || slugify(row.name),
+        model_url: null,
+        status: 'draft',
+      };
+
+      const { error } = await supabase.from('products').insert(payload);
+
+      if (error) {
+        failed.push({ name: row.name, reason: error.message });
+      } else {
+        succeeded.push(row.name);
+      }
+    }
+
+    setImporting(false);
+    setImportResults({ succeeded, failed });
+    await refreshProducts();
+
+    if (succeeded.length) {
+      setCsvRows([]);
+      setCsvFileName('');
+      setQuickRows([{ name: '', price: '', alto: '', ancho: '', fondo: '', slug: '' }]);
+    }
+
+    showToast(
+      succeeded.length ? 'Importación terminada' : 'No se importó nada',
+      `${succeeded.length} producto(s) importado(s)${failed.length ? `, ${failed.length} con error` : ''}.`,
+      failed.length && !succeeded.length ? 'error' : 'success'
+    );
   }
 
   function updateField(field, value) {
@@ -676,6 +866,223 @@ export default function ProductosPage() {
             )}
           </section>
 
+          <section className={`installation-card import-card ${importOpen ? 'open' : ''}`}>
+            <button
+              className="installation-header"
+              type="button"
+              onClick={() => setImportOpen((current) => !current)}
+            >
+              <span className="installation-title">
+                <span className="info-icon">
+                  <i data-lucide="upload-cloud"></i>
+                </span>
+                Importar varios productos a la vez
+                <small>Planilla, o carga rápida en tabla</small>
+              </span>
+
+              <i data-lucide="chevron-down"></i>
+            </button>
+
+            {importOpen && (
+              <div className="import-content">
+                <div className="import-tabs">
+                  <button
+                    type="button"
+                    className={importTab === 'csv' ? 'active' : ''}
+                    onClick={() => setImportTab('csv')}
+                  >
+                    <i data-lucide="file-spreadsheet"></i>
+                    Subir planilla (CSV)
+                  </button>
+                  <button
+                    type="button"
+                    className={importTab === 'quick' ? 'active' : ''}
+                    onClick={() => setImportTab('quick')}
+                  >
+                    <i data-lucide="table"></i>
+                    Carga rápida en tabla
+                  </button>
+                </div>
+
+                {importTab === 'csv' ? (
+                  <div className="import-csv">
+                    <p className="import-help">
+                      El archivo debe tener estas columnas (en cualquier orden):{' '}
+                      <code>nombre</code>, <code>precio</code>, <code>alto</code>,{' '}
+                      <code>ancho</code>, <code>fondo</code>, <code>slug</code> (el slug
+                      es opcional, si lo dejás vacío se genera solo a partir del nombre).
+                    </p>
+
+                    <a
+                      className="import-template-link"
+                      href={
+                        'data:text/csv;charset=utf-8,' +
+                        encodeURIComponent(
+                          'nombre,precio,alto,ancho,fondo,slug\nSillón Estocolmo,210.000,80,75,85,sillon-estocolmo\n'
+                        )
+                      }
+                      download="plantilla-productos-reality.csv"
+                    >
+                      <i data-lucide="download"></i>
+                      Descargar planilla de ejemplo
+                    </a>
+
+                    <label className="import-file-drop">
+                      <i data-lucide="cloud-upload"></i>
+                      <span>{csvFileName || 'Hacé clic para elegir tu archivo .csv'}</span>
+                      <input
+                        type="file"
+                        accept=".csv,text/csv"
+                        onChange={(event) => handleCsvFile(event.target.files?.[0])}
+                      />
+                    </label>
+
+                    {csvRows.length > 0 && (
+                      <div className="import-preview">
+                        <p>{csvRows.length} producto(s) detectado(s):</p>
+                        <div className="import-preview-table">
+                          <table>
+                            <thead>
+                              <tr>
+                                <th>Nombre</th>
+                                <th>Precio</th>
+                                <th>Medidas</th>
+                                <th>Slug</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {csvRows.map((row, i) => (
+                                <tr key={i}>
+                                  <td>{row.name || '—'}</td>
+                                  <td>{row.price || '—'}</td>
+                                  <td>
+                                    {row.alto || 0}×{row.ancho || 0}×{row.fondo || 0}
+                                  </td>
+                                  <td>{row.slug || '—'}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="import-quick">
+                    <div className="import-preview-table">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th>Alto</th>
+                            <th>Ancho</th>
+                            <th>Fondo</th>
+                            <th>Slug</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {quickRows.map((row, i) => (
+                            <tr key={i}>
+                              <td>
+                                <input
+                                  value={row.name}
+                                  placeholder="Sillón Estocolmo"
+                                  onChange={(e) => updateQuickRow(i, 'name', e.target.value)}
+                                />
+                              </td>
+                              <td>
+                                <input
+                                  value={row.price}
+                                  placeholder="210.000"
+                                  onChange={(e) => updateQuickRow(i, 'price', e.target.value)}
+                                />
+                              </td>
+                              <td>
+                                <input
+                                  value={row.alto}
+                                  placeholder="80"
+                                  onChange={(e) => updateQuickRow(i, 'alto', e.target.value)}
+                                />
+                              </td>
+                              <td>
+                                <input
+                                  value={row.ancho}
+                                  placeholder="75"
+                                  onChange={(e) => updateQuickRow(i, 'ancho', e.target.value)}
+                                />
+                              </td>
+                              <td>
+                                <input
+                                  value={row.fondo}
+                                  placeholder="85"
+                                  onChange={(e) => updateQuickRow(i, 'fondo', e.target.value)}
+                                />
+                              </td>
+                              <td>
+                                <input
+                                  value={row.slug}
+                                  placeholder="sillon-estocolmo"
+                                  onChange={(e) => updateQuickRow(i, 'slug', e.target.value)}
+                                />
+                              </td>
+                              <td>
+                                <button
+                                  type="button"
+                                  className="remove-row-button"
+                                  onClick={() => removeQuickRow(i)}
+                                  aria-label="Quitar fila"
+                                >
+                                  <i data-lucide="x"></i>
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <button type="button" className="add-row-button" onClick={addQuickRow}>
+                      <i data-lucide="plus"></i>
+                      Agregar fila
+                    </button>
+                  </div>
+                )}
+
+                {importResults && (
+                  <div className="import-results">
+                    <p className="import-results-ok">
+                      <i data-lucide="check-circle-2"></i>
+                      {importResults.succeeded.length} producto(s) importado(s) — quedaron
+                      como "Falta modelo 3D" hasta que les generes o subas el modelo.
+                    </p>
+                    {importResults.failed.length > 0 && (
+                      <div className="import-results-fail">
+                        <p><i data-lucide="alert-triangle"></i> {importResults.failed.length} con error:</p>
+                        <ul>
+                          {importResults.failed.map((f, i) => (
+                            <li key={i}>{f.name}: {f.reason}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                <button
+                  type="button"
+                  className="import-run-button"
+                  onClick={runImport}
+                  disabled={importing}
+                >
+                  <i data-lucide="upload-cloud"></i>
+                  {importing ? 'Importando…' : 'Importar productos'}
+                </button>
+              </div>
+            )}
+          </section>
+
           <section className="editor-grid">
             <form className="product-form-card" onSubmit={handleSubmit}>
               <div className="card-title-row">
@@ -966,6 +1373,7 @@ export default function ProductosPage() {
                     <option value="all">Todos</option>
                     <option value="published">Publicados</option>
                     <option value="draft">Pausados</option>
+                    <option value="missing-model">Falta modelo 3D</option>
                   </select>
                 </label>
               </div>
@@ -1041,16 +1449,26 @@ export default function ProductosPage() {
                         </td>
 
                         <td>
-                          <button
-                            className={`status-badge ${product.status === 'published' ? 'published' : 'draft'}`}
-                            type="button"
-                            onClick={() => toggleStatus(product)}
-                          >
-                            <span />
-                            {product.status === 'published'
-                              ? 'Publicado'
-                              : 'Pausado'}
-                          </button>
+                          {product.model_url ? (
+                            <button
+                              className={`status-badge ${product.status === 'published' ? 'published' : 'draft'}`}
+                              type="button"
+                              onClick={() => toggleStatus(product)}
+                            >
+                              <span />
+                              {product.status === 'published'
+                                ? 'Publicado'
+                                : 'Pausado'}
+                            </button>
+                          ) : (
+                            <span
+                              className="status-badge missing-model"
+                              title="Editá el producto y generá o subí su modelo 3D antes de publicarlo"
+                            >
+                              <span />
+                              Falta modelo 3D
+                            </span>
+                          )}
                         </td>
 
                         <td>
@@ -1589,6 +2007,264 @@ export default function ProductosPage() {
         .installation-content > button i {
           width: 15px;
           height: 15px;
+        }
+
+        .import-card {
+          margin-top: 14px;
+        }
+
+        .import-content {
+          display: grid;
+          gap: 16px;
+          padding: 0 22px 22px;
+        }
+
+        .import-tabs {
+          display: flex;
+          gap: 8px;
+        }
+
+        .import-tabs button {
+          display: flex;
+          align-items: center;
+          gap: 7px;
+          min-height: 38px;
+          padding: 0 14px;
+          border: 1px solid #d7e2f1;
+          border-radius: 11px;
+          color: #627598;
+          background: var(--white);
+          font-size: 0.78rem;
+          font-weight: 850;
+          cursor: pointer;
+        }
+
+        .import-tabs button i {
+          width: 14px;
+          height: 14px;
+        }
+
+        .import-tabs button.active {
+          border-color: var(--blue-600);
+          color: var(--blue-700);
+          background: var(--blue-50);
+        }
+
+        .import-help {
+          margin: 0;
+          color: var(--muted);
+          font-size: 0.78rem;
+          line-height: 1.6;
+        }
+
+        .import-help code {
+          padding: 1px 5px;
+          border-radius: 5px;
+          background: var(--blue-50);
+          color: var(--blue-700);
+          font-size: 0.72rem;
+        }
+
+        .import-template-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          width: max-content;
+          color: var(--blue-700);
+          font-size: 0.76rem;
+          font-weight: 850;
+        }
+
+        .import-template-link i {
+          width: 14px;
+          height: 14px;
+        }
+
+        .import-file-drop {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 8px;
+          padding: 26px;
+          border: 2px dashed #cddaf0;
+          border-radius: 16px;
+          color: var(--muted);
+          background: var(--blue-50);
+          font-size: 0.8rem;
+          font-weight: 750;
+          cursor: pointer;
+          text-align: center;
+        }
+
+        .import-file-drop i {
+          width: 26px;
+          height: 26px;
+          color: var(--blue-600);
+        }
+
+        .import-file-drop input {
+          display: none;
+        }
+
+        .import-preview p {
+          margin: 0 0 8px;
+          color: var(--muted);
+          font-size: 0.78rem;
+          font-weight: 800;
+        }
+
+        .import-preview-table {
+          max-height: 280px;
+          overflow: auto;
+          border: 1px solid var(--border);
+          border-radius: 14px;
+        }
+
+        .import-preview-table table {
+          width: 100%;
+          border-collapse: collapse;
+        }
+
+        .import-preview-table th {
+          position: sticky;
+          top: 0;
+          padding: 9px 10px;
+          border-bottom: 1px solid var(--border);
+          background: var(--blue-50);
+          color: var(--navy);
+          font-size: 0.68rem;
+          text-align: left;
+          text-transform: uppercase;
+          letter-spacing: 0.02em;
+        }
+
+        .import-preview-table td {
+          padding: 7px 10px;
+          border-bottom: 1px solid var(--border);
+          color: #445576;
+          font-size: 0.78rem;
+        }
+
+        .import-preview-table input {
+          width: 100%;
+          min-width: 80px;
+          height: 32px;
+          padding: 0 8px;
+          border: 1px solid var(--border);
+          border-radius: 8px;
+          font-size: 0.76rem;
+        }
+
+        .remove-row-button {
+          width: 26px;
+          height: 26px;
+          display: grid;
+          place-items: center;
+          border: 0;
+          border-radius: 8px;
+          color: var(--danger);
+          background: #fdece5;
+          cursor: pointer;
+        }
+
+        .remove-row-button i {
+          width: 13px;
+          height: 13px;
+        }
+
+        .add-row-button {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          width: max-content;
+          min-height: 36px;
+          padding: 0 13px;
+          border: 1px dashed #b9c9e6;
+          border-radius: 10px;
+          color: var(--blue-700);
+          background: var(--white);
+          font-size: 0.76rem;
+          font-weight: 850;
+          cursor: pointer;
+        }
+
+        .add-row-button i {
+          width: 14px;
+          height: 14px;
+        }
+
+        .import-results {
+          padding: 12px 14px;
+          border: 1px solid var(--border);
+          border-radius: 14px;
+          background: var(--blue-50);
+        }
+
+        .import-results-ok {
+          display: flex;
+          align-items: center;
+          gap: 7px;
+          margin: 0;
+          color: #18834a;
+          font-size: 0.78rem;
+          font-weight: 800;
+        }
+
+        .import-results-ok i {
+          width: 15px;
+          height: 15px;
+          flex: 0 0 auto;
+        }
+
+        .import-results-fail {
+          margin-top: 8px;
+        }
+
+        .import-results-fail p {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          margin: 0 0 5px;
+          color: var(--danger);
+          font-size: 0.76rem;
+          font-weight: 800;
+        }
+
+        .import-results-fail p i {
+          width: 14px;
+          height: 14px;
+        }
+
+        .import-results-fail ul {
+          margin: 0;
+          padding-left: 18px;
+          color: #8a4a3a;
+          font-size: 0.72rem;
+        }
+
+        .import-run-button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          min-height: 44px;
+          border: 0;
+          border-radius: 12px;
+          color: var(--white);
+          background: linear-gradient(180deg, #3189f8, #1067ed);
+          font-size: 0.82rem;
+          font-weight: 900;
+          cursor: pointer;
+        }
+
+        .import-run-button:disabled {
+          cursor: default;
+          opacity: 0.6;
+        }
+
+        .import-run-button i {
+          width: 16px;
+          height: 16px;
         }
 
         .editor-grid {
@@ -2185,6 +2861,16 @@ export default function ProductosPage() {
 
         .status-badge.draft span {
           background: #e0a928;
+        }
+
+        .status-badge.missing-model {
+          cursor: default;
+          color: #b64429;
+          background: #fdece5;
+        }
+
+        .status-badge.missing-model span {
+          background: #e05b32;
         }
 
         .row-actions {
