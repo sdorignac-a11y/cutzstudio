@@ -342,35 +342,49 @@
       '  font-style:italic;',
       '}',
 
-      '.fab-wrap{',
+       '.fab-wrap{',
       '  position:fixed;',
       '  right:16px;',
       '  bottom:16px;',
-      '  width:54px;',
-      '  height:54px;',
+      '  width:58px;',
+      '  height:58px;',
       '  z-index:999999;',
+      '  display:grid;',
+      '  place-items:center;',
       '  cursor:pointer;',
-      '  border:none;',
-      '  background:none;',
+      '  border:1.5px solid rgba(218,176,128,.95);',
+      '  border-radius:18px;',
+      '  background:linear-gradient(180deg,#FFFDF9 0%,#FFF4E7 100%);',
+      '  box-shadow:0 14px 30px rgba(120,70,28,.22);',
       '  padding:0;',
       '  outline:none;',
+      '  transition:transform .22s ease,box-shadow .22s ease,background .22s ease;',
       '}',
 
       '.fab-wrap svg{',
-      '  width:100%;',
-      '  height:100%;',
+      '  width:39px;',
+      '  height:39px;',
       '  display:block;',
-      '  filter:drop-shadow(0 13px 22px rgba(120,70,28,.28));',
-      '  transition:transform .22s ease,filter .22s ease;',
+      '  fill:none;',
+      '  stroke:#8A552F;',
+      '  stroke-width:2.8;',
+      '  stroke-linecap:round;',
+      '  stroke-linejoin:round;',
+      '  transition:transform .22s ease;',
+      '}',
+
+      '.fab-wrap:hover{',
+      '  transform:translateY(-2px);',
+      '  background:linear-gradient(180deg,#FFFFFF 0%,#FCEEDC 100%);',
+      '  box-shadow:0 18px 36px rgba(120,70,28,.28);',
       '}',
 
       '.fab-wrap:hover svg{',
-      '  transform:scale(1.06) rotate(-4deg);',
-      '  filter:drop-shadow(0 17px 27px rgba(120,70,28,.34));',
+      '  transform:scale(1.05) rotate(-4deg);',
       '}',
 
       '.fab-wrap.is-open svg{',
-      '  transform:scale(.94) rotate(5deg);',
+      '  transform:scale(.94) rotate(6deg);',
       '}',
 
       '.menu{',
@@ -1175,8 +1189,9 @@
       '  .fab-wrap{',
       '    right:10px;',
       '    bottom:10px;',
-      '    width:52px;',
-      '    height:52px;',
+      '    width:56px;',
+      '    height:56px;',
+      '    border-radius:17px;',
       '  }',
       '}'
     ].join('\n');
@@ -1234,27 +1249,16 @@
     var fab = document.createElement('button');
 
     fab.className = 'fab-wrap';
-    fab.setAttribute('aria-label', 'Abrir Reality');
+fab.setAttribute('aria-label', 'Abrir visualizador 3D y AR');
 
-    fab.innerHTML =
-      '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
-      '  <circle cx="50" cy="50" r="48" fill="url(#fabGrad)"/>' +
-      '  <defs>' +
-      '    <linearGradient id="fabGrad" x1="0" y1="0" x2="0" y2="1">' +
-      '      <stop offset="0" stop-color="#E4B573"/>' +
-      '      <stop offset="1" stop-color="#C98C42"/>' +
-      '    </linearGradient>' +
-      '  </defs>' +
-      '  <g fill="none" stroke="#3B2410" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">' +
-      '    <path d="M50 27 66 36v18L50 63 34 54V36z"/>' +
-      '    <path d="M34 36l16 9 16-9"/>' +
-      '    <path d="M50 45v18"/>' +
-      '    <path d="M74 32c6 8 6 20-1 28" stroke-linecap="round"/>' +
-      '    <path d="M67 58l6 3 2-7" stroke-linecap="round"/>' +
-      '  </g>' +
-      '</svg>';
-
-    fab.classList.add('fab-cube');
+fab.innerHTML =
+  '<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+  '  <path d="M32 13 46 21 32 29 18 21 32 13Z" />' +
+  '  <path d="M18 21v16l14 8 14-8V21" />' +
+  '  <path d="M32 29v16" />' +
+  '  <path d="M11 35c1.8 10.7 11.1 18.8 22.2 18.8 7.7 0 14.5-3.8 18.6-9.7" />' +
+  '  <path d="m46.2 44.4 6-.8-.8 6" />' +
+  '</svg>';
 
     root.appendChild(fab);
 
