@@ -141,6 +141,7 @@ export default function ProductosPage() {
   const [file, setFile] = useState(null);
   const [editingProduct, setEditingProduct] = useState(null);
   const [slugTouched, setSlugTouched] = useState(false);
+  const [extraMeasurements, setExtraMeasurements] = useState([]);
 
   const [sourceMode, setSourceMode] = useState('file'); // 'file' | 'photos'
   const [photoFiles, setPhotoFiles] = useState([]);
@@ -411,6 +412,7 @@ export default function ProductosPage() {
     setPhotoFiles([]);
     setGeneratedModelUrl(null);
     setGenerationStatus('');
+    setExtraMeasurements([]);
     if (pollingRef.current) {
       clearInterval(pollingRef.current);
       pollingRef.current = null;
@@ -436,7 +438,24 @@ export default function ProductosPage() {
     });
     setFile(null);
     setSlugTouched(true);
+    setExtraMeasurements(
+      Array.isArray(product.extra_measurements) ? product.extra_measurements : []
+    );
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function addExtraMeasurement() {
+    setExtraMeasurements((current) => [...current, { label: '', value: '' }]);
+  }
+
+  function updateExtraMeasurement(index, field, value) {
+    setExtraMeasurements((current) =>
+      current.map((item, i) => (i === index ? { ...item, [field]: value } : item))
+    );
+  }
+
+  function removeExtraMeasurement(index) {
+    setExtraMeasurements((current) => current.filter((_, i) => i !== index));
   }
 
   async function uploadModel(selectedFile) {
@@ -608,6 +627,9 @@ export default function ProductosPage() {
         fondo: Number(form.fondo || 0),
         model_url: modelUrl,
         status: editingProduct?.status || 'published',
+        extra_measurements: extraMeasurements
+          .filter((m) => m.label.trim() && m.value.trim())
+          .map((m) => ({ label: m.label.trim(), value: m.value.trim() })),
       };
 
       if (editingProduct) {
@@ -1188,6 +1210,51 @@ export default function ProductosPage() {
                     </div>
                   </label>
                 ))}
+              </div>
+
+              <div className="field extra-measurements-field">
+                <span>
+                  Medidas adicionales
+                  <small>Opcional — útil para sillones en L, mesas extensibles, etc.</small>
+                </span>
+
+                {extraMeasurements.map((measurement, index) => (
+                  <div className="extra-measurement-row" key={index}>
+                    <input
+                      type="text"
+                      placeholder="Ej: Brazo largo"
+                      value={measurement.label}
+                      onChange={(event) =>
+                        updateExtraMeasurement(index, 'label', event.target.value)
+                      }
+                    />
+                    <input
+                      type="text"
+                      placeholder="Ej: 220 cm"
+                      value={measurement.value}
+                      onChange={(event) =>
+                        updateExtraMeasurement(index, 'value', event.target.value)
+                      }
+                    />
+                    <button
+                      type="button"
+                      className="remove-row-button"
+                      onClick={() => removeExtraMeasurement(index)}
+                      aria-label="Quitar medida"
+                    >
+                      <i data-lucide="x"></i>
+                    </button>
+                  </div>
+                ))}
+
+                <button
+                  type="button"
+                  className="add-row-button"
+                  onClick={addExtraMeasurement}
+                >
+                  <i data-lucide="plus"></i>
+                  Agregar medida
+                </button>
               </div>
 
               <div className="field file-field">
@@ -2458,6 +2525,34 @@ export default function ProductosPage() {
 
         .slug-field {
           margin-top: 16px;
+        }
+
+        .extra-measurements-field {
+          margin-top: 17px;
+        }
+
+        .extra-measurement-row {
+          display: grid;
+          grid-template-columns: 1fr 1fr auto;
+          gap: 8px;
+          margin-bottom: 8px;
+        }
+
+        .extra-measurement-row input {
+          height: 40px;
+          padding: 0 12px;
+          border: 1px solid #d7e2f1;
+          border-radius: 10px;
+          outline: none;
+          color: var(--navy);
+          background: rgba(255, 255, 255, 0.95);
+          font-size: 0.76rem;
+          font-weight: 700;
+        }
+
+        .extra-measurement-row input:focus {
+          border-color: #75aef8;
+          box-shadow: 0 0 0 4px rgba(45, 124, 242, 0.09);
         }
 
         .field-help {
