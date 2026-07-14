@@ -210,6 +210,43 @@
     );
   }
 
+  function armchairIcon() {
+    return (
+      '<svg class="line-icon" viewBox="0 0 48 48" aria-hidden="true">' +
+      '  <path d="M13 22V15.5A7.5 7.5 0 0 1 20.5 8h7A7.5 7.5 0 0 1 35 15.5V22" />' +
+      '  <path d="M10 21A5 5 0 0 0 6 26v6.5A5.6 5.6 0 0 0 11.5 38h25A5.6 5.6 0 0 0 42 32.5V26a5 5 0 0 0-5-5 5 5 0 0 0-5 5v2H15v-2a5 5 0 0 0-5-5Z" />' +
+      '  <path d="M12 38v3M36 38v3" />' +
+      '</svg>'
+    );
+  }
+
+  function scanIcon() {
+    return (
+      '<svg class="line-icon" viewBox="0 0 48 48" aria-hidden="true">' +
+      '  <path d="M8 16V11a3 3 0 0 1 3-3h5M40 16V11a3 3 0 0 1-3-3h-5M8 32v5a3 3 0 0 0 3 3h5M40 32v5a3 3 0 0 1-3 3h-5" />' +
+      '  <circle cx="24" cy="24" r="6" />' +
+      '</svg>'
+    );
+  }
+
+  function pencilIcon() {
+    return (
+      '<svg class="line-icon" viewBox="0 0 48 48" aria-hidden="true">' +
+      '  <path d="M30 9l9 9-19 19-11 2 2-11z" />' +
+      '  <path d="M27 12l9 9" />' +
+      '</svg>'
+    );
+  }
+
+  function lockIcon() {
+    return (
+      '<svg class="line-icon" viewBox="0 0 48 48" aria-hidden="true">' +
+      '  <rect x="10" y="21" width="28" height="19" rx="4" />' +
+      '  <path d="M16 21v-6a8 8 0 0 1 16 0v6" />' +
+      '</svg>'
+    );
+  }
+
   // -----------------------------------------------------------
   // UI flotante con Shadow DOM
   // -----------------------------------------------------------
@@ -228,7 +265,7 @@
     var style = document.createElement('style');
 
     style.textContent = [
-      '@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800;900&display=swap");',
+      '@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Nunito:wght@400;600;700;800;900&display=swap");',
 
       '*{',
       '  box-sizing:border-box;',
@@ -529,39 +566,64 @@
       '  max-width:100%;',
       '  max-height:88vh;',
       '  overflow-y:auto;',
-      '  border-radius:18px;',
-      '  padding:18px;',
-      '  background:#FFF7ED;',
-      '  border:1px solid rgba(210,174,125,.65);',
+      '  border-radius:24px;',
+      '  padding:22px;',
+      '  background:#FFFBF4;',
+      '  border:1px solid rgba(210,174,125,.55);',
       '  box-shadow:0 30px 80px rgba(0,0,0,.28);',
       '}',
 
       '.modal-top{',
       '  display:flex;',
       '  justify-content:space-between;',
-      '  align-items:center;',
+      '  align-items:flex-start;',
       '  gap:12px;',
-      '  margin-bottom:11px;',
+      '  margin-bottom:16px;',
+      '}',
+
+      '.modal-top-info{',
+      '  display:flex;',
+      '  align-items:flex-start;',
+      '  gap:12px;',
+      '}',
+
+      '.modal-icon{',
+      '  width:38px;',
+      '  height:38px;',
+      '  flex:0 0 auto;',
+      '  display:grid;',
+      '  place-items:center;',
+      '  border-radius:50%;',
+      '  border:1.5px solid #E7CDA3;',
+      '  color:#A8632C;',
+      '  background:#FFFFFF;',
+      '}',
+
+      '.modal-icon .line-icon{',
+      '  width:19px;',
+      '  height:19px;',
       '}',
 
       '.modal-top strong{',
-      '  font-size:14px;',
-      '  font-weight:900;',
-      '  color:#3D2A1B;',
+      '  font-family:"Fraunces","Nunito",serif;',
+      '  font-size:18px;',
+      '  font-weight:600;',
+      '  color:#2A2016;',
+      '  letter-spacing:-.01em;',
       '}',
 
       '.ar-dims{',
       '  font-size:11px;',
       '  font-weight:700;',
       '  color:#8A7B68;',
-      '  margin-top:2px;',
+      '  margin-top:3px;',
       '}',
 
       '.ar-extra-dims{',
       '  display:flex;',
       '  flex-wrap:wrap;',
       '  gap:6px;',
-      '  margin-top:6px;',
+      '  margin-top:7px;',
       '}',
 
       '.ar-extra-dim-item{',
@@ -574,11 +636,12 @@
       '}',
 
       '.close{',
-      '  width:28px;',
-      '  height:28px;',
-      '  border:none;',
+      '  width:30px;',
+      '  height:30px;',
+      '  flex:0 0 auto;',
+      '  border:1px solid #EEE1CC;',
       '  border-radius:999px;',
-      '  background:#F1E4D1;',
+      '  background:#FFFFFF;',
       '  color:#6E4127;',
       '  font-size:16px;',
       '  cursor:pointer;',
@@ -589,10 +652,10 @@
       '  width:100%;',
       '  height:280px;',
       '  background:#FFFFFF;',
-      '  border:1px solid rgba(218,196,165,.75);',
-      '  border-radius:14px;',
+      '  border:1px solid rgba(218,196,165,.6);',
+      '  border-radius:18px;',
       '  overflow:hidden;',
-      '  margin-bottom:8px;',
+      '  margin-bottom:14px;',
       '}',
 
       'model-viewer{',
@@ -600,19 +663,11 @@
       '  height:100%;',
       '}',
 
-      '.ar-btn{',
-      '  background:#6B4A32;',
-      '  color:#FFFFFF;',
-      '  border:none;',
-      '  padding:8px 13px;',
-      '  border-radius:999px;',
-      '  font-size:11.5px;',
-      '  font-weight:800;',
-      '  cursor:pointer;',
-      '  margin:10px;',
+      '.dim-anchor{',
+      '  display:none;',
       '}',
 
-      '.dim-anchor{',
+      '.ar-btn-hidden{',
       '  display:none;',
       '}',
 
@@ -652,33 +707,87 @@
       '  stroke-width:1;',
       '}',
 
-      '.dims-toggle{',
-      '  width:100%;',
-      '  background:#FFFFFF;',
-      '  color:#6B4A32;',
-      '  border:1.5px solid #DCC8A9;',
-      '  padding:8px;',
+      '.hint-row{',
+      '  display:flex;',
+      '  align-items:flex-start;',
+      '  gap:9px;',
+      '  margin-bottom:16px;',
+      '  color:#8A7B68;',
+      '  font-size:11.5px;',
+      '  line-height:1.5;',
+      '}',
+
+      '.hint-row .line-icon{',
+      '  width:17px;',
+      '  height:17px;',
+      '  flex:0 0 auto;',
+      '  margin-top:1px;',
+      '  color:#A8632C;',
+      '}',
+
+      '.action-row{',
+      '  display:grid;',
+      '  grid-template-columns:1fr 1fr;',
+      '  gap:9px;',
+      '  margin-bottom:14px;',
+      '}',
+
+      '.action-row button{',
+      '  display:flex;',
+      '  align-items:center;',
+      '  justify-content:center;',
+      '  gap:7px;',
+      '  min-height:46px;',
       '  border-radius:999px;',
-      '  font-size:11px;',
+      '  font-size:12.5px;',
       '  font-weight:800;',
       '  cursor:pointer;',
-      '  margin-bottom:8px;',
+      '}',
+
+      '.action-row .line-icon{',
+      '  width:15px;',
+      '  height:15px;',
+      '}',
+
+      '.dims-toggle{',
+      '  background:#FFFFFF;',
+      '  color:#6B4A32;',
+      '  border:1.5px solid #E7CDA3;',
       '}',
 
       '.dims-toggle:hover{',
       '  background:#FBF0E1;',
       '}',
 
-      '.hint{',
-      '  font-size:11px;',
-      '  color:#8A7B68;',
-      '  margin:8px 0 0;',
-      '  line-height:1.35;',
+      '.ar-open-btn{',
+      '  border:none;',
+      '  color:#3B2410;',
+      '  background:linear-gradient(180deg,#E4B573,#C98C42);',
+      '  box-shadow:0 10px 22px rgba(168,99,44,.28);',
+      '}',
+
+      '.ar-open-btn:hover{',
+      '  box-shadow:0 13px 26px rgba(168,99,44,.34);',
+      '}',
+
+      '.trust-line{',
+      '  display:flex;',
+      '  align-items:center;',
+      '  justify-content:center;',
+      '  gap:6px;',
+      '  color:#A99B87;',
+      '  font-size:10.5px;',
+      '  font-weight:700;',
+      '}',
+
+      '.trust-line .line-icon{',
+      '  width:11px;',
+      '  height:11px;',
       '}',
 
       '.poweredby{',
       '  font-size:10px;',
-      '  color:#9E8667;',
+      '  color:#C7B79B;',
       '  margin-top:10px;',
       '  text-align:center;',
       '  font-weight:800;',
@@ -1149,12 +1258,15 @@
     overlay.className = 'overlay';
 
     overlay.innerHTML =
-      '<div class="modal">' +
+      '<div class="modal ar-modal">' +
       '  <div class="modal-top">' +
-      '    <div>' +
-      '      <strong id="arTitle"></strong>' +
-      '      <div class="ar-dims" id="arDims"></div>' +
-      '      <div class="ar-extra-dims" id="arExtraDims"></div>' +
+      '    <div class="modal-top-info">' +
+      '      <span class="modal-icon">' + armchairIcon() + '</span>' +
+      '      <div>' +
+      '        <strong id="arTitle"></strong>' +
+      '        <div class="ar-dims" id="arDims"></div>' +
+      '        <div class="ar-extra-dims" id="arExtraDims"></div>' +
+      '      </div>' +
       '    </div>' +
       '    <button class="close" aria-label="Cerrar">×</button>' +
       '  </div>' +
@@ -1171,9 +1283,7 @@
       '      ar-modes="webxr scene-viewer quick-look" ' +
       '      ar-scale="fixed" ' +
       '      ar-placement="floor">' +
-      '      <button slot="ar-button" class="ar-btn">' +
-      '        Ver en tu espacio' +
-      '      </button>' +
+      '      <button slot="ar-button" class="ar-btn-hidden" aria-hidden="true"></button>' +
       '      <span slot="hotspot-alto-top" class="dim-anchor" data-position="0 0 0"></span>' +
       '      <span slot="hotspot-alto-bottom" class="dim-anchor" data-position="0 0 0"></span>' +
       '      <span slot="hotspot-ancho-left" class="dim-anchor" data-position="0 0 0"></span>' +
@@ -1183,10 +1293,15 @@
       '    </model-viewer>' +
       '    <svg class="dim-svg" id="dimSvg"></svg>' +
       '  </div>' +
-      '  <button class="dims-toggle" id="dimsToggle">Ver medidas sobre el mueble</button>' +
-      '  <p class="hint">' +
-      '    Desde el celular esto abre la cámara real, a escala bloqueada.' +
-      '  </p>' +
+      '  <div class="hint-row">' +
+      '    ' + scanIcon() +
+      '    <span>Desde el celular, tocá "Abrir en AR" para abrir la cámara y ver el mueble en tu espacio.</span>' +
+      '  </div>' +
+      '  <div class="action-row">' +
+      '    <button class="dims-toggle" id="dimsToggle">' + pencilIcon() + ' Ver medidas</button>' +
+      '    <button class="ar-open-btn" id="arOpenBtn">' + scanIcon() + ' Abrir en AR</button>' +
+      '  </div>' +
+      '  <div class="trust-line">' + lockIcon() + ' Tu espacio, a escala real. Seguro y privado.</div>' +
       '  <div class="poweredby">powered by reality</div>' +
       '</div>';
 
@@ -1207,14 +1322,21 @@
     });
 
     overlay
+      .querySelector('#arOpenBtn')
+      .addEventListener('click', function () {
+        var viewer = overlay.querySelector('#arViewer');
+        if (viewer && viewer.activateAR) viewer.activateAR();
+      });
+
+    overlay
       .querySelector('#dimsToggle')
       .addEventListener('click', function (event) {
         var viewer = overlay.querySelector('#arViewer');
         var showing = overlay.classList.toggle('showing-dims');
 
-        event.currentTarget.textContent = showing
-          ? 'Ocultar medidas'
-          : 'Ver medidas sobre el mueble';
+        event.currentTarget.innerHTML = showing
+          ? pencilIcon() + ' Ocultar medidas'
+          : pencilIcon() + ' Ver medidas';
 
         if (showing) {
           placeMeasurementAnchors(viewer, overlay._currentProduct);
@@ -1364,7 +1486,7 @@
       stopDimensionTracking(overlay, viewer);
       overlay._currentProduct = product;
       overlay.classList.remove('showing-dims');
-      overlay.querySelector('#dimsToggle').textContent = 'Ver medidas sobre el mueble';
+      overlay.querySelector('#dimsToggle').innerHTML = pencilIcon() + ' Ver medidas';
 
       overlay.classList.add('open');
     });
