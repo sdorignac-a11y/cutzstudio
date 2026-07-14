@@ -1249,13 +1249,16 @@
     var fab = document.createElement('button');
 
     fab.className = 'fab-wrap';
-    fab.setAttribute('aria-label', 'Abrir Reality');
+fab.setAttribute('aria-label', 'Abrir visualizador 3D y AR');
 
-    fab.innerHTML =
-      '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
-      '  <path fill="#A8632C" d="M50 4 C56 4 58 16 63 18 C69 20 78 12 83 17 C88 22 79 30 81 36 C83 42 96 44 96 51 C96 58 83 60 80 66 C77 72 84 82 78 87 C72 92 63 81 57 83 C51 85 48 96 41 96 C34 96 33 84 27 81 C21 78 10 86 6 80 C2 74 12 64 10 58 C8 52 -3 49 -1 42 C1 35 14 36 18 31 C22 26 17 14 24 10 C31 6 39 17 45 15 C49 14 47 4 50 4 Z"/>' +
-      '  <path fill="rgba(255,255,255,.16)" d="M30 23 C38 17 51 14 63 19 C52 18 40 22 31 30 C27 34 22 28 30 23 Z"/>' +
-      '</svg>';
+fab.innerHTML =
+  '<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+  '  <path d="M32 13 46 21 32 29 18 21 32 13Z" />' +
+  '  <path d="M18 21v16l14 8 14-8V21" />' +
+  '  <path d="M32 29v16" />' +
+  '  <path d="M11 35c1.8 10.7 11.1 18.8 22.2 18.8 7.7 0 14.5-3.8 18.6-9.7" />' +
+  '  <path d="m46.2 44.4 6-.8-.8 6" />' +
+  '</svg>';
 
     root.appendChild(fab);
 
