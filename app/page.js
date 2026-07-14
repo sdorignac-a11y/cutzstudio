@@ -628,28 +628,17 @@ export default function HomePage() {
           <div className="orbit orbit-left"></div>
           <div className="orbit orbit-right"></div>
 
-          <svg className="hero-furniture hero-chair" viewBox="0 0 390 360" aria-hidden="true">
-            <ellipse cx="195" cy="324" rx="150" ry="24" fill="rgba(31,67,119,.10)" />
-            <path d="M90 132C90 82 123 48 170 48h50c47 0 80 34 80 84v82H90z" fill="#86b6ed" />
-            <rect x="64" y="175" width="262" height="116" rx="46" fill="#6fa4e6" />
-            <rect x="77" y="190" width="236" height="89" rx="39" fill="#7aade8" />
-            <rect x="54" y="158" width="74" height="142" rx="34" fill="#689be0" />
-            <rect x="262" y="158" width="74" height="142" rx="34" fill="#689be0" />
-            <path d="M94 287h32l-12 60H83zM264 287h32l11 60h-31z" fill="#c6ad87" />
-            <path d="M134 69c20-9 101-9 121 0" fill="none" stroke="rgba(255,255,255,.3)" strokeWidth="6" strokeLinecap="round" />
-          </svg>
+<img
+  src="/reality-hero-left.png"
+  className="hero-furniture hero-chair"
+  alt=""
+/>
 
-          <svg className="hero-furniture hero-sofa" viewBox="0 0 520 360" aria-hidden="true">
-            <ellipse cx="260" cy="326" rx="212" ry="24" fill="rgba(31,67,119,.10)" />
-            <rect x="78" y="122" width="364" height="153" rx="48" fill="#d6dbe2" />
-            <rect x="54" y="176" width="412" height="119" rx="42" fill="#c9cfd8" />
-            <rect x="54" y="155" width="83" height="145" rx="34" fill="#c0c7d1" />
-            <rect x="383" y="155" width="83" height="145" rx="34" fill="#c0c7d1" />
-            <rect x="124" y="182" width="130" height="92" rx="25" fill="#dce1e7" />
-            <rect x="266" y="182" width="130" height="92" rx="25" fill="#dce1e7" />
-            <path d="M112 291h32l-7 43h-32zM376 291h32l8 43h-32z" fill="#c3a67f" />
-            <rect x="299" y="140" width="88" height="72" rx="18" fill="#8fbdef" />
-          </svg>
+<img
+  src="/reality-hero-right.png"
+  className="hero-furniture hero-sofa"
+  alt=""
+/>
 
           <div className="container hero-content reveal">
             <div className="eyebrow">
