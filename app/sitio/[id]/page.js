@@ -22,17 +22,18 @@ function applyRealScale(modelViewer, alto, ancho, fondo) {
       const targetY = (Number(alto) || 0) / 100;
       const targetZ = (Number(fondo) || 0) / 100;
 
-      const ratios = [];
-      if (baseX > 0 && targetX > 0) ratios.push(targetX / baseX);
-      if (baseY > 0 && targetY > 0) ratios.push(targetY / baseY);
-      if (baseZ > 0 && targetZ > 0) ratios.push(targetZ / baseZ);
+      // Un factor por eje (no un promedio) — así las tres medidas
+      // quedan exactas, aunque eso implique estirar un poco la forma
+      // si el modelo 3D no tenía las mismas proporciones reales.
+      const scaleX = baseX > 0 && targetX > 0 ? targetX / baseX : 1;
+      const scaleY = baseY > 0 && targetY > 0 ? targetY / baseY : 1;
+      const scaleZ = baseZ > 0 && targetZ > 0 ? targetZ / baseZ : 1;
 
-      if (!ratios.length) return;
+      if (![scaleX, scaleY, scaleZ].every((n) => isFinite(n) && n > 0)) {
+        return;
+      }
 
-      const avg = ratios.reduce((a, b) => a + b, 0) / ratios.length;
-      if (!isFinite(avg) || avg <= 0) return;
-
-      modelViewer.setAttribute('scale', `${avg} ${avg} ${avg}`);
+      modelViewer.setAttribute('scale', `${scaleX} ${scaleY} ${scaleZ}`);
     } catch (e) {
       // si algo falla, dejamos el modelo con su escala original
     }
@@ -75,6 +76,28 @@ export default function ProductPage() {
       <div className="mono" style={{ fontSize: 12, color: '#8a8375', marginTop: 6 }}>
         {product.alto} × {product.ancho} × {product.fondo} cm
       </div>
+      {Array.isArray(product.extra_measurements) && product.extra_measurements.length > 0 && (
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 8 }}>
+          {product.extra_measurements
+            .filter((m) => m && m.label && m.value)
+            .map((m, i) => (
+              <span
+                key={i}
+                className="mono"
+                style={{
+                  fontSize: 10.5,
+                  fontWeight: 700,
+                  color: 'var(--wood)',
+                  background: '#f3e8d7',
+                  padding: '3px 8px',
+                  borderRadius: 999,
+                }}
+              >
+                {m.label}: {m.value}
+              </span>
+            ))}
+        </div>
+      )}
       <div style={{
         marginTop: 24, height: 380, borderRadius: 4, overflow: 'hidden',
         background: 'linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px),#fbfaf6',
