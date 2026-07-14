@@ -549,6 +549,13 @@
       '  color:#3D2A1B;',
       '}',
 
+      '.ar-dims{',
+      '  font-size:11px;',
+      '  font-weight:700;',
+      '  color:#8A7B68;',
+      '  margin-top:2px;',
+      '}',
+
       '.close{',
       '  width:28px;',
       '  height:28px;',
@@ -1069,7 +1076,10 @@
     overlay.innerHTML =
       '<div class="modal">' +
       '  <div class="modal-top">' +
-      '    <strong id="arTitle"></strong>' +
+      '    <div>' +
+      '      <strong id="arTitle"></strong>' +
+      '      <div class="ar-dims" id="arDims"></div>' +
+      '    </div>' +
       '    <button class="close" aria-label="Cerrar">×</button>' +
       '  </div>' +
       '  <div class="frame">' +
@@ -1117,6 +1127,9 @@
     ensureModelViewer().then(function () {
       overlay.querySelector('#arTitle').textContent =
         product.name + ' — ' + product.price;
+
+      overlay.querySelector('#arDims').textContent =
+        product.alto + ' × ' + product.ancho + ' × ' + product.fondo + ' cm';
 
       var viewer = overlay.querySelector('#arViewer');
 
