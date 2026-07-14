@@ -594,6 +594,49 @@
       '  margin:10px;',
       '}',
 
+      '.dim-hotspot{',
+      '  border:none;',
+      '  background:none;',
+      '  padding:0;',
+      '  cursor:default;',
+      '  display:none;',
+      '}',
+
+      '.overlay.showing-dims .dim-hotspot{',
+      '  display:block;',
+      '}',
+
+      '.dim-pill{',
+      '  display:inline-flex;',
+      '  align-items:center;',
+      '  gap:4px;',
+      '  padding:4px 9px;',
+      '  border-radius:999px;',
+      '  background:#3D2A1B;',
+      '  color:#FFF7ED;',
+      '  font-size:10.5px;',
+      '  font-weight:800;',
+      '  white-space:nowrap;',
+      '  box-shadow:0 4px 10px rgba(0,0,0,.22);',
+      '}',
+
+      '.dims-toggle{',
+      '  width:100%;',
+      '  background:#FFFFFF;',
+      '  color:#6B4A32;',
+      '  border:1.5px solid #DCC8A9;',
+      '  padding:8px;',
+      '  border-radius:999px;',
+      '  font-size:11px;',
+      '  font-weight:800;',
+      '  cursor:pointer;',
+      '  margin-bottom:8px;',
+      '}',
+
+      '.dims-toggle:hover{',
+      '  background:#FBF0E1;',
+      '}',
+
       '.hint{',
       '  font-size:11px;',
       '  color:#8A7B68;',
@@ -1098,8 +1141,18 @@
       '      <button slot="ar-button" class="ar-btn">' +
       '        Ver en tu espacio' +
       '      </button>' +
+      '      <button slot="hotspot-alto" class="dim-hotspot dim-alto" data-position="0 0 0" data-normal="0 0 1">' +
+      '        <span class="dim-pill">↕ <span class="dim-value" id="dimAlto"></span></span>' +
+      '      </button>' +
+      '      <button slot="hotspot-ancho" class="dim-hotspot dim-ancho" data-position="0 0 0" data-normal="0 -1 0">' +
+      '        <span class="dim-pill">↔ <span class="dim-value" id="dimAncho"></span></span>' +
+      '      </button>' +
+      '      <button slot="hotspot-fondo" class="dim-hotspot dim-fondo" data-position="0 0 0" data-normal="1 0 0">' +
+      '        <span class="dim-pill">⤢ <span class="dim-value" id="dimFondo"></span></span>' +
+      '      </button>' +
       '    </model-viewer>' +
       '  </div>' +
+      '  <button class="dims-toggle" id="dimsToggle">Ver medidas sobre el mueble</button>' +
       '  <p class="hint">' +
       '    Desde el celular esto abre la cámara real, a escala bloqueada.' +
       '  </p>' +
@@ -1120,7 +1173,67 @@
       }
     });
 
+    overlay
+      .querySelector('#dimsToggle')
+      .addEventListener('click', function (event) {
+        var viewer = overlay.querySelector('#arViewer');
+        var showing = overlay.classList.toggle('showing-dims');
+
+        event.currentTarget.textContent = showing
+          ? 'Ocultar medidas'
+          : 'Ver medidas sobre el mueble';
+
+        if (showing) {
+          placeMeasurementHotspots(viewer, overlay._currentProduct);
+        }
+      });
+
     return overlay;
+  }
+
+  // Ubica las 3 etiquetas de medida (alto/ancho/fondo) sobre las esquinas
+  // reales del mueble, usando el tamaño ya corregido por applyRealScale.
+  function placeMeasurementHotspots(viewer, product) {
+    if (!viewer || !product) return;
+
+    try {
+      var dims = viewer.getDimensions();
+      var center = viewer.getBoundingBoxCenter();
+
+      var hx = dims.x / 2;
+      var hy = dims.y / 2;
+      var hz = dims.z / 2;
+
+      var altoHotspot = viewer.querySelector('[slot="hotspot-alto"]');
+      var anchoHotspot = viewer.querySelector('[slot="hotspot-ancho"]');
+      var fondoHotspot = viewer.querySelector('[slot="hotspot-fondo"]');
+
+      // Alto: arista vertical, adelante a la derecha
+      var altoPos = (center.x + hx) + ' ' + center.y + ' ' + (center.z + hz);
+      altoHotspot.setAttribute('data-position', altoPos);
+      altoHotspot.setAttribute('data-normal', '1 0 0');
+      altoHotspot.querySelector('.dim-value').textContent = product.alto + ' cm';
+
+      // Ancho: arista horizontal, adelante abajo
+      var anchoPos = center.x + ' ' + (center.y - hy) + ' ' + (center.z + hz);
+      anchoHotspot.setAttribute('data-position', anchoPos);
+      anchoHotspot.setAttribute('data-normal', '0 -1 0');
+      anchoHotspot.querySelector('.dim-value').textContent = product.ancho + ' cm';
+
+      // Fondo: arista lateral, costado abajo
+      var fondoPos = (center.x + hx) + ' ' + (center.y - hy) + ' ' + center.z;
+      fondoHotspot.setAttribute('data-position', fondoPos);
+      fondoHotspot.setAttribute('data-normal', '1 0 0');
+      fondoHotspot.querySelector('.dim-value').textContent = product.fondo + ' cm';
+
+      if (viewer.updateHotspot) {
+        viewer.updateHotspot({ name: 'hotspot-alto', position: altoPos, normal: '1 0 0' });
+        viewer.updateHotspot({ name: 'hotspot-ancho', position: anchoPos, normal: '0 -1 0' });
+        viewer.updateHotspot({ name: 'hotspot-fondo', position: fondoPos, normal: '1 0 0' });
+      }
+    } catch (e) {
+      // si algo falla, simplemente no se muestran las medidas sobre el modelo
+    }
   }
 
   function openAR(overlay, product) {
@@ -1135,6 +1248,10 @@
 
       viewer.setAttribute('src', product.model_url);
       applyRealScale(viewer, product.alto, product.ancho, product.fondo);
+
+      overlay._currentProduct = product;
+      overlay.classList.remove('showing-dims');
+      overlay.querySelector('#dimsToggle').textContent = 'Ver medidas sobre el mueble';
 
       overlay.classList.add('open');
     });
